@@ -12,21 +12,18 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context) => MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(),
     );
-  }
 }
 
 class MyHomePage extends HookConsumerWidget {
   const MyHomePage({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
+  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
       appBar: AppBar(
         title: Text('Reflection Simulater'),
       ),
@@ -41,7 +38,7 @@ class MyHomePage extends HookConsumerWidget {
                   Expanded(
                     flex: 2,
                     child: Card(
-                      elevation: 5.0,
+                      elevation: 5,
                       child: Container(
                         color: Colors.white,
                         padding:
@@ -53,7 +50,7 @@ class MyHomePage extends HookConsumerWidget {
                   Expanded(
                     flex: 1,
                     child: Card(
-                      elevation: 5.0,
+                      elevation: 5,
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -90,5 +87,4 @@ class MyHomePage extends HookConsumerWidget {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
-  }
 }
