@@ -10,10 +10,14 @@ class OpticsDiagram extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final opticsDiagramViewModel = ref.watch(opticsDiagramViewModelProvider);
-    return DragAndDropLists(
-      children: opticsDiagramViewModel.contents,
-      onItemReorder: opticsDiagramViewModel.onItemReorder,
-      onListReorder: opticsDiagramViewModel.onListReorder,
+    final contents = opticsDiagramViewModel.contents;
+    return ReorderableListView.builder(
+      itemCount: contents.length,
+      onReorder: opticsDiagramViewModel.dragAndDrop,
+      itemBuilder: (context, index) {
+        final content = contents[index]..index = index;
+        return content;
+      },
     );
   }
 }
