@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'optics_diagram/optics_diagram.dart';
+import 'optics_display/opticts_display.dart';
+
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -33,14 +36,30 @@ class MyHomePage extends HookConsumerWidget {
             flex: 3,
             child: Container(
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
                     flex: 2,
-                    child: Container(color: Colors.blue),
+                    child: Card(
+                      elevation: 5.0,
+                      child: Container(
+                        color: Colors.white,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        child: OpticsDisplay(),
+                      ),
+                    ),
                   ),
                   Expanded(
                     flex: 1,
-                    child: Container(color: Colors.green),
+                    child: Card(
+                      elevation: 5.0,
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        child: OpticsDiagram(),
+                      ),
+                    ),
                   ),
                 ],
               ),
