@@ -8,15 +8,15 @@ class DiagramItem extends HookConsumerWidget {
     required this.index,
     required this.onDelete,
     required this.data,
-    Key? key,
+    required Key key,
   }) : super(key: key);
   final int index;
   final void Function() onDelete;
-  final MyData data;
+  final OpticsData data;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => Dismissible(
-        key: Key(data.id), // 項目が特定できるよう固有の文字列をキーとする
+        key: key!, // 項目が特定できるよう固有の文字列をキーとする
         background: Container(color: Colors.red), // スワイプしているアイテムの背景色
         onDismissed: (direction) {
           // 削除時の処理
@@ -29,11 +29,11 @@ class DiagramItem extends HookConsumerWidget {
             data.name,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 24,
+              fontSize: 16,
               height: 1.2,
             ),
           ),
-          subtitle: Text('AGE: ${data.age}'),
+          subtitle: Text('x: ${data.position.x}   y: ${data.position.y}   z: ${data.position.z}   θ: ${data.position.theta}   φ: ${data.position.phi}'),
           onTap: () {
             print(data.name);
           },

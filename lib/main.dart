@@ -25,41 +25,39 @@ class MyHomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => Scaffold(
       appBar: AppBar(
-        title: Text('Reflection Simulater'),
+        title: const Text('Reflection Simulater'),
       ),
       body: Column(
         children: [
           Expanded(
             flex: 3,
-            child: Container(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Card(
-                      elevation: 5,
-                      child: Container(
-                        color: Colors.white,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                        child: OpticsDisplay(),
-                      ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Card(
+                    elevation: 5,
+                    child: Container(
+                      color: Colors.white,
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      child: OpticsDisplay(),
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Card(
-                      elevation: 5,
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                        child: OpticsDiagram(),
-                      ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Card(
+                    elevation: 5,
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      child: OpticsDiagram(),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Expanded(

@@ -17,12 +17,12 @@ class OpticsDiagram extends HookConsumerWidget {
       children: contents
           .asMap()
           .map(
-            (i, item) => MapEntry(
-              i,
+            (index, item) => MapEntry(
+              index,
               DiagramItem(
                 data: item,
-                index: i,
-                onDelete: () => opticsDiagramViewModel.removeContent(i),
+                index: index,
+                onDelete: () => opticsDiagramViewModel.removeContent(index),
                 key: Key(item.id),
               ),
             ),
