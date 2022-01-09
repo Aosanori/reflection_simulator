@@ -23,14 +23,17 @@ class LaserRefalactionPositionDisplay extends HookConsumerWidget {
           padding: const EdgeInsets.all(10),
           width: constraints.maxHeight,
           child: const CustomPaint(
-            painter: _SamplePainter(),
+            painter: _MirrorPainter(),
           ),
         ),
       );
 }
 
-class _SamplePainter extends CustomPainter {
-  const _SamplePainter();
+class _MirrorPainter extends CustomPainter {
+  const _MirrorPainter();
+
+  // 左上が(0,0)
+  // 中心を基準 => Offset(size.width / 2, size.height / 2)
 
   @override
   void paint(Canvas canvas, Size size) {
