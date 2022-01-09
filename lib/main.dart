@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'laser_information/laser_information.dart';
 import 'optics_diagram/optics_diagram.dart';
 import 'optics_display/opticts_display.dart';
 
@@ -42,7 +43,7 @@ class MyHomePage extends HookConsumerWidget {
                         color: Colors.white,
                         padding:
                             EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                        child: OpticsDisplay(),
+                        child: const OpticsDisplay(),
                       ),
                     ),
                   ),
@@ -52,8 +53,8 @@ class MyHomePage extends HookConsumerWidget {
                       elevation: 5,
                       child: Container(
                         padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                        child: OpticsDiagram(),
+                            const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        child: const OpticsDiagram(),
                       ),
                     ),
                   ),
@@ -61,34 +62,30 @@ class MyHomePage extends HookConsumerWidget {
               ),
             ),
             Expanded(
-              flex: 1,
-              child: Container(
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Card(
-                        elevation: 5,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 10),
-                          child: Container(color: Colors.red),
-                        ),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Card(
+                      elevation: 5,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
+                        child: Container(color: Colors.red),
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Card(
-                        elevation: 5,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 10),
-                          child: Container(color: Colors.yellow),
-                        ),
+                  ),
+                  Expanded(
+                    child: Card(
+                      elevation: 5,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
+                        child: const LaserInformation(),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             )
           ],
