@@ -69,6 +69,4 @@ class OpticsDiagramViewModel extends ViewModelChangeNotifier {
     contents.removeAt(index);
     notifyListeners();
   }
-
-
 }

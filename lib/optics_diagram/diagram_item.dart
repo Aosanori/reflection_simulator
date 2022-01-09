@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'optics_diagram_viewModel.dart';
 
-class DiagramItem extends HookConsumerWidget {
+class DiagramItem extends StatelessWidget {
   const DiagramItem({
     required this.index,
     required this.onDelete,
@@ -15,7 +14,7 @@ class DiagramItem extends HookConsumerWidget {
   final OpticsData data;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => Dismissible(
+  Widget build(BuildContext context) => Dismissible(
         key: key!, // 項目が特定できるよう固有の文字列をキーとする
         background: Container(color: Colors.red), // スワイプしているアイテムの背景色
         onDismissed: (direction) {
