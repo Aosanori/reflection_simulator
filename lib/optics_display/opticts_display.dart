@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:reflection_simulator/optics_diagram/optics_diagram_viewModel.dart';
-import 'dart:math';
+import '../optics_diagram/optics_diagram_viewModel.dart';
+import '../utils/get_position_of_mirror.dart';
 
 class OpticsDisplay extends HookConsumerWidget {
   const OpticsDisplay({Key? key}) : super(key: key);
@@ -9,16 +9,6 @@ class OpticsDisplay extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) => CustomPaint(
         painter: _OpticsPainter(),
       );
-}
-
-List<Offset> getPositionOfMirror(double x, double y, double theta, Size size) {
-  y *= -1; // y軸が上から下に取られているので逆にする
-  const mirror_size = 50;
-  final x1 = (x + 10) + mirror_size * cos((180 - theta) * pi / 180);
-  final y1 = y + size.height / 2 + mirror_size * sin((180 - theta) * pi / 180);
-  final x2 = (x + 10) - mirror_size * cos((180 - theta) * pi / 180);
-  final y2 = y + size.height / 2 - mirror_size * sin((180 - theta) * pi / 180);
-  return [Offset(x1, y1), Offset(x2, y2)];
 }
 
 class _OpticsPainter extends CustomPainter {
