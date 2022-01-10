@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
+import 'optics.dart';
 import 'optics_diagram_viewModel.dart';
 
 class DiagramItem extends StatelessWidget {
   const DiagramItem({
     required this.index,
     required this.onDelete,
-    required this.data,
+    required this.optics,
     required Key key,
   }) : super(key: key);
   final int index;
   final void Function() onDelete;
-  final OpticsData data;
+  final Optics optics;
 
   @override
   Widget build(BuildContext context) => Dismissible(
@@ -25,16 +26,16 @@ class DiagramItem extends StatelessWidget {
         child: ListTile(
           tileColor: Theme.of(context).cardColor,
           title: Text(
-            data.name,
+            optics.name,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
               height: 1.2,
             ),
           ),
-          subtitle: Text('x: ${data.position.x}   y: ${data.position.y}   z: ${data.position.z}   θ: ${data.position.theta}   φ: ${data.position.phi}'),
+          subtitle: Text('x: ${optics.position.x}   y: ${optics.position.y}   z: ${optics.position.z}   θ: ${optics.position.theta}   φ: ${optics.position.phi}'),
           onTap: () {
-            print(data.name);
+            print(optics.name);
           },
         ),
       );

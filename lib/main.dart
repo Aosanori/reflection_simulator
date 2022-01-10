@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'laser_information/laser_information_display.dart';
-import 'laser_reflection_position_display/laser_reflection_position_display.dart';
+import 'beam_information/beam_information_display.dart';
+import 'beam_reflection_position_display/beam_reflection_position_display.dart';
 import 'optics_diagram/optics_diagram.dart';
 import 'optics_display/opticts_display.dart';
 
@@ -72,7 +72,7 @@ class MyHomePage extends HookConsumerWidget {
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 10),
-                        child: const LaserRefalactionPositionListDisplay(),
+                        child: const BeamRefalactionPositionListDisplay(),
                       ),
                     ),
                   ),
@@ -82,7 +82,7 @@ class MyHomePage extends HookConsumerWidget {
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 10),
-                        child: const LaserInformationDisplay(),
+                        child: const BeamInformationDisplay(),
                       ),
                     ),
                   ),

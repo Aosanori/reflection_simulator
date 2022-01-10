@@ -20,7 +20,7 @@ class OpticsDiagram extends HookConsumerWidget {
             (index, item) => MapEntry(
               index,
               DiagramItem(
-                data: item,
+                optics: item,
                 index: index,
                 onDelete: () => opticsDiagramViewModel.removeContent(index),
                 key: Key(item.id),

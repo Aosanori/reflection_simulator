@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../optics_diagram/optics_diagram_viewModel.dart';
 
-class LaserRefalactionPositionListDisplay extends HookConsumerWidget {
-  const LaserRefalactionPositionListDisplay({Key? key}) : super(key: key);
+class BeamRefalactionPositionListDisplay extends HookConsumerWidget {
+  const BeamRefalactionPositionListDisplay({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => ListView.builder(
-        // This next line does the trick.
-        scrollDirection: Axis.horizontal,
-        itemCount: dataList.length,
-        itemBuilder: (context, index) =>
-            const LaserRefalactionPositionDisplay(),
-      );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final opticsDiagramViewModel = ref.watch(opticsDiagramViewModelProvider);
+    return ListView.builder(
+      // This next line does the trick.
+      scrollDirection: Axis.horizontal,
+      itemCount: opticsDiagramViewModel.contents.length,
+      itemBuilder: (context, index) => const BeamRefalactionPositionDisplay(),
+    );
+  }
 }
 
-class LaserRefalactionPositionDisplay extends HookConsumerWidget {
-  const LaserRefalactionPositionDisplay({Key? key}) : super(key: key);
+class BeamRefalactionPositionDisplay extends HookConsumerWidget {
+  const BeamRefalactionPositionDisplay({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) => LayoutBuilder(
         builder: (context, constraints) => Container(
@@ -56,7 +58,6 @@ class _MirrorPainter extends CustomPainter {
     // 中心点（塗りつぶし）
     paint.color = Colors.red;
     canvas.drawCircle(Offset(size.width / 2, size.height / 2), 10, paint);
-
 
     // 円（外線） 一応 反射鏡
     final line = Paint()
