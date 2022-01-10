@@ -21,7 +21,7 @@ class _OpticsPainter extends CustomPainter {
         ..color = Colors.grey
         ..strokeWidth = 5;
       final positions = getPositionOfMirror(
-          data.position.x, data.position.y, data.position.theta, size);
+          data.position.x, data.position.y, data.position.theta, size,);
       canvas.drawLine(
         positions[0],
         positions[1],

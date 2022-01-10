@@ -29,15 +29,15 @@ class OpticsData {
 // リスト項目
 List<OpticsData> dataList = <OpticsData>[
   OpticsData(
-      'item1', 'Mirror 1', OpticsPosition(x: 50, y: 100, z: 0, theta: 40, phi: 0)),
+      'item1', 'Mirror 1', OpticsPosition(x: 500, y: 100, z: 0, theta: 135, phi: 0)),
   OpticsData(
-      'item2', 'Mirror 2', OpticsPosition(x: 0, y: 100, z: 0, theta: 40, phi:20)),
+      'item2', 'Mirror 2', OpticsPosition(x: 500, y: -100, z: 0, theta: 45, phi:20)),
   OpticsData(
-      'item3', 'Mirror 3', OpticsPosition(x: 0, y: 0, z: 200, theta: 40, phi: 10)),
+      'item3', 'Mirror 3', OpticsPosition(x: 300, y: -100, z: 200, theta: 135, phi: 10)),
   OpticsData(
-      'item4', 'Mirror 4', OpticsPosition(x: 300, y: 0, z: 0, theta: 0, phi: 0)),
+      'item4', 'Mirror 4', OpticsPosition(x: 300, y: 200, z: 0, theta: 45, phi: 0)),
   OpticsData(
-      'item5', 'Mirror 5', OpticsPosition(x: 200, y: 0, z: 100, theta: 50, phi: 20)),
+      'item5', 'Mirror 5', OpticsPosition(x: 700, y: 200, z: 100, theta: 135, phi: 20)),
 ];
 
 final opticsDiagramViewModelProvider = ChangeNotifierProvider.autoDispose(
