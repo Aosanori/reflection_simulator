@@ -10,7 +10,6 @@ class BeamInformationDisplay extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final beamInformationDisplayViewModel =
         ref.watch(beamInformationDisplayViewModelProvider);
-    final currentBeam = beamInformationDisplayViewModel.currentBeam;
     return Column(
       children: [
         const Text(
@@ -78,7 +77,8 @@ class BeamInformationDisplay extends HookConsumerWidget {
                   SizedBox(
                     width: 100,
                     child: TextField(
-                      controller: beamInformationDisplayViewModel.beamWaveLengthInputController,
+                      controller: beamInformationDisplayViewModel
+                          .beamWaveLengthInputController,
                       textAlign: TextAlign.end,
                       decoration: const InputDecoration(
                         suffixText: 'nm',
@@ -90,7 +90,8 @@ class BeamInformationDisplay extends HookConsumerWidget {
                   SizedBox(
                     width: 100,
                     child: TextField(
-                      controller: beamInformationDisplayViewModel.beamWaistInputController,
+                      controller: beamInformationDisplayViewModel
+                          .beamWaistInputController,
                       textAlign: TextAlign.end,
                       onChanged:
                           beamInformationDisplayViewModel.changeBeamWaist,
