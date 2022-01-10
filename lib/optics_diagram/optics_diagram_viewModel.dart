@@ -4,7 +4,6 @@ import '../common/view_model_change_notifier.dart';
 import '../utils/environments_variables.dart';
 import 'optics.dart';
 
-
 final opticsDiagramViewModelProvider = ChangeNotifierProvider.autoDispose(
   (ref) => OpticsDiagramViewModel(),
 );

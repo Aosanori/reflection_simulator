@@ -53,8 +53,8 @@ class MyHomePage extends HookConsumerWidget {
                     child: Card(
                       elevation: 5,
                       child: Container(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
                         child: const OpticsDiagram(),
                       ),
                     ),
