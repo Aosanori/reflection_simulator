@@ -11,11 +11,11 @@ class OpticsPosition {
     required this.phi,
   });
 
-  final num x;
-  final num y;
-  final num z;
-  final num theta;
-  final num phi;
+  final double x;
+  final double y;
+  final double z;
+  final double theta;
+  final double phi;
 }
 
 // リスト項目のデータ構造
@@ -29,13 +29,15 @@ class OpticsData {
 // リスト項目
 List<OpticsData> dataList = <OpticsData>[
   OpticsData(
-      'item1', 'Mirror 1', OpticsPosition(x: 0, y: 0, z: 0, theta: 40, phi: 0)),
+      'item1', 'Mirror 1', OpticsPosition(x: 50, y: 100, z: 0, theta: 40, phi: 0)),
   OpticsData(
-      'item2', 'Mirror 2', OpticsPosition(x: 0, y: 10, z: 0, theta: 40, phi:20)),
+      'item2', 'Mirror 2', OpticsPosition(x: 0, y: 100, z: 0, theta: 40, phi:20)),
   OpticsData(
-      'item3', 'Mirror 3', OpticsPosition(x: 0, y: 0, z: 20, theta: 40, phi: 10)),
+      'item3', 'Mirror 3', OpticsPosition(x: 0, y: 0, z: 200, theta: 40, phi: 10)),
   OpticsData(
-      'item4', 'Mirror 4', OpticsPosition(x: 30, y: 0, z: 0, theta: 0, phi: 0)),
+      'item4', 'Mirror 4', OpticsPosition(x: 300, y: 0, z: 0, theta: 0, phi: 0)),
+  OpticsData(
+      'item5', 'Mirror 5', OpticsPosition(x: 200, y: 0, z: 100, theta: 50, phi: 20)),
 ];
 
 final opticsDiagramViewModelProvider = ChangeNotifierProvider.autoDispose(
