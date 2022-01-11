@@ -28,7 +28,14 @@ void drawPositionOfReflection(
   Size size,
   Paint paint,
 ) {
-  final angle = optics.position.vector.angleTo(result);
+  final position = optics.position;
+  final baseAxis = Vector3(
+    sin(position.phiRadian) * cos(position.thetaRadian + (pi / 2)),
+    sin(position.phiRadian) * sin(position.thetaRadian + (pi / 2)),
+    cos(position.phiRadian),
+  );
+  final angle = (result - optics.position.vector).angleTo(baseAxis);
+  print(angle * 180 / pi);
   final distance = optics.position.vector.distanceTo(result);
   final ratio = distance / optics.size;
   final radius = size.width / 2;

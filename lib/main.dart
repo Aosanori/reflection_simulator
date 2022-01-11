@@ -43,7 +43,9 @@ class MyHomePage extends HookConsumerWidget {
                       child: Container(
                         color: Colors.white,
                         padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10,),
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
                         child: const OpticsDisplay(),
                       ),
                     ),
