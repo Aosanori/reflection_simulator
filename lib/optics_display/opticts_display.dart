@@ -52,25 +52,25 @@ class _OpticsPainter extends CustomPainter {
         paint,
       );
     }
-    for (var i = 0; i < simulationResult.length - 1; i++) {
-      paint
-        ..color = Colors.red
-        ..strokeWidth = 3;
-      final distance = currentOpticsList[i]
+    paint
+      ..color = Colors.red
+      ..strokeWidth = 3;
+    for (var i = 1; i < simulationResult.length; i++) {
+
+      final distance = currentOpticsList[i - 1]
           .position
           .vector
-          .distanceTo(simulationResult[i + 1]);
-
-      // ミラーからはみ出したら
-      if (distance > currentOpticsList[i].size) {
-        paint.color = Colors.red.shade50;
-      }
+          .distanceTo(simulationResult[i]);
 
       canvas.drawLine(
+        getPositionOfBeam(simulationResult[i - 1], size),
         getPositionOfBeam(simulationResult[i], size),
-        getPositionOfBeam(simulationResult[i + 1], size),
         paint,
       );
+            // ミラーからはみ出したら
+      if (distance > currentOpticsList[i - 1].size) {
+        paint.color = Colors.red.shade50;
+      }
     }
   }
 
