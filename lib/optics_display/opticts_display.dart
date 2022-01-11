@@ -56,7 +56,6 @@ class _OpticsPainter extends CustomPainter {
       ..color = Colors.red
       ..strokeWidth = 3;
     for (var i = 1; i < simulationResult.length; i++) {
-
       final distance = currentOpticsList[i - 1]
           .position
           .vector
@@ -67,7 +66,7 @@ class _OpticsPainter extends CustomPainter {
         getPositionOfBeam(simulationResult[i], size),
         paint,
       );
-            // ミラーからはみ出したら
+      // ミラーからはみ出したら
       if (distance > currentOpticsList[i - 1].size) {
         paint.color = Colors.red.shade50;
       }

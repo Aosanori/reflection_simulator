@@ -29,11 +29,11 @@ class SimulationService extends ViewModelChangeNotifier {
       beamWaist: currentBeam.beamWaist,
       startFrom: currentBeam.startFrom,
     );
+    
     final reflectPositions = <Vector3>[currentBeam.startFrom.vector];
 
     for (var i = 0; i < currentOpticsList.length; i++) {
       reflectPositions.add(simulationBeam.reflect(currentOpticsList[i]));
-      //beam.startFrom = ;
     }
     simulatedReflectPositions = reflectPositions;
     notifyListeners();
