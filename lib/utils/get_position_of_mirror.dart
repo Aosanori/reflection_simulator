@@ -34,8 +34,8 @@ void drawPositionOfReflection(
     sin(position.phiRadian) * sin(position.thetaRadian + (pi / 2)),
     cos(position.phiRadian),
   );
+  // 鏡の3時方向を基準とした角度
   final angle = (result - optics.position.vector).angleTo(baseAxis);
-  print(angle * 180 / pi);
   final distance = optics.position.vector.distanceTo(result);
   final ratio = distance / optics.size;
   final radius = size.width / 2;

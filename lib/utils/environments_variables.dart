@@ -9,7 +9,7 @@ final Beam initialBeam = Beam(
   type: 'Gaussian beam',
   waveLength: 800,
   beamWaist: 10,
-  startFrom: OpticsPosition(x: 0, y: 100, z: 0, theta: 1.5, phi: 90),
+  startFrom: OpticsPosition(x: 0, y: 100, z: 0, theta: 0.4, phi: 90),
 );
 
 // リスト項目
@@ -17,12 +17,12 @@ final List<Optics> initialOpticsList = <Optics>[
   Optics(
     'item1',
     'Mirror 1',
-    OpticsPosition(x: 500, y: 100, z: 0, theta: 225, phi: 90),
+    OpticsPosition(x: 500, y: 100, z: 0, theta: 225, phi: 89.5),
   ),
   Optics(
     'item2',
     'Mirror 2',
-    OpticsPosition(x: 500, y: -100, z: 0, theta: 135, phi: 90),
+    OpticsPosition(x: 500, y: -100, z: 0, theta: 135, phi: 90.5),
   ),
   Optics(
     'item3',
