@@ -10,7 +10,7 @@ class BeamInformationDisplay extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final beamInformationDisplayViewModel =
         ref.watch(beamInformationDisplayViewModelProvider);
-    return Column(
+    return ListView(
       children: [
         const Text(
           'Beam Information',
@@ -20,7 +20,8 @@ class BeamInformationDisplay extends HookConsumerWidget {
             height: 1.2,
           ),
         ),
-        Expanded(
+        SizedBox(
+          height: 145,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -101,7 +102,7 @@ class BeamInformationDisplay extends HookConsumerWidget {
                     ),
                   ),
                 ],
-              ),
+              )
             ],
           ),
         ),
