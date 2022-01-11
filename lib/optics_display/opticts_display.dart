@@ -16,7 +16,9 @@ class OpticsDisplay extends HookConsumerWidget {
     final simulationResult = opticsDisplayViewModel.simulationResult;
     return CustomPaint(
       willChange: true,
-      painter: _OpticsPainter(currentOpticsList: currentOpticsList, simulationResult: simulationResult),
+      painter: _OpticsPainter(
+          currentOpticsList: currentOpticsList,
+          simulationResult: simulationResult),
     );
   }
 }
@@ -28,7 +30,7 @@ class _OpticsPainter extends CustomPainter {
   });
   final List<Optics> currentOpticsList;
   final List<vm.Vector3> simulationResult;
-  
+
   @override
   void paint(Canvas canvas, Size size) {
     // Offset(x,y)
@@ -50,15 +52,27 @@ class _OpticsPainter extends CustomPainter {
         paint,
       );
     }
-    for(var i = 0; i < simulationResult.length-1; i++){
+    var cutted = false;
+    for (var i = 0; i < simulationResult.length - 1; i++) {
       paint
         ..color = Colors.red
         ..strokeWidth = 3;
-      canvas.drawLine(
-        getPositionOfBeam(simulationResult[i],size),
-        getPositionOfBeam(simulationResult[i+1], size),
-        paint,
-      );
+      final distance = currentOpticsList[i]
+          .position
+          .vector
+          .distanceTo(simulationResult[i + 1]);
+      if (!cutted) {
+        // ミラーからはみ出したら
+        if (distance > currentOpticsList[i].size) {
+          cutted = true;
+          break;
+        }
+        canvas.drawLine(
+          getPositionOfBeam(simulationResult[i], size),
+          getPositionOfBeam(simulationResult[i + 1], size),
+          paint,
+        );
+      }
     }
   }
 

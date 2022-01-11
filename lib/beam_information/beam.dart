@@ -78,7 +78,6 @@ class Beam {
       direction,
     );
     startPosionVector = nextStartPoint;
-    print(nextStartPoint);
     return nextStartPoint;
   }
 }

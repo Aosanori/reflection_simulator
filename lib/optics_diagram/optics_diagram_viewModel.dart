@@ -1,8 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:reflection_simulator/simulation/simulation_service.dart';
 
 import '../common/view_model_change_notifier.dart';
-import '../utils/environments_variables.dart';
+import '../simulation/simulation_service.dart';
 import 'optics.dart';
 
 final opticsDiagramViewModelProvider = ChangeNotifierProvider.autoDispose(
@@ -23,7 +22,7 @@ class OpticsDiagramViewModel extends ViewModelChangeNotifier {
 
     // 並び替え処理
     final optics = _simulationService.currentOpticsList[oldIndex];
-    opticsList
+    _simulationService.currentOpticsList
       ..removeAt(oldIndex)
       ..insert(newIndex, optics);
     notifyListeners();

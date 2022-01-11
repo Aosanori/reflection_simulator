@@ -12,8 +12,8 @@ final simulationServiceProvider = ChangeNotifierProvider.autoDispose(
 
 class SimulationService extends ViewModelChangeNotifier {
   SimulationService() {
-    currentOpticsList = opticsList;
-    currentBeam = example_beam;
+    currentOpticsList = initialOpticsList;
+    currentBeam = initialBeam;
     simulatedReflectPositions = runSimulation();
   }
 
