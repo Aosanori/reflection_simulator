@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vector_math/vector_math.dart' as vm;
 
 import '../optics_diagram/optics.dart';
-import '../utils/environments_variables.dart';
 import '../utils/get_position_of_mirror.dart';
 import 'optics_display_viewModel.dart';
 
@@ -52,7 +51,6 @@ class _OpticsPainter extends CustomPainter {
         paint,
       );
     }
-    var cutted = false;
     for (var i = 0; i < simulationResult.length - 1; i++) {
       paint
         ..color = Colors.red
@@ -61,18 +59,17 @@ class _OpticsPainter extends CustomPainter {
           .position
           .vector
           .distanceTo(simulationResult[i + 1]);
-      if (!cutted) {
-        // ミラーからはみ出したら
-        if (distance > currentOpticsList[i].size) {
-          cutted = true;
-          break;
-        }
-        canvas.drawLine(
-          getPositionOfBeam(simulationResult[i], size),
-          getPositionOfBeam(simulationResult[i + 1], size),
-          paint,
-        );
+      
+      // ミラーからはみ出したら
+      if (distance > currentOpticsList[i].size) {
+        paint.color = Colors.red.shade50;
       }
+
+      canvas.drawLine(
+        getPositionOfBeam(simulationResult[i], size),
+        getPositionOfBeam(simulationResult[i + 1], size),
+        paint,
+      );
     }
   }
 
