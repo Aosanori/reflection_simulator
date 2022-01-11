@@ -11,7 +11,7 @@ class BeamRefalactionPositionListDisplay extends HookConsumerWidget {
     return ListView.builder(
       // This next line does the trick.
       scrollDirection: Axis.horizontal,
-      itemCount: opticsDiagramViewModel.contents.length,
+      itemCount: opticsDiagramViewModel.currentOpticsList.length,
       itemBuilder: (context, index) => const BeamRefalactionPositionDisplay(),
     );
   }

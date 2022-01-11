@@ -25,7 +25,7 @@ class _OpticsPainter extends CustomPainter {
         optics.position.x,
         optics.position.y,
         // thetaは法線方向を表すので90たす
-        optics.position.theta+90,
+        optics.position.theta + 90,
         size,
       );
       canvas.drawLine(

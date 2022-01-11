@@ -1,20 +1,18 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:reflection_simulator/simulation/simulation_provider.dart';
 
 import '../common/view_model_change_notifier.dart';
 import '../utils/environments_variables.dart';
 import 'optics.dart';
 
 final opticsDiagramViewModelProvider = ChangeNotifierProvider.autoDispose(
-  (ref) => OpticsDiagramViewModel(),
+  (ref) => OpticsDiagramViewModel(ref.watch(simulationServiceProvider)),
 );
 
 class OpticsDiagramViewModel extends ViewModelChangeNotifier {
-  OpticsDiagramViewModel() {
-    // Generate a list
-    contents = opticsList;
-  }
-
-  late List<Optics> contents;
+  OpticsDiagramViewModel(this._simulationService);
+  final SimulationService _simulationService;
+  List<Optics> get currentOpticsList => _simulationService.currentOpticsList;
 
   void dragAndDrop(int oldIndex, int newIndex) {
     if (newIndex > oldIndex) {
@@ -24,7 +22,7 @@ class OpticsDiagramViewModel extends ViewModelChangeNotifier {
     }
 
     // 並び替え処理
-    final optics = contents[oldIndex];
+    final optics = _simulationService.currentOpticsList[oldIndex];
     opticsList
       ..removeAt(oldIndex)
       ..insert(newIndex, optics);
@@ -32,7 +30,7 @@ class OpticsDiagramViewModel extends ViewModelChangeNotifier {
   }
 
   void removeContent(int index) {
-    contents.removeAt(index);
+    _simulationService.currentOpticsList.removeAt(index);
     notifyListeners();
   }
 }

@@ -10,11 +10,11 @@ class OpticsDiagram extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final opticsDiagramViewModel = ref.watch(opticsDiagramViewModelProvider);
-    final contents = opticsDiagramViewModel.contents;
+    final currentOpticsList = opticsDiagramViewModel.currentOpticsList;
     return ReorderableListView(
       onReorder: opticsDiagramViewModel.dragAndDrop,
       padding: const EdgeInsets.only(top: 4),
-      children: contents
+      children: currentOpticsList
           .asMap()
           .map(
             (index, item) => MapEntry(

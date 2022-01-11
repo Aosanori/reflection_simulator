@@ -21,8 +21,8 @@ class Beam {
   String type;
   num waveLength;
   num beamWaist;
-  OpticsPosition startFrom;
-  double distanceFromStart = 0.0;
+  final OpticsPosition startFrom;
+  double distanceFromStart = 0;
   late Vector3 startPosionVector;
   late Ray ray;
 
