@@ -1,11 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:reflection_simulator/utils/get_position_of_mirror.dart';
 import 'package:vector_math/vector_math.dart' as vm;
 
 import '../optics_diagram/optics.dart';
+import '../utils/get_position_of_mirror.dart';
 import 'beam_reflection_position_list_display_viewModel.dart';
 
 class BeamReflectionPositionListDisplay extends HookConsumerWidget {

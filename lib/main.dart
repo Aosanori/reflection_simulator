@@ -42,19 +42,20 @@ class MyHomePage extends HookConsumerWidget {
                       elevation: 5,
                       child: Container(
                         color: Colors.white,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
                         child: const OpticsDisplay(),
                       ),
                     ),
                   ),
                   Expanded(
-                    flex: 1,
                     child: Card(
                       elevation: 5,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
                         child: const OpticsDiagram(),
                       ),
                     ),
@@ -71,7 +72,9 @@ class MyHomePage extends HookConsumerWidget {
                       elevation: 5,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
                         child: const BeamReflectionPositionListDisplay(),
                       ),
                     ),
@@ -81,7 +84,9 @@ class MyHomePage extends HookConsumerWidget {
                       elevation: 5,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
                         child: const BeamInformationDisplay(),
                       ),
                     ),
@@ -91,10 +96,10 @@ class MyHomePage extends HookConsumerWidget {
             )
           ],
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: const FloatingActionButton(
           onPressed: null,
           tooltip: 'Increment',
-          child: const Icon(Icons.add),
+          child: Icon(Icons.add),
         ), // This trailing comma makes auto-formatting nicer for build methods.
       );
 }

@@ -8,6 +8,7 @@ import 'package:vector_math/vector_math.dart' as vm;
 import '../optics_diagram/optics.dart';
 
 List<Offset> getPositionOfMirror(double x, double y, double theta, Size size) {
+  // ignore: parameter_assignments
   y *= -1; // y軸が上から下に取られているので逆にする
   const mirrorSize = 50;
   final x1 = (x + 10) + mirrorSize * cos((180 - theta) * pi / 180);
