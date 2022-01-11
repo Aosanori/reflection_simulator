@@ -77,7 +77,7 @@ class _MirrorPainter extends CustomPainter {
 
     // 中心点（塗りつぶし）
     paint.color = Colors.red;
-    drawPositionOfReflection(optics,result,canvas,size,paint);
+    drawPositionOfReflection(optics, result, canvas, size, paint);
 
     // 円（外線） 一応 反射鏡
     final line = Paint()
@@ -95,6 +95,3 @@ class _MirrorPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
-
-
-

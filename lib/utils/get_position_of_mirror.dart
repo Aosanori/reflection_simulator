@@ -31,14 +31,14 @@ void drawPositionOfReflection(
   final distance = optics.position.vector.distanceTo(result);
   final ratio = distance / optics.size;
   final radius = size.width / 2;
-  if(ratio <= 1) {
+  if (ratio <= 1) {
     canvas.drawCircle(
-    Offset(
-      size.width / 2 + (radius * ratio * cos(angle)),
-      size.height / 2 - (radius * ratio * sin(angle)),
-    ),
-    10,
-    paint,
-  );
+      Offset(
+        size.width / 2 + (radius * ratio * cos(angle)),
+        size.height / 2 - (radius * ratio * sin(angle)),
+      ),
+      10,
+      paint,
+    );
   }
 }
