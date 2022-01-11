@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:reflection_simulator/simulation/simulation_provider.dart';
+import 'package:reflection_simulator/simulation/simulation_service.dart';
 
 import '../common/view_model_change_notifier.dart';
 import '../utils/environments_variables.dart';
@@ -27,10 +27,12 @@ class OpticsDiagramViewModel extends ViewModelChangeNotifier {
       ..removeAt(oldIndex)
       ..insert(newIndex, optics);
     notifyListeners();
+     _simulationService.runSimulation();
   }
 
   void removeContent(int index) {
     _simulationService.currentOpticsList.removeAt(index);
     notifyListeners();
+     _simulationService.runSimulation();
   }
 }

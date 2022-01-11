@@ -19,9 +19,9 @@ class SimulationService extends ViewModelChangeNotifier {
 
   late List<Optics> currentOpticsList;
   late Beam currentBeam;
-  late List<Vector3?> simulatedReflectPositions;
+  late List<Vector3> simulatedReflectPositions;
 
-  List<Vector3?> runSimulation() {
+  List<Vector3> runSimulation() {
     // インスタンスをコピー
     final simulationBeam = Beam(
       type: currentBeam.type,
@@ -29,14 +29,13 @@ class SimulationService extends ViewModelChangeNotifier {
       beamWaist: currentBeam.beamWaist,
       startFrom: currentBeam.startFrom,
     );
-    final reflectPositions =
-        List<Vector3?>.generate(currentOpticsList.length, (index) => null);
-    const cutted = false;
+    final reflectPositions = <Vector3>[currentBeam.startFrom.vector];
 
     for (var i = 0; i < currentOpticsList.length; i++) {
-      reflectPositions[i] = simulationBeam.reflect(currentOpticsList[i]);
+      reflectPositions.add(simulationBeam.reflect(currentOpticsList[i]));
       //beam.startFrom = ;
     }
+    simulatedReflectPositions = reflectPositions;
     notifyListeners();
     return reflectPositions;
   }

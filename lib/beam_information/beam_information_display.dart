@@ -78,8 +78,6 @@ class BeamInformationDisplay extends HookConsumerWidget {
                   SizedBox(
                     width: 100,
                     child: TextField(
-                      controller: beamInformationDisplayViewModel
-                          .beamWaveLengthInputController,
                       textAlign: TextAlign.end,
                       decoration: const InputDecoration(
                         suffixText: 'nm',
@@ -91,8 +89,6 @@ class BeamInformationDisplay extends HookConsumerWidget {
                   SizedBox(
                     width: 100,
                     child: TextField(
-                      controller: beamInformationDisplayViewModel
-                          .beamWaistInputController,
                       textAlign: TextAlign.end,
                       onChanged:
                           beamInformationDisplayViewModel.changeBeamWaist,

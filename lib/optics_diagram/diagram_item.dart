@@ -34,7 +34,8 @@ class DiagramItem extends StatelessWidget {
             ),
           ),
           subtitle: Text(
-              'x: ${optics.position.x}   y: ${optics.position.y}   z: ${optics.position.z}   θ: ${optics.position.theta}   φ: ${optics.position.phi}'),
+            'x: ${optics.position.x}   y: ${optics.position.y}   z: ${optics.position.z}   θ: ${optics.position.theta}   φ: ${optics.position.phi}',
+          ),
           onTap: () {
             print(optics.name);
           },

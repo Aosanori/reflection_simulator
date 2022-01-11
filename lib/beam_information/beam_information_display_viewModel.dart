@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../common/view_model_change_notifier.dart';
-import '../simulation/simulation_provider.dart';
+import '../simulation/simulation_service.dart';
 import 'beam.dart';
 
 final beamInformationDisplayViewModelProvider =
@@ -12,16 +12,9 @@ final beamInformationDisplayViewModelProvider =
 );
 
 class BeamInformationDisplayViewModel extends ViewModelChangeNotifier {
-  BeamInformationDisplayViewModel(this._simulationService) {
-    beamWaistInputController = TextEditingController(
-        text: _simulationService.currentBeam.beamWaist.toString());
-    beamWaveLengthInputController = TextEditingController(
-        text: _simulationService.currentBeam.waveLength.toString());
-  }
+  BeamInformationDisplayViewModel(this._simulationService);
 
   final SimulationService _simulationService;
-  late TextEditingController beamWaveLengthInputController;
-  late TextEditingController beamWaistInputController;
 
   Beam get currentBeam => _simulationService.currentBeam;
 

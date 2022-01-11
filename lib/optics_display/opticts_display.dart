@@ -1,23 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vector_math/vector_math.dart' as vm;
 
+import '../optics_diagram/optics.dart';
 import '../utils/environments_variables.dart';
 import '../utils/get_position_of_mirror.dart';
+import 'optics_display_viewModel.dart';
 
 class OpticsDisplay extends HookConsumerWidget {
   const OpticsDisplay({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context, WidgetRef ref) => CustomPaint(
-        painter: _OpticsPainter(),
-      );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final opticsDisplayViewModel = ref.watch(opticsDisplayViewModelProvider);
+    final currentOpticsList = opticsDisplayViewModel.currentOpticsList;
+    final simulationResult = opticsDisplayViewModel.simulationResult;
+    return CustomPaint(
+      willChange: true,
+      painter: _OpticsPainter(currentOpticsList: currentOpticsList, simulationResult: simulationResult),
+    );
+  }
 }
 
 class _OpticsPainter extends CustomPainter {
+  _OpticsPainter({
+    required this.currentOpticsList,
+    required this.simulationResult,
+  });
+  final List<Optics> currentOpticsList;
+  final List<vm.Vector3> simulationResult;
+  
   @override
   void paint(Canvas canvas, Size size) {
     // Offset(x,y)
     final paint = Paint();
-    for (final optics in opticsList) {
+    for (final optics in currentOpticsList) {
       paint
         ..color = Colors.grey
         ..strokeWidth = 5;
@@ -31,6 +47,16 @@ class _OpticsPainter extends CustomPainter {
       canvas.drawLine(
         positions[0],
         positions[1],
+        paint,
+      );
+    }
+    for(var i = 0; i < simulationResult.length-1; i++){
+      paint
+        ..color = Colors.red
+        ..strokeWidth = 3;
+      canvas.drawLine(
+        getPositionOfBeam(simulationResult[i],size),
+        getPositionOfBeam(simulationResult[i+1], size),
         paint,
       );
     }

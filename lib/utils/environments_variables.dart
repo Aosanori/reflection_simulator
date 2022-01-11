@@ -9,7 +9,7 @@ Beam example_beam = Beam(
   type: 'Gaussian beam',
   waveLength: 800,
   beamWaist: 10,
-  startFrom: OpticsPosition(x: 0, y: 100, z: 0, theta: 0, phi: 90),
+  startFrom: OpticsPosition(x: 0, y: 100, z: 0, theta: 1, phi: 90),
 );
 
 // リスト項目
