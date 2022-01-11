@@ -29,10 +29,10 @@ class Beam {
         cos(startFrom.phiRadian),
       );
 
-  Vector3 reflect(Optics optics) => direction.reflected(optics.normalVector);
+  Vector3 reflectVector(Optics optics) => direction.reflected(optics.normalVector);
 
   // 三分探索で求める
-  Vector3 positionOfReflection(Optics optics) {
+  Vector3 pointOfReflection(Optics optics) {
     final constant = -optics.position.vector.dot(optics.normalVector);
     final plane = Plane.normalconstant(optics.normalVector, constant);
 
@@ -59,7 +59,7 @@ class Beam {
 
   bool canReflect(Optics optics) {
     final distanceToCenter =
-        positionOfReflection(optics).distanceTo(optics.position.vector);
+        pointOfReflection(optics).distanceTo(optics.position.vector);
     print('$distanceToCenter mm');
     return distanceToCenter <= optics.size;
   }

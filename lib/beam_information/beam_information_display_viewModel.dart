@@ -18,9 +18,6 @@ class BeamInformationDisplayViewModel extends ViewModelChangeNotifier {
     beamWaveLengthInputController =
         TextEditingController(text: currentBeam.waveLength.toString());
 
-    print(currentBeam.direction);
-    print(opticsList[0].normalVector);
-    //print(currentBeam.reflect(opticsList[0]));
     print(currentBeam.canReflect(opticsList[0]));
   }
 
