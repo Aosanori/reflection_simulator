@@ -26,12 +26,12 @@ class OpticsDiagramViewModel extends ViewModelChangeNotifier {
       ..removeAt(oldIndex)
       ..insert(newIndex, optics);
     notifyListeners();
-     _simulationService.runSimulation();
+    _simulationService.runSimulation();
   }
 
   void removeContent(int index) {
     _simulationService.currentOpticsList.removeAt(index);
     notifyListeners();
-     _simulationService.runSimulation();
+    _simulationService.runSimulation();
   }
 }

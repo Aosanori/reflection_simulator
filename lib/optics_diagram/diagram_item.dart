@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'optics.dart';
-import 'optics_diagram_viewModel.dart';
 
 class DiagramItem extends StatelessWidget {
   const DiagramItem({

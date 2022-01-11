@@ -16,8 +16,9 @@ class OpticsDisplay extends HookConsumerWidget {
     return CustomPaint(
       willChange: true,
       painter: _OpticsPainter(
-          currentOpticsList: currentOpticsList,
-          simulationResult: simulationResult),
+        currentOpticsList: currentOpticsList,
+        simulationResult: simulationResult,
+      ),
     );
   }
 }
@@ -59,7 +60,7 @@ class _OpticsPainter extends CustomPainter {
           .position
           .vector
           .distanceTo(simulationResult[i + 1]);
-      
+
       // ミラーからはみ出したら
       if (distance > currentOpticsList[i].size) {
         paint.color = Colors.red.shade50;

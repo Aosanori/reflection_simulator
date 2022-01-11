@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'beam_information/beam_information_display.dart';
-import 'beam_reflection_position_display/beam_reflection_position_display.dart';
+import 'beam_reflection_position_display/beam_reflection_position_list_display.dart';
 import 'optics_diagram/optics_diagram.dart';
 import 'optics_display/opticts_display.dart';
 
@@ -72,7 +72,7 @@ class MyHomePage extends HookConsumerWidget {
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 10),
-                        child: const BeamRefalactionPositionListDisplay(),
+                        child: const BeamReflectionPositionListDisplay(),
                       ),
                     ),
                   ),
