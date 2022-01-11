@@ -24,7 +24,8 @@ class _OpticsPainter extends CustomPainter {
       final positions = getPositionOfMirror(
         optics.position.x,
         optics.position.y,
-        optics.position.theta,
+        // thetaは法線方向を表すので90たす
+        optics.position.theta+90,
         size,
       );
       canvas.drawLine(
