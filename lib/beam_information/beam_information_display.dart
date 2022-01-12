@@ -79,6 +79,7 @@ class BeamInformationDisplay extends HookConsumerWidget {
                     width: 100,
                     child: TextField(
                       textAlign: TextAlign.end,
+                      keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         suffixText: 'nm',
                       ),
@@ -90,6 +91,7 @@ class BeamInformationDisplay extends HookConsumerWidget {
                     width: 100,
                     child: TextField(
                       textAlign: TextAlign.end,
+                      keyboardType: TextInputType.number,
                       onChanged:
                           beamInformationDisplayViewModel.changeBeamWaist,
                       decoration: const InputDecoration(
