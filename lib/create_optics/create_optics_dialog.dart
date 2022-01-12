@@ -47,55 +47,35 @@ class CreateOpticsDialog extends HookConsumerWidget {
                 ),
               ],
             ),
-            TextFormField(
-                textAlign: TextAlign.end,
-                decoration: const InputDecoration(
-                  labelText: 'x',
-                  suffixText: 'mm',
-                ),
-                autofocus: true,
-                maxLength: 3,
-                keyboardType: TextInputType.number,
-                onChanged: (newValue) {
-                  createOpticsDialogViewModel.newOptics.type = newValue;
-                },),
-            TextFormField(
-              textAlign: TextAlign.end,
-              decoration: const InputDecoration(
+            _CreateOpticsDialogInputField(
+                labelText: 'x',
+                suffixText: 'nm',
+                maxLength: 4,
+                onChanged: (_) {},),
+            _CreateOpticsDialogInputField(
                 labelText: 'y',
-                suffixText: 'mm',
-              ),
+                suffixText: 'nm',
+                maxLength: 4,
+                onChanged: (_) {},),
+            _CreateOpticsDialogInputField(
+              labelText: 'z',
+              suffixText: 'nm',
               maxLength: 4,
-              keyboardType: TextInputType.number,
+              onChanged: (_) {},
             ),
-            TextFormField(
-              textAlign: TextAlign.end,
-              decoration: const InputDecoration(
-                labelText: 'z',
-                suffixText: 'mm',
-              ),
+            _CreateOpticsDialogInputField(
+              labelText: 'theta',
+              hintText: '0° ~ 360',
+              suffixText: '°',
               maxLength: 3,
-              keyboardType: TextInputType.number,
+              onChanged: (_) {},
             ),
-            TextFormField(
-              textAlign: TextAlign.end,
-              decoration: const InputDecoration(
-                labelText: 'theta',
-                hintText: '0° ~ 360',
-                suffixText: '°',
-              ),
+            _CreateOpticsDialogInputField(
+              labelText: 'phi',
+              hintText: '0° ~ 180',
+              suffixText: '°',
               maxLength: 3,
-              keyboardType: TextInputType.number,
-            ),
-            TextFormField(
-              textAlign: TextAlign.end,
-              decoration: const InputDecoration(
-                labelText: 'phi',
-                hintText: '0° ~ 180',
-                suffixText: '°',
-              ),
-              maxLength: 3,
-              keyboardType: TextInputType.number,
+              onChanged: (_) {},
             ),
           ],
         ),
@@ -108,10 +88,56 @@ class CreateOpticsDialog extends HookConsumerWidget {
           },
         ),
         TextButton(
-          onPressed: createOpticsDialogViewModel.addToDiagram,
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              createOpticsDialogViewModel.addToDiagram();
+              Navigator.pop(context);
+            }
+          },
           child: const Text('Add'),
         ),
       ],
     );
   }
+}
+
+class _CreateOpticsDialogInputField extends StatelessWidget {
+  const _CreateOpticsDialogInputField({
+    required this.labelText,
+    required this.suffixText,
+        required this.maxLength,
+    required this.onChanged,
+
+    this.hintText='',
+    Key? key,
+  }) : super(key: key);
+  final String labelText;
+  final String suffixText;
+  final String hintText;
+  final int maxLength;
+  final Function(String) onChanged;
+
+  @override
+  Widget build(BuildContext context) => TextFormField(
+        textAlign: TextAlign.end,
+        decoration: InputDecoration(
+          labelText: labelText,
+          suffixText: suffixText,
+          hintText:hintText,
+        ),
+        autofocus: true,
+        maxLength: 4,
+        keyboardType: TextInputType.number,
+        onChanged: onChanged,
+        validator: (text) {
+          if (text == null || text.isEmpty) {
+            return 'Input is empty';
+          }
+
+          if (double.tryParse(text) == null) {
+            return 'Input must be integer.';
+          }
+          return null;
+        },
+      );
 }
