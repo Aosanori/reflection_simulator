@@ -33,9 +33,7 @@ class CreateOpticsDialog extends HookConsumerWidget {
                     height: 2,
                     color: Colors.grey,
                   ),
-                  onChanged: (newValue) {
-                    createOpticsDialogViewModel.newOptics.type = newValue!;
-                  },
+                  onChanged: createOpticsDialogViewModel.changeOpticsType,
                   items: opticsTypes
                       .map<DropdownMenuItem<String>>(
                         (value) => DropdownMenuItem<String>(
@@ -48,37 +46,43 @@ class CreateOpticsDialog extends HookConsumerWidget {
               ],
             ),
             _CreateOpticsDialogInputField(
+              labelText: 'Optics Name',
+              suffixText: '',
+              maxLength: 20,
+              onChanged: createOpticsDialogViewModel.changeValueOfName,
+              isExpectedInteger:false,
+            ),
+            _CreateOpticsDialogInputField(
               labelText: 'x',
-              suffixText: 'nm',
+              suffixText: 'mm',
               maxLength: 4,
-              onChanged: (_) {},
+              onChanged: createOpticsDialogViewModel.changeValueOfX,
             ),
             _CreateOpticsDialogInputField(
               labelText: 'y',
-              suffixText: 'nm',
+              suffixText: 'mm',
               maxLength: 4,
-              onChanged: (_) {},
+              onChanged: createOpticsDialogViewModel.changeValueOfY,
             ),
             _CreateOpticsDialogInputField(
               labelText: 'z',
-              suffixText: 'nm',
+              suffixText: 'mm',
               maxLength: 4,
-              onChanged: (_) {},
+              onChanged: createOpticsDialogViewModel.changeValueOfZ,
             ),
             _CreateOpticsDialogInputField(
               labelText: 'theta',
               hintText: '0° ~ 360',
               suffixText: '°',
               maxLength: 3,
-              onChanged: (_) {},
+              onChanged: createOpticsDialogViewModel.changeValueOfTheta,
             ),
             _CreateOpticsDialogInputField(
-              labelText: 'phi',
-              hintText: '0° ~ 180',
-              suffixText: '°',
-              maxLength: 3,
-              onChanged: (_) {},
-            ),
+                labelText: 'phi',
+                hintText: '0° ~ 180',
+                suffixText: '°',
+                maxLength: 3,
+                onChanged: createOpticsDialogViewModel.changeValueOfPhi),
           ],
         ),
       ),
@@ -109,6 +113,7 @@ class _CreateOpticsDialogInputField extends StatelessWidget {
     required this.suffixText,
     required this.maxLength,
     required this.onChanged,
+    this.isExpectedInteger = true,
     this.hintText = '',
     Key? key,
   }) : super(key: key);
@@ -116,6 +121,7 @@ class _CreateOpticsDialogInputField extends StatelessWidget {
   final String suffixText;
   final String hintText;
   final int maxLength;
+  final bool isExpectedInteger;
   final Function(String) onChanged;
 
   @override
@@ -127,7 +133,7 @@ class _CreateOpticsDialogInputField extends StatelessWidget {
           hintText: hintText,
         ),
         autofocus: true,
-        maxLength: 4,
+        maxLength: maxLength,
         keyboardType: TextInputType.number,
         onChanged: onChanged,
         validator: (text) {
@@ -135,7 +141,7 @@ class _CreateOpticsDialogInputField extends StatelessWidget {
             return 'Input is empty';
           }
 
-          if (double.tryParse(text) == null) {
+          if (isExpectedInteger &&double.tryParse(text) == null) {
             return 'Input must be integer.';
           }
           return null;

@@ -30,4 +30,54 @@ class CreateOpticsDialogViewModel extends ViewModelChangeNotifier {
     _simulationService.currentOpticsList.add(newOptics);
     _simulationService.runSimulation();
   }
+
+  void changeOpticsType(String? newValue) {
+    newOptics.type = newValue!;
+    notifyListeners();
+  }
+
+  void changeValueOfName(String newValue) {
+    newOptics.name = newValue;
+    notifyListeners();
+  }
+
+  void changeValueOfX(String newValue) {
+    final value = double.tryParse(newValue);
+    if (value != null) {
+      newOptics.position.x = value;
+      notifyListeners();
+    }
+  }
+
+  void changeValueOfY(String newValue) {
+    final value = double.tryParse(newValue);
+    if (value != null) {
+      newOptics.position.y = value;
+      notifyListeners();
+    }
+  }
+
+  void changeValueOfZ(String newValue) {
+    final value = double.tryParse(newValue);
+    if (value != null) {
+      newOptics.position.z = value;
+      notifyListeners();
+    }
+  }
+
+  void changeValueOfTheta(String newValue) {
+    final value = double.tryParse(newValue);
+    if (value != null) {
+      newOptics.position.theta = value;
+      notifyListeners();
+    }
+  }
+
+  void changeValueOfPhi(String newValue) {
+    final value = double.tryParse(newValue);
+    if (value != null) {
+      newOptics.position.phi = value;
+      notifyListeners();
+    }
+  }
 }
