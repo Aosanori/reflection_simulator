@@ -102,7 +102,7 @@ class MyHomePage extends HookConsumerWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () => showDialog<CreateOpticsDialog>(
             context: context,
-            builder: (_) => const CreateOpticsDialog(),
+            builder: (_) => CreateOpticsDialog(),
           ),
           tooltip: 'Increment',
           child: const Icon(Icons.add),

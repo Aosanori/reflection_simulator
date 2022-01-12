@@ -5,8 +5,8 @@ import '../utils/environments_variables.dart';
 import 'create_optics_dialog_viewModel.dart';
 
 class CreateOpticsDialog extends HookConsumerWidget {
-  const CreateOpticsDialog({Key? key}) : super(key: key);
-
+  CreateOpticsDialog({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final createOpticsDialogViewModel =
@@ -15,87 +15,101 @@ class CreateOpticsDialog extends HookConsumerWidget {
       title: const Text(
         'Add Optics',
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          DropdownButton<String>(
-            value: createOpticsDialogViewModel.newOptics.type,
-            icon: const Icon(Icons.arrow_drop_down),
-            iconSize: 30,
-            elevation: 16,
-            underline: Container(
-              height: 2,
-              color: Colors.grey,
-            ),
-            onChanged: (newValue) {
-              //beamInformationDisplayViewModel.changeBeamType(newValue!);
-            },
-            items: opticsTypes
-                .map<DropdownMenuItem<String>>(
-                  (value) => DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
+      content: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const Text('Optics Type:'),
+                DropdownButton<String>(
+                  value: createOpticsDialogViewModel.newOptics.type,
+                  icon: const Icon(Icons.arrow_drop_down),
+                  iconSize: 30,
+                  elevation: 16,
+                  underline: Container(
+                    height: 2,
+                    color: Colors.grey,
                   ),
-                )
-                .toList(),
-          ),
-          TextField(
-            textAlign: TextAlign.end,
-            decoration: InputDecoration(
-              labelText: "x",
-              suffixText: 'mm',
+                  onChanged: (newValue) {
+                    createOpticsDialogViewModel.newOptics.type = newValue!;
+                  },
+                  items: opticsTypes
+                      .map<DropdownMenuItem<String>>(
+                        (value) => DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ],
             ),
-            autofocus: true,
-            keyboardType: TextInputType.number,
-          ),
-          TextField(
-            textAlign: TextAlign.end,
-            decoration: InputDecoration(
-             labelText: 'y',
-              suffixText: 'mm',
+            TextFormField(
+                textAlign: TextAlign.end,
+                decoration: const InputDecoration(
+                  labelText: 'x',
+                  suffixText: 'mm',
+                ),
+                autofocus: true,
+                maxLength: 3,
+                keyboardType: TextInputType.number,
+                onChanged: (newValue) {
+                  createOpticsDialogViewModel.newOptics.type = newValue;
+                },),
+            TextFormField(
+              textAlign: TextAlign.end,
+              decoration: const InputDecoration(
+                labelText: 'y',
+                suffixText: 'mm',
+              ),
+              maxLength: 4,
+              keyboardType: TextInputType.number,
             ),
-            keyboardType: TextInputType.number,
-          ),
-          TextField(
-            textAlign: TextAlign.end,
-            decoration: InputDecoration(
-             labelText: 'z',
-              suffixText: 'mm',
+            TextFormField(
+              textAlign: TextAlign.end,
+              decoration: const InputDecoration(
+                labelText: 'z',
+                suffixText: 'mm',
+              ),
+              maxLength: 3,
+              keyboardType: TextInputType.number,
             ),
-            keyboardType: TextInputType.number,
-          ),
-          TextField(
-            textAlign: TextAlign.end,
-            decoration: InputDecoration(
-              labelText:'theta',
-              hintText: '0° ~ 360',
-              suffixText: '°',
+            TextFormField(
+              textAlign: TextAlign.end,
+              decoration: const InputDecoration(
+                labelText: 'theta',
+                hintText: '0° ~ 360',
+                suffixText: '°',
+              ),
+              maxLength: 3,
+              keyboardType: TextInputType.number,
             ),
-            keyboardType: TextInputType.number,
-          ),
-          TextField(
-            textAlign: TextAlign.end,
-            decoration: InputDecoration(
-              labelText: 'phi',
-              hintText: '0° ~ 180',
-              suffixText: '°',
+            TextFormField(
+              textAlign: TextAlign.end,
+              decoration: const InputDecoration(
+                labelText: 'phi',
+                hintText: '0° ~ 180',
+                suffixText: '°',
+              ),
+              maxLength: 3,
+              keyboardType: TextInputType.number,
             ),
-            keyboardType: TextInputType.number,
-          ),
-        ],
+          ],
+        ),
       ),
       actions: <Widget>[
         TextButton(
-          child: Text('cancel'),
+          child: const Text('cancel'),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
         TextButton(
-          child: Text('Add'),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: createOpticsDialogViewModel.addToDiagram,
+          child: const Text('Add'),
         ),
       ],
     );
