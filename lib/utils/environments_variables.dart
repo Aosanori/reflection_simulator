@@ -18,25 +18,30 @@ final List<Optics> initialOpticsList = <Optics>[
     'item1',
     'Mirror 1',
     OpticsPosition(x: 500, y: 100, z: 0, theta: 225, phi: 89.5),
+    'Mirror',
   ),
   Optics(
     'item2',
     'Mirror 2',
     OpticsPosition(x: 500, y: -100, z: 0, theta: 135, phi: 90.3),
+    'Mirror',
   ),
   Optics(
     'item3',
     'Mirror 3',
     OpticsPosition(x: 300, y: -100, z: 0, theta: 45, phi: 90),
+    'Mirror',
   ),
   Optics(
     'item4',
     'Mirror 4',
     OpticsPosition(x: 300, y: 200, z: 0, theta: 315, phi: 90),
+    'Mirror',
   ),
   Optics(
     'item5',
     'Mirror 5',
     OpticsPosition(x: 700, y: 200, z: 0, theta: 225, phi: 90),
+    'Mirror',
   ),
 ];

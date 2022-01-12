@@ -24,9 +24,10 @@ class OpticsPosition {
 
 // リスト項目のデータ構造
 class Optics {
-  Optics(this.id, this.name, this.position, [this.size = 12.7]);
+  Optics(this.id, this.name, this.position,this.type,[this.size = 12.7]);
   String id;
   String name;
+  String type;
   OpticsPosition position;
   double size;
 
