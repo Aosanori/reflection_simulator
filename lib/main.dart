@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'beam_information/beam_information_display.dart';
 import 'beam_reflection_position_display/beam_reflection_position_list_display.dart';
+import 'create_optics/create_optics_dialog.dart';
 import 'optics_diagram/optics_diagram.dart';
 import 'optics_display/opticts_display.dart';
 
@@ -98,23 +99,13 @@ class MyHomePage extends HookConsumerWidget {
             )
           ],
         ),
-        floatingActionButton: const FloatingActionButton(
-          onPressed: null,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => showDialog<CreateOpticsDialog>(
+            context: context,
+            builder: (_) => const CreateOpticsDialog(),
+          ),
           tooltip: 'Increment',
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ), // This trailing comma makes auto-formatting nicer for build methods.
       );
 }
-/*
-class AddOpticsFloatingActionButton extends HookConsumerWidget {
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final optics
-    return FloatingActionButton(
-      onPressed: null,
-      tooltip: 'Increment',
-      child: const Icon(Icons.add),
-    );
-  }
-}
-*/
