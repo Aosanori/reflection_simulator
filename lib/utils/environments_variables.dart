@@ -32,7 +32,7 @@ final List<Optics> initialOpticsList = <Optics>[
   Optics(
     'item4',
     'Mirror 4',
-    OpticsPosition(x: 300, y: 200, z: 0, theta: -45, phi: 90),
+    OpticsPosition(x: 300, y: 200, z: 0, theta: 315, phi: 90),
   ),
   Optics(
     'item5',

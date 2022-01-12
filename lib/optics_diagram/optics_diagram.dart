@@ -13,6 +13,7 @@ class OpticsDiagram extends HookConsumerWidget {
     final currentOpticsList = opticsDiagramViewModel.currentOpticsList;
     return ReorderableListView(
       onReorder: opticsDiagramViewModel.dragAndDrop,
+      buildDefaultDragHandles:  false,
       padding: const EdgeInsets.only(top: 4),
       children: currentOpticsList
           .asMap()
@@ -20,7 +21,6 @@ class OpticsDiagram extends HookConsumerWidget {
             (index, item) => MapEntry(
               index,
               DiagramItem(
-                optics: item,
                 index: index,
                 onDelete: () => opticsDiagramViewModel.removeContent(index),
                 key: Key(item.id),

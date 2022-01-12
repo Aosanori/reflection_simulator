@@ -11,11 +11,11 @@ class OpticsPosition {
     required this.phi,
   });
 
-  final double x;
-  final double y;
-  final double z;
-  final double theta;
-  final double phi;
+  double x;
+  double y;
+  double z;
+  double theta;
+  double phi;
 
   double get thetaRadian => theta * pi / 180;
   double get phiRadian => phi * pi / 180;
