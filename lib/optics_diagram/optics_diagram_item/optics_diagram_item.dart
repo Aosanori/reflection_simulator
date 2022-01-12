@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'optics_diagram_viewModel.dart';
+import 'optics_diagram_item_viewModel.dart';
 
-class DiagramItem extends HookConsumerWidget {
-  const DiagramItem({
+
+class OpticsDiagramItem extends HookConsumerWidget {
+  const OpticsDiagramItem({
     required this.index,
     required this.onDelete,
     required Key key,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'diagram_item.dart';
 
+import 'optics_diagram_item/optics_diagram_item.dart';
 import 'optics_diagram_viewModel.dart';
 
 class OpticsDiagram extends HookConsumerWidget {
@@ -20,7 +20,7 @@ class OpticsDiagram extends HookConsumerWidget {
           .map(
             (index, item) => MapEntry(
               index,
-              DiagramItem(
+              OpticsDiagramItem(
                 index: index,
                 onDelete: () => opticsDiagramViewModel.removeContent(index),
                 key: Key(item.id),
