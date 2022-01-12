@@ -4,7 +4,6 @@ import '../../simulation/simulation_service.dart';
 
 import '../optics.dart';
 
-
 final opticsDiagramItemViewModelProvider =
     ChangeNotifierProvider.family.autoDispose<OpticsDiagramItemViewModel, int>(
   (ref, index) =>

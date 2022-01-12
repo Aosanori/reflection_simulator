@@ -36,6 +36,5 @@ class OpticsDiagramViewModel extends ViewModelChangeNotifier {
   }
 }
 
-
 // TODO: PreviousPositionはStateNotifier
 // TODO: ミラーの上下方向の差分がうまくできてない

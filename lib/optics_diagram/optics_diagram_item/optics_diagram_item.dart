@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'optics_diagram_item_viewModel.dart';
 
-
 class OpticsDiagramItem extends HookConsumerWidget {
   const OpticsDiagramItem({
     required this.index,
@@ -43,7 +42,8 @@ class OpticsDiagramItem extends HookConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const Text('θ: ',
+              const Text(
+                'θ: ',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
@@ -67,7 +67,8 @@ class OpticsDiagramItem extends HookConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const Text('φ: ',
+              const Text(
+                'φ: ',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,

@@ -48,15 +48,17 @@ class CreateOpticsDialog extends HookConsumerWidget {
               ],
             ),
             _CreateOpticsDialogInputField(
-                labelText: 'x',
-                suffixText: 'nm',
-                maxLength: 4,
-                onChanged: (_) {},),
+              labelText: 'x',
+              suffixText: 'nm',
+              maxLength: 4,
+              onChanged: (_) {},
+            ),
             _CreateOpticsDialogInputField(
-                labelText: 'y',
-                suffixText: 'nm',
-                maxLength: 4,
-                onChanged: (_) {},),
+              labelText: 'y',
+              suffixText: 'nm',
+              maxLength: 4,
+              onChanged: (_) {},
+            ),
             _CreateOpticsDialogInputField(
               labelText: 'z',
               suffixText: 'nm',
@@ -105,10 +107,9 @@ class _CreateOpticsDialogInputField extends StatelessWidget {
   const _CreateOpticsDialogInputField({
     required this.labelText,
     required this.suffixText,
-        required this.maxLength,
+    required this.maxLength,
     required this.onChanged,
-
-    this.hintText='',
+    this.hintText = '',
     Key? key,
   }) : super(key: key);
   final String labelText;
@@ -123,7 +124,7 @@ class _CreateOpticsDialogInputField extends StatelessWidget {
         decoration: InputDecoration(
           labelText: labelText,
           suffixText: suffixText,
-          hintText:hintText,
+          hintText: hintText,
         ),
         autofocus: true,
         maxLength: 4,
