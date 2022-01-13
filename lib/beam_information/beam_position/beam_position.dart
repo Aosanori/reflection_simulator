@@ -11,23 +11,32 @@ class BeamPositionDisplay extends HookConsumerWidget {
     final viewModel = ref.watch(beamPositionViewModelProvider);
     final currentBeam = viewModel.currentBeam;
     return GestureDetector(
-      child: Column(
+      child: ListView(
         children: [
-          Text(
-            currentBeam.type,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              height: 1.2,
+          Container(
+            padding: const EdgeInsets.all(5),
+            child: Text(
+              currentBeam.type,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                height: 1.2,
+              ),
             ),
           ),
-          Text(
-            'x: ${currentBeam.startFrom.x} mm  y: ${currentBeam.startFrom.y} mm  z: ${currentBeam.startFrom.z} mm   θ: ${currentBeam.startFrom.theta}°  φ: ${currentBeam.startFrom.phi}°',
-            style: const TextStyle(color: Colors.black54),
+          Container(
+            padding: const EdgeInsets.all(5),
+            child: Text(
+              'x: ${currentBeam.startFrom.x} mm  y: ${currentBeam.startFrom.y} mm  z: ${currentBeam.startFrom.z} mm   θ: ${currentBeam.startFrom.theta}°  φ: ${currentBeam.startFrom.phi}°',
+              style: const TextStyle(color: Colors.black54),
+            ),
           ),
-          Text(
-            'λ: ${currentBeam.waveLength} nm   beam waist: ${currentBeam.startFrom.y} mm',
-            style: const TextStyle(color: Colors.black54),
+          Container(
+            padding: const EdgeInsets.all(5),
+            child: Text(
+              'λ: ${currentBeam.waveLength} nm   beam waist: ${currentBeam.startFrom.y} mm',
+              style: const TextStyle(color: Colors.black54),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -108,7 +117,7 @@ class _BeamPositionInputDialog extends HookConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Beam Type:'),
+                const Text('Beam Type:  '),
                 DropdownButton<String>(
                   value: viewModel.currentBeam.type,
                   icon: const Icon(Icons.arrow_drop_down),

@@ -50,7 +50,7 @@ class CreateOpticsDialog extends HookConsumerWidget {
               suffixText: '',
               maxLength: 20,
               onChanged: createOpticsDialogViewModel.changeValueOfName,
-              isExpectedInteger:false,
+              isExpectedInteger: false,
             ),
             _CreateOpticsDialogInputField(
               labelText: 'x',
@@ -78,11 +78,12 @@ class CreateOpticsDialog extends HookConsumerWidget {
               onChanged: createOpticsDialogViewModel.changeValueOfTheta,
             ),
             _CreateOpticsDialogInputField(
-                labelText: 'phi',
-                hintText: '0° ~ 180',
-                suffixText: '°',
-                maxLength: 3,
-                onChanged: createOpticsDialogViewModel.changeValueOfPhi,),
+              labelText: 'phi',
+              hintText: '0° ~ 180',
+              suffixText: '°',
+              maxLength: 3,
+              onChanged: createOpticsDialogViewModel.changeValueOfPhi,
+            ),
           ],
         ),
       ),
@@ -141,7 +142,7 @@ class _CreateOpticsDialogInputField extends StatelessWidget {
             return 'Input is empty';
           }
 
-          if (isExpectedInteger &&double.tryParse(text) == null) {
+          if (isExpectedInteger && double.tryParse(text) == null) {
             return 'Input must be integer.';
           }
           return null;

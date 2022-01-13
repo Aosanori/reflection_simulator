@@ -3,7 +3,7 @@ import '../optics_diagram/optics.dart';
 
 const beamTypes = <String>['Gaussian beam'];
 
-const opticsTypes = <String>['Mirror','PBS'];
+const opticsTypes = <String>['Mirror', 'PBS'];
 // 基本球座標
 // ただしx-y平面の曲座標をθとしている()
 

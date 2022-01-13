@@ -50,16 +50,15 @@ class BeamPositionViewModel extends ViewModelChangeNotifier {
   }
 
   void changeValueOfTheta(double newValue) {
-      currentBeam.startFrom.theta = newValue;
-      notifyListeners();
-       _simulationService.runSimulation();
+    currentBeam.startFrom.theta = newValue;
+    notifyListeners();
+    _simulationService.runSimulation();
   }
 
   void changeValueOfPhi(double newValue) {
-
-      currentBeam.startFrom.phi = newValue;
-      notifyListeners();
-     _simulationService.runSimulation();
+    currentBeam.startFrom.phi = newValue;
+    notifyListeners();
+    _simulationService.runSimulation();
   }
 
   void changeValueOfWaveLength(String newValue) {
