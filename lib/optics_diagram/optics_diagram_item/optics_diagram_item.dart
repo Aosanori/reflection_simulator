@@ -35,7 +35,7 @@ class OpticsDiagramItem extends HookConsumerWidget {
           ),
         ),
         subtitle: Text(
-          'x: ${optics.position.x}   y: ${optics.position.y}   z: ${optics.position.z}   θ: ${optics.position.theta}   φ: ${optics.position.phi}',
+          'x: ${optics.position.x} mm   y: ${optics.position.y} mm  z: ${optics.position.z} mm  θ: ${optics.position.theta}°   φ: ${optics.position.phi}°',
           style: const TextStyle(color: Colors.black54),
         ),
         children: [

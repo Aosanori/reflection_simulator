@@ -17,12 +17,6 @@ class BeamInformationDisplayViewModel extends ViewModelChangeNotifier {
 
   Beam get currentBeam => _simulationService.currentBeam;
 
-  void changeBeamType(String newValue) {
-    _simulationService.currentBeam.type = newValue;
-    notifyListeners();
-    _simulationService.runSimulation();
-  }
-
   void changeBeamWaist(String newValue) {
     _simulationService.currentBeam.beamWaist = double.parse(newValue);
     notifyListeners();
