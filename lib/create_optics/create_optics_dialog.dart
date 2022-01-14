@@ -84,6 +84,12 @@ class CreateOpticsDialog extends HookConsumerWidget {
               maxLength: 3,
               onChanged: createOpticsDialogViewModel.changeValueOfPhi,
             ),
+            _CreateOpticsDialogInputField(
+              labelText: 'size',
+              suffixText: 'mm',
+              maxLength: 4,
+              onChanged: createOpticsDialogViewModel.changeValueOfSize,
+            ),
           ],
         ),
       ),

@@ -80,4 +80,12 @@ class CreateOpticsDialogViewModel extends ViewModelChangeNotifier {
       notifyListeners();
     }
   }
+
+  void changeValueOfSize(String newValue) {
+    final value = double.tryParse(newValue);
+    if (value != null) {
+      newOptics.size = value;
+      notifyListeners();
+    }
+  }
 }

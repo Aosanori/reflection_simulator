@@ -34,10 +34,12 @@ class OpticsDiagramItem extends HookConsumerWidget {
             height: 1.2,
           ),
         ),
-        subtitle: Text(
-          'x: ${optics.position.x} mm   y: ${optics.position.y} mm  z: ${optics.position.z} mm  θ: ${optics.position.theta}°   φ: ${optics.position.phi}°',
+        subtitle: Container(
+            padding: const EdgeInsets.symmetric(vertical:5),
+            child: Text(
+          'x: ${optics.position.x} mm   y: ${optics.position.y} mm  z: ${optics.position.z} mm  θ: ${optics.position.theta}°   φ: ${optics.position.phi}°   size: ${optics.size} mm',
           style: const TextStyle(color: Colors.black54),
-        ),
+        ),),
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

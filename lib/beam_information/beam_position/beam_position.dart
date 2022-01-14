@@ -34,7 +34,7 @@ class BeamPositionDisplay extends HookConsumerWidget {
           Container(
             padding: const EdgeInsets.all(5),
             child: Text(
-              'λ: ${currentBeam.waveLength} nm   beam waist: ${currentBeam.startFrom.y} mm',
+              'λ: ${currentBeam.waveLength} nm   beam waist: ${currentBeam.beamWaist} mm',
               style: const TextStyle(color: Colors.black54),
             ),
           ),
@@ -57,7 +57,7 @@ class BeamPositionDisplay extends HookConsumerWidget {
                   activeColor: Colors.orange,
                   inactiveColor: Colors.blueAccent,
                   onChanged: viewModel
-                      .changeValueOfTheta, /*onChangeStart: _startSlider*/
+                      .changeValueOfTheta,
                 ),
               ),
             ],
@@ -80,8 +80,7 @@ class BeamPositionDisplay extends HookConsumerWidget {
                   value: viewModel.currentBeam.startFrom.phi,
                   activeColor: Colors.orange,
                   inactiveColor: Colors.blueAccent,
-                  onChanged: viewModel
-                      .changeValueOfPhi, /*onChangeStart: _startSlider*/
+                  onChanged: viewModel.changeValueOfPhi,
                 ),
               ),
             ],
