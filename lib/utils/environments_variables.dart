@@ -4,6 +4,10 @@ import '../optics_diagram/optics.dart';
 const beamTypes = <String>['Gaussian beam'];
 
 const opticsTypes = <String>['Mirror', 'PBS'];
+
+const adjustableAngleOfBeam = 5;
+const adjustableAngleOfMirror = 5;
+
 // 基本球座標
 // ただしx-y平面の曲座標をθとしている()
 
@@ -49,5 +53,4 @@ final List<Optics> initialOpticsList = <Optics>[
 ];
 
 // TODO: ミラーの上下方向の差分がうまくできてない
-// TODO: レーザーの照射を鏡とは反対方向ではできないようにする
 // TODO: ミラーも同様に反対方向ではできないようにする

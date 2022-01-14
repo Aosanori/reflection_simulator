@@ -1,9 +1,10 @@
 import 'dart:math';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import '../../common/view_model_change_notifier.dart';
 import '../../simulation/simulation_service.dart';
-
+import '../../utils/environments_variables.dart';
 import '../beam.dart';
 
 final beamPositionViewModelProvider = ChangeNotifierProvider.autoDispose(
@@ -21,7 +22,10 @@ class BeamPositionViewModel extends ViewModelChangeNotifier {
               180 /
               pi -
           90;
-      rangeOfTheta = [directionToNextOptics - 5, directionToNextOptics + 5];
+      rangeOfTheta = [
+        directionToNextOptics - adjustableAngleOfBeam,
+        directionToNextOptics + adjustableAngleOfBeam
+      ];
     }
   }
 
