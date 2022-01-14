@@ -47,10 +47,9 @@ final List<Optics> initialOpticsList = <Optics>[
   Optics(
     'item5',
     'Mirror 5',
-    OpticsPosition(x: 700, y: 200, z: 0, theta:-135, phi: 90),
+    OpticsPosition(x: 700, y: 200, z: 0, theta: -135, phi: 90),
     'Mirror',
   ),
 ];
 
 // TODO: ミラーの上下方向の差分がうまくできてない
-
