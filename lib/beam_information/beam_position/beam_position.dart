@@ -111,76 +111,79 @@ class _BeamPositionInputDialog extends HookConsumerWidget {
       title: const Text(
         'Edit Beam',
       ),
-      content: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Beam Type:  '),
-                DropdownButton<String>(
-                  value: viewModel.currentBeam.type,
-                  icon: const Icon(Icons.arrow_drop_down),
-                  iconSize: 30,
-                  elevation: 16,
-                  underline: Container(
-                    height: 2,
-                    color: Colors.grey,
+      content: SingleChildScrollView(
+        reverse: true,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Beam Type:  '),
+                  DropdownButton<String>(
+                    value: viewModel.currentBeam.type,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    iconSize: 30,
+                    elevation: 16,
+                    underline: Container(
+                      height: 2,
+                      color: Colors.grey,
+                    ),
+                    onChanged: (newValue) {
+                      viewModel.changeBeamType(newValue!);
+                    },
+                    items: beamTypes
+                        .map<DropdownMenuItem<String>>(
+                          (value) => DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          ),
+                        )
+                        .toList(),
                   ),
-                  onChanged: (newValue) {
-                    viewModel.changeBeamType(newValue!);
-                  },
-                  items: beamTypes
-                      .map<DropdownMenuItem<String>>(
-                        (value) => DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ],
-            ),
-            _BeamPositionInputField(
-              labelText: 'x',
-              suffixText: 'mm',
-              maxLength: 4,
-              onChanged: viewModel.changeValueOfX,
-              initialValue: currentBeam.startFrom.x.toInt(),
-            ),
-            _BeamPositionInputField(
-              labelText: 'y',
-              suffixText: 'mm',
-              maxLength: 4,
-              onChanged: viewModel.changeValueOfY,
-              initialValue: currentBeam.startFrom.y.toInt(),
-            ),
-            _BeamPositionInputField(
-              labelText: 'z',
-              suffixText: 'mm',
-              maxLength: 4,
-              onChanged: viewModel.changeValueOfZ,
-              initialValue: currentBeam.startFrom.z.toInt(),
-            ),
-            _BeamPositionInputField(
-              labelText: 'λ',
-              hintText: '600 ~ 1000',
-              suffixText: 'nm',
-              maxLength: 4,
-              onChanged: viewModel.changeValueOfWaveLength,
-              initialValue: currentBeam.waveLength.toInt(),
-            ),
-            _BeamPositionInputField(
-              labelText: 'beam waist',
-              hintText: '0 ~ 100',
-              suffixText: 'mm',
-              maxLength: 3,
-              onChanged: viewModel.changeValueOfBeamWaist,
-              initialValue: currentBeam.beamWaist.toInt(),
-            )
-          ],
+                ],
+              ),
+              _BeamPositionInputField(
+                labelText: 'x',
+                suffixText: 'mm',
+                maxLength: 4,
+                onChanged: viewModel.changeValueOfX,
+                initialValue: currentBeam.startFrom.x.toInt(),
+              ),
+              _BeamPositionInputField(
+                labelText: 'y',
+                suffixText: 'mm',
+                maxLength: 4,
+                onChanged: viewModel.changeValueOfY,
+                initialValue: currentBeam.startFrom.y.toInt(),
+              ),
+              _BeamPositionInputField(
+                labelText: 'z',
+                suffixText: 'mm',
+                maxLength: 4,
+                onChanged: viewModel.changeValueOfZ,
+                initialValue: currentBeam.startFrom.z.toInt(),
+              ),
+              _BeamPositionInputField(
+                labelText: 'λ',
+                hintText: '600 ~ 1000',
+                suffixText: 'nm',
+                maxLength: 4,
+                onChanged: viewModel.changeValueOfWaveLength,
+                initialValue: currentBeam.waveLength.toInt(),
+              ),
+              _BeamPositionInputField(
+                labelText: 'beam waist',
+                hintText: '0 ~ 100',
+                suffixText: 'mm',
+                maxLength: 3,
+                onChanged: viewModel.changeValueOfBeamWaist,
+                initialValue: currentBeam.beamWaist.toInt(),
+              )
+            ],
+          ),
         ),
       ),
       actions: <Widget>[
