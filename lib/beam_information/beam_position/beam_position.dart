@@ -109,7 +109,7 @@ class _BeamPositionInputDialog extends HookConsumerWidget {
     final currentBeam = viewModel.currentBeam;
     return AlertDialog(
       title: const Text(
-        'Add Optics',
+        'Edit Beam',
       ),
       content: Form(
         key: _formKey,
