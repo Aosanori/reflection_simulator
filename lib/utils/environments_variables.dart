@@ -10,7 +10,7 @@ const adjustableAngleOfMirror = 5;
 
 // 基本球座標
 // ただしx-y平面の曲座標をθとしている()
-
+// θは-180~180とする
 final Beam initialBeam = Beam(
   type: 'Gaussian beam',
   waveLength: 800,
@@ -23,7 +23,7 @@ final List<Optics> initialOpticsList = <Optics>[
   Optics(
     'item1',
     'Mirror 1',
-    OpticsPosition(x: 500, y: 100, z: 0, theta: 225, phi: 89.5),
+    OpticsPosition(x: 500, y: 100, z: 0, theta: -135, phi: 89.5),
     'Mirror',
   ),
   Optics(
@@ -41,16 +41,16 @@ final List<Optics> initialOpticsList = <Optics>[
   Optics(
     'item4',
     'Mirror 4',
-    OpticsPosition(x: 300, y: 200, z: 0, theta: 315, phi: 90),
+    OpticsPosition(x: 300, y: 200, z: 0, theta: -45, phi: 90),
     'Mirror',
   ),
   Optics(
     'item5',
     'Mirror 5',
-    OpticsPosition(x: 700, y: 200, z: 0, theta: 225, phi: 90),
+    OpticsPosition(x: 700, y: 200, z: 0, theta:-135, phi: 90),
     'Mirror',
   ),
 ];
 
 // TODO: ミラーの上下方向の差分がうまくできてない
-// TODO: ミラーも同様に反対方向ではできないようにする
+

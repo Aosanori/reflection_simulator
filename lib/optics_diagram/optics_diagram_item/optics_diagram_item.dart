@@ -17,6 +17,7 @@ class OpticsDiagramItem extends HookConsumerWidget {
     final opticsDiagramItemViewModel =
         ref.watch(opticsDiagramItemViewModelProvider(index));
     final optics = opticsDiagramItemViewModel.optics;
+    final rangeOfTheta = opticsDiagramItemViewModel.rangeOfTheta;
     return Dismissible(
       key: key!, // 項目が特定できるよう固有の文字列をキーとする
       background: Container(color: Colors.red), // スワイプしているアイテムの背景色
@@ -56,7 +57,8 @@ class OpticsDiagramItem extends HookConsumerWidget {
               Expanded(
                 child: Slider(
                   label: optics.position.theta.toString(),
-                  max: 360,
+                  min: rangeOfTheta[0],
+                  max: rangeOfTheta[1],
                   value: optics.position.theta,
                   activeColor: Colors.orange,
                   inactiveColor: Colors.blueAccent,
