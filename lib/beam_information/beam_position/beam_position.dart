@@ -10,6 +10,7 @@ class BeamPositionDisplay extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(beamPositionViewModelProvider);
     final currentBeam = viewModel.currentBeam;
+    final rangeOfTheta = viewModel.rangeOfTheta;
     return GestureDetector(
       child: ListView(
         children: [
@@ -52,12 +53,13 @@ class BeamPositionDisplay extends HookConsumerWidget {
               Expanded(
                 child: Slider(
                   label: viewModel.currentBeam.startFrom.theta.toString(),
-                  max: 360,
+                  min: rangeOfTheta != null ? rangeOfTheta[0] : 0,
+                  max: rangeOfTheta != null ? rangeOfTheta[1] : 360,
+                  //max:360,
                   value: viewModel.currentBeam.startFrom.theta,
                   activeColor: Colors.orange,
                   inactiveColor: Colors.blueAccent,
-                  onChanged: viewModel
-                      .changeValueOfTheta,
+                  onChanged: viewModel.changeValueOfTheta,
                 ),
               ),
             ],

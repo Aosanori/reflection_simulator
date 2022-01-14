@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../common/view_model_change_notifier.dart';
 import '../../simulation/simulation_service.dart';
@@ -11,11 +13,22 @@ final beamPositionViewModelProvider = ChangeNotifierProvider.autoDispose(
 class BeamPositionViewModel extends ViewModelChangeNotifier {
   BeamPositionViewModel(this._simulationService) {
     currentBeam = _simulationService.currentBeam;
+    if (_simulationService.currentOpticsList.isNotEmpty) {
+      final nextOptics = _simulationService.currentOpticsList.first;
+      final directionToNextOptics = currentBeam.startFrom.vector.angleTo(
+                nextOptics.position.vector - currentBeam.startFrom.vector,
+              ) *
+              180 /
+              pi -
+          90;
+      rangeOfTheta = [directionToNextOptics - 5, directionToNextOptics + 5];
+    }
   }
 
   final SimulationService _simulationService;
 
   late Beam currentBeam;
+  late List<double>? rangeOfTheta;
 
   void runSimulation() => _simulationService.runSimulation();
 

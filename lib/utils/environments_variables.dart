@@ -47,3 +47,7 @@ final List<Optics> initialOpticsList = <Optics>[
     'Mirror',
   ),
 ];
+
+// TODO: ミラーの上下方向の差分がうまくできてない
+// TODO: レーザーの照射を鏡とは反対方向ではできないようにする
+// TODO: ミラーも同様に反対方向ではできないようにする

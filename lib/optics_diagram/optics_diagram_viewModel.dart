@@ -35,6 +35,3 @@ class OpticsDiagramViewModel extends ViewModelChangeNotifier {
     _simulationService.runSimulation();
   }
 }
-
-// TODO: PreviousPositionはStateNotifier
-// TODO: ミラーの上下方向の差分がうまくできてない
