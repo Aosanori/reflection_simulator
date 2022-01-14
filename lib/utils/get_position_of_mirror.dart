@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 // ignore: directives_ordering
 import 'dart:math';
 import 'package:vector_math/vector_math.dart';
-import 'package:complex/complex.dart';
 
 import 'package:vector_math/vector_math.dart' as vm;
 

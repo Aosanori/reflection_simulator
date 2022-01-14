@@ -1,8 +1,7 @@
 import 'dart:math';
 
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vector_math/vector_math.dart';
 import 'package:complex/complex.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../common/view_model_change_notifier.dart';
 import '../../simulation/simulation_service.dart';
