@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:reflection_simulator/utils/environments_variables.dart';
 
 import 'optics_diagram_item_viewModel.dart';
 
@@ -83,7 +84,8 @@ class OpticsDiagramItem extends HookConsumerWidget {
               Expanded(
                 child: Slider(
                   label: optics.position.phi.toString(),
-                  max: 180,
+                  min: 90.0 - adjustableAngleOfMirror,
+                  max: 90.0 + adjustableAngleOfMirror,
                   value: optics.position.phi,
                   activeColor: Colors.orange,
                   inactiveColor: Colors.blueAccent,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // ignore: directives_ordering
 import 'dart:math';
 import 'package:vector_math/vector_math.dart';
+import 'package:complex/complex.dart';
 
 import 'package:vector_math/vector_math.dart' as vm;
 
@@ -35,7 +36,10 @@ void drawPositionOfReflection(
     cos(position.phiRadian),
   );
   // 鏡の3時方向を基準とした角度
-  final angle = (result - optics.position.vector).angleTo(baseAxis);
+  var angle = (result - optics.position.vector).angleTo(baseAxis);
+  if (result.z - optics.position.vector.z < 0) {
+    angle *= -1;
+  }
   final distance = optics.position.vector.distanceTo(result);
   final ratio = distance / optics.size;
   final radius = size.width / 2;

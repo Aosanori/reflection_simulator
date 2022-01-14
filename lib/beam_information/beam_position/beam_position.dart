@@ -78,7 +78,8 @@ class BeamPositionDisplay extends HookConsumerWidget {
               Expanded(
                 child: Slider(
                   label: viewModel.currentBeam.startFrom.phi.toString(),
-                  max: 180,
+                  min: 90.0 - adjustableAngleOfBeam,
+                  max: 90.0 + adjustableAngleOfBeam,
                   value: viewModel.currentBeam.startFrom.phi,
                   activeColor: Colors.orange,
                   inactiveColor: Colors.blueAccent,
