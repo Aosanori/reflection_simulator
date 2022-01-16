@@ -5,7 +5,7 @@ import 'beam_information/beam_information_display.dart';
 import 'beam_reflection_position_display/beam_reflection_position_list_display.dart';
 import 'create_optics/create_optics_dialog.dart';
 import 'optics_diagram/optics_diagram.dart';
-import 'optics_display/opticts_display.dart';
+import 'optics_display/optics_display.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -28,7 +28,7 @@ class MyHomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => Scaffold(
         appBar: AppBar(
-          title: const Text('Reflection Simulater'),
+          title: const Text('Reflection Simulator'),
         ),
         body: Column(
           children: [
