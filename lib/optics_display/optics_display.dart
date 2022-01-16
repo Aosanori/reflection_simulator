@@ -31,27 +31,68 @@ class _OpticsPainter extends CustomPainter {
   final List<Optics> currentOpticsList;
   final List<vm.Vector3> simulationResult;
 
+  void _drawOptics(Paint paint, Canvas canvas, Optics optics, Size size) {
+    paint
+      ..color = Colors.grey
+      ..strokeWidth = 5;
+    final positions = getPositionOfMirror(
+      optics.position.x,
+      optics.position.y,
+      // thetaは法線方向を表すので90たす
+      optics.position.theta + 90,
+      size,
+    );
+    canvas.drawLine(
+      positions[0],
+      positions[1],
+      paint,
+    );
+  }
+
+  void _drawOpticsName(Canvas canvas, Optics optics, Size size) {
+    final textSpan = TextSpan(
+      style: const TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+        height: 1.2,
+        overflow: TextOverflow.ellipsis,
+      ),
+      children: <TextSpan>[
+        TextSpan(text: optics.name),
+      ],
+    );
+
+    // テキスト描画用のペインター
+    final textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+      maxLines: 1,
+    )..layout(
+        maxWidth: 50,
+      );
+
+    final positions = getPositionOfMirror(
+      optics.position.x,
+      optics.position.y,
+      // thetaは法線方向を表すので90たす
+      optics.position.theta,
+      size,
+    );
+    // テキストの描画
+    final offset = positions[0];
+    textPainter.paint(canvas, offset);
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     // Offset(x,y)
     final paint = Paint();
     for (final optics in currentOpticsList) {
-      paint
-        ..color = Colors.grey
-        ..strokeWidth = 5;
-      final positions = getPositionOfMirror(
-        optics.position.x,
-        optics.position.y,
-        // thetaは法線方向を表すので90たす
-        optics.position.theta + 90,
-        size,
-      );
-      canvas.drawLine(
-        positions[0],
-        positions[1],
-        paint,
-      );
+      _drawOptics(paint, canvas, optics, size);
+      _drawOpticsName(canvas, optics, size);
     }
+
     paint
       ..color = Colors.red
       ..strokeWidth = 3;

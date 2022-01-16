@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:reflection_simulator/utils/environments_variables.dart';
+import '../../utils/environments_variables.dart';
 
 import 'optics_diagram_item_viewModel.dart';
 
