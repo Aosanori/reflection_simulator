@@ -25,7 +25,24 @@ class EditOpticsDialogViewModel extends ViewModelChangeNotifier {
   }
 
   void changeOpticsType(String? newValue) {
-    editOptics.type = newValue!;
+    switch (newValue) {
+      case 'Mirror':
+        editOptics = Mirror(
+          editOptics.id,
+          editOptics.name,
+          editOptics.position,
+        );
+        break;
+      case 'PBS':
+        editOptics = PolarizingBeamSplitter(
+          editOptics.id,
+          editOptics.name,
+          editOptics.position,
+        );
+        break;
+      default:
+        return;
+    }
     notifyListeners();
   }
 
