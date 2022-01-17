@@ -36,7 +36,8 @@ class CreateOpticsDialogViewModel extends ViewModelChangeNotifier {
         newOptics = Mirror(newOptics.id, newOptics.name, newOptics.position);
         break;
       case 'PBS':
-        newOptics = PolarizingBeamSplitter(newOptics.id, newOptics.name, newOptics.position);
+        newOptics = PolarizingBeamSplitter(
+            newOptics.id, newOptics.name, newOptics.position);
         break;
       default:
         return;

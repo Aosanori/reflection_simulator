@@ -64,7 +64,7 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
       rangeOfTheta = [-180, 180];
     }
   }
-  
+
   final int index;
   final SimulationService _simulationService;
 
