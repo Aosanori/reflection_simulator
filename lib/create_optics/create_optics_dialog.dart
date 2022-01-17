@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:reflection_simulator/common/optics_input_dialog_input_field.dart';
+import '../common/optics_input_dialog_input_field.dart';
 import '../utils/environments_variables.dart';
 
 import 'create_optics_dialog_viewModel.dart';
