@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../edit_optics/edit_optics_dialog.dart';
 import '../../utils/environments_variables.dart';
 
 import 'optics_diagram_item_viewModel.dart';
@@ -95,9 +96,24 @@ class OpticsDiagramItem extends HookConsumerWidget {
                 ),
               ),
             ],
-          )
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child:TextButton(
+              child: const Text('edit'),
+              onPressed: () {
+                showDialog<EditOpticsDialog>(
+                  context: context,
+                  builder: (_) => EditOpticsDialog(index: index),
+                );
+              },
+            ),),
+          )          
         ],
       ),
     );
   }
 }
+

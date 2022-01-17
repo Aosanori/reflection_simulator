@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:reflection_simulator/common/optics_input_dialog_input_field.dart';
+import '../common/optics_input_dialog_input_field.dart';
 import '../utils/environments_variables.dart';
+import 'edit_optics_dialog_viewModel.dart';
 
-import 'create_optics_dialog_viewModel.dart';
-
-class CreateOpticsDialog extends HookConsumerWidget {
-  CreateOpticsDialog({Key? key}) : super(key: key);
+class EditOpticsDialog extends HookConsumerWidget {
+  EditOpticsDialog({
+    required this.index,
+    Key? key,
+  }) : super(key: key);
+  final int index;
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final createOpticsDialogViewModel =
-        ref.watch(createOpticsDialogViewModelProvider);
+    final editOpticsDialogViewModel =
+        ref.watch(editOpticsDialogViewModelProvider(index));
     return AlertDialog(
       title: const Text(
         'Add Optics',
@@ -28,7 +32,7 @@ class CreateOpticsDialog extends HookConsumerWidget {
                 children: [
                   const Text('Optics Type:'),
                   DropdownButton<String>(
-                    value: createOpticsDialogViewModel.newOptics.type,
+                    value: editOpticsDialogViewModel.editOptics.type,
                     icon: const Icon(Icons.arrow_drop_down),
                     iconSize: 30,
                     elevation: 16,
@@ -36,7 +40,7 @@ class CreateOpticsDialog extends HookConsumerWidget {
                       height: 2,
                       color: Colors.grey,
                     ),
-                    onChanged: createOpticsDialogViewModel.changeOpticsType,
+                    onChanged: editOpticsDialogViewModel.changeOpticsType,
                     items: opticsTypes
                         .map<DropdownMenuItem<String>>(
                           (value) => DropdownMenuItem<String>(
@@ -52,46 +56,54 @@ class CreateOpticsDialog extends HookConsumerWidget {
                 labelText: 'Optics Name',
                 suffixText: '',
                 maxLength: 20,
-                onChanged: createOpticsDialogViewModel.changeValueOfName,
+                onChanged: editOpticsDialogViewModel.changeValueOfName,
+                initialValue: editOpticsDialogViewModel.editOptics.name,
                 isExpectedInteger: false,
               ),
               OpticsDialogInputField(
                 labelText: 'x',
                 suffixText: 'mm',
-                maxLength: 4,
-                onChanged: createOpticsDialogViewModel.changeValueOfX,
+                onChanged: editOpticsDialogViewModel.changeValueOfX,
+                initialValue:
+                    editOpticsDialogViewModel.editOptics.position.x.toString(),
               ),
               OpticsDialogInputField(
                 labelText: 'y',
                 suffixText: 'mm',
-                maxLength: 4,
-                onChanged: createOpticsDialogViewModel.changeValueOfY,
+                onChanged: editOpticsDialogViewModel.changeValueOfY,
+                initialValue:
+                    editOpticsDialogViewModel.editOptics.position.y.toString(),
               ),
               OpticsDialogInputField(
                 labelText: 'z',
                 suffixText: 'mm',
-                maxLength: 4,
-                onChanged: createOpticsDialogViewModel.changeValueOfZ,
+                onChanged: editOpticsDialogViewModel.changeValueOfZ,
+                initialValue:
+                    editOpticsDialogViewModel.editOptics.position.z.toString(),
               ),
-              OpticsDialogInputField(
+              /*OpticsDialogInputField(
                 labelText: 'theta',
                 hintText: '0° ~ 360',
                 suffixText: '°',
-                maxLength: 3,
-                onChanged: createOpticsDialogViewModel.changeValueOfTheta,
+                onChanged: editOpticsDialogViewModel.changeValueOfTheta,
+                initialValue: editOpticsDialogViewModel
+                    .editOptics.position.theta
+                    .toString(),
               ),
               OpticsDialogInputField(
                 labelText: 'phi',
                 hintText: '0° ~ 180',
                 suffixText: '°',
-                maxLength: 3,
-                onChanged: createOpticsDialogViewModel.changeValueOfPhi,
-              ),
+                onChanged: editOpticsDialogViewModel.changeValueOfPhi,
+                initialValue: editOpticsDialogViewModel.editOptics.position.phi
+                    .toString(),
+              ),*/
               OpticsDialogInputField(
                 labelText: 'size',
                 suffixText: 'mm',
-                maxLength: 4,
-                onChanged: createOpticsDialogViewModel.changeValueOfSize,
+                onChanged: editOpticsDialogViewModel.changeValueOfSize,
+                initialValue:
+                    editOpticsDialogViewModel.editOptics.size.toString(),
               ),
             ],
           ),
@@ -107,11 +119,11 @@ class CreateOpticsDialog extends HookConsumerWidget {
         TextButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              createOpticsDialogViewModel.addToDiagram();
+              editOpticsDialogViewModel.addToDiagram();
               Navigator.pop(context);
             }
           },
-          child: const Text('Add'),
+          child: const Text('save'),
         ),
       ],
     );
