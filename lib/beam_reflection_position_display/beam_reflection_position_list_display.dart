@@ -109,9 +109,9 @@ class _MirrorPainter extends CustomPainter {
       maxLines: 1,
     )
       ..layout(
-        maxWidth: 40,
+        maxWidth: 50,
       )
-      ..paint(canvas, Offset.zero);
+      ..paint(canvas, const Offset(-10,0));
   }
 
   @override
