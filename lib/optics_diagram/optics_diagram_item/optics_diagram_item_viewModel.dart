@@ -45,10 +45,20 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
           180 /
           pi;
 
+      final minimumValueOfTheta = idealTheta - adjustableAngleOfMirror;
+      final maximumValueOfTheta = idealTheta + adjustableAngleOfMirror;
       rangeOfTheta = [
-        idealTheta - adjustableAngleOfMirror,
-        idealTheta + adjustableAngleOfMirror
+        minimumValueOfTheta,
+        maximumValueOfTheta,
       ];
+
+      // 調整時に範囲から出ていたらやり直す
+      if (!(minimumValueOfTheta <= _optics.position.theta &&
+          _optics.position.theta <= maximumValueOfTheta)) {
+        _optics.position.theta =
+            (minimumValueOfTheta + maximumValueOfTheta) / 2;
+        _simulationService.runSimulation();
+      }
     } else {
       rangeOfTheta = [-180, 180];
     }
