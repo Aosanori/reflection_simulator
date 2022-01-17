@@ -13,7 +13,7 @@ class CreateOpticsDialogViewModel extends ViewModelChangeNotifier {
   CreateOpticsDialogViewModel(this._simulationService);
   final SimulationService _simulationService;
 
-  Optics newOptics = Optics(
+  Optics newOptics = Mirror(
     randomString(4),
     'New Optics',
     OpticsPosition(
@@ -23,7 +23,6 @@ class CreateOpticsDialogViewModel extends ViewModelChangeNotifier {
       theta: 0,
       phi: 0,
     ),
-    'Mirror',
   );
 
   void addToDiagram() {
@@ -32,7 +31,17 @@ class CreateOpticsDialogViewModel extends ViewModelChangeNotifier {
   }
 
   void changeOpticsType(String? newValue) {
-    newOptics.type = newValue!;
+    switch (newValue) {
+      case 'Mirror':
+        newOptics = Mirror(newOptics.id, newOptics.name, newOptics.position);
+        break;
+      case 'PBS':
+        newOptics = PolarizingBeamSplitter(
+            newOptics.id, newOptics.name, newOptics.position);
+        break;
+      default:
+        return;
+    }
     notifyListeners();
   }
 

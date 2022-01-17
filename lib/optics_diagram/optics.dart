@@ -2,6 +2,27 @@ import 'dart:math';
 
 import 'package:vector_math/vector_math.dart';
 
+// リスト項目のデータ構造
+abstract class Optics {
+  Optics({
+    required this.id,
+    required this.name,
+    required this.position,
+    this.size = 12.7,
+  });
+  String id;
+  String name;
+  OpticsPosition position;
+  double size;
+  late String type;
+
+  Vector3 get normalVector => Vector3(
+        sin(position.phiRadian) * cos(position.thetaRadian),
+        sin(position.phiRadian) * sin(position.thetaRadian),
+        cos(position.phiRadian),
+      );
+}
+
 class OpticsPosition {
   OpticsPosition({
     required this.x,
@@ -22,18 +43,32 @@ class OpticsPosition {
   Vector3 get vector => Vector3(x, y, z);
 }
 
-// リスト項目のデータ構造
-class Optics {
-  Optics(this.id, this.name, this.position, this.type, [this.size = 12.7]);
-  String id;
-  String name;
-  String type;
-  OpticsPosition position;
-  double size;
+class PolarizingBeamSplitter extends Optics {
+  PolarizingBeamSplitter(
+    String id,
+    String name,
+    OpticsPosition position,
+  ) : super(
+          id: id,
+          name: name,
+          position: position,
+        );
 
-  Vector3 get normalVector => Vector3(
-        sin(position.phiRadian) * cos(position.thetaRadian),
-        sin(position.phiRadian) * sin(position.thetaRadian),
-        cos(position.phiRadian),
-      );
+  @override
+  final type = 'PBS';
+}
+
+class Mirror extends Optics {
+  Mirror(
+    String id,
+    String name,
+    OpticsPosition position,
+  ) : super(
+          id: id,
+          name: name,
+          position: position,
+        );
+
+  @override
+  final type = 'Mirror';
 }

@@ -15,39 +15,44 @@ final Beam initialBeam = Beam(
   type: 'Gaussian beam',
   waveLength: 800,
   beamWaist: 10,
-  startFrom: OpticsPosition(x: 0, y: 100, z: 0, theta: 0.4, phi: 90),
+  startFrom: OpticsPosition(x: 0, y: 100, z: 0, theta: 0, phi: 90),
 );
 
 // リスト項目
 final List<Optics> initialOpticsList = <Optics>[
-  Optics(
+  PolarizingBeamSplitter(
     'item1',
-    'M1',
-    OpticsPosition(x: 500, y: 100, z: 0, theta: -135, phi: 89.5),
-    'Mirror',
+    'PBS1',
+    OpticsPosition(x: 300, y: 100, z: 0, theta: -135, phi: 90),
   ),
-  Optics(
+  Mirror(
     'item2',
     'M2',
-    OpticsPosition(x: 500, y: -100, z: 0, theta: 135, phi: 90.3),
-    'Mirror',
+    OpticsPosition(x: 300, y: -100, z: 0, theta: 45, phi: 90),
   ),
-  Optics(
+  Mirror(
     'item3',
     'M3',
-    OpticsPosition(x: 300, y: -100, z: 0, theta: 45, phi: 90),
-    'Mirror',
+    OpticsPosition(x: 500, y: -100, z: 0, theta: 135, phi: 90),
   ),
-  Optics(
+  PolarizingBeamSplitter(
     'item4',
-    'M4',
-    OpticsPosition(x: 300, y: 200, z: 0, theta: -45, phi: 90),
-    'Mirror',
+    'PBS2',
+    OpticsPosition(x: 500, y: 100, z: 0, theta: -45, phi: 90),
   ),
-  Optics(
+  Mirror(
     'item5',
     'M5',
-    OpticsPosition(x: 700, y: 200, z: 0, theta: -135, phi: 90),
-    'Mirror',
+    OpticsPosition(x: 700, y: 100, z: 0, theta: 180, phi: 90),
+  ),
+  Mirror(
+    'item6',
+    'M6',
+    OpticsPosition(x: 100, y: 100, z: 0, theta: 45, phi: 90),
+  ),
+  Mirror(
+    'item7',
+    'M7',
+    OpticsPosition(x: 100, y: 200, z: 0, theta: -90, phi: 90),
   ),
 ];
