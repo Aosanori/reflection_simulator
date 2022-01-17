@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../common/view_model_change_notifier.dart';
 import '../../simulation/simulation_service.dart';
 import '../optics_diagram/optics.dart';
-import '../utils/random_string.dart';
 
 final editOpticsDialogViewModelProvider =
     ChangeNotifierProvider.family.autoDispose<EditOpticsDialogViewModel, int>(

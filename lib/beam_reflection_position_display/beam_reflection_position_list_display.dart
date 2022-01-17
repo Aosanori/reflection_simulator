@@ -88,6 +88,30 @@ class _MirrorPainter extends CustomPainter {
       size.width / 2,
       line,
     );
+
+    final textSpan = TextSpan(
+      style: const TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+        height: 1.2,
+        overflow: TextOverflow.ellipsis,
+      ),
+      children: <TextSpan>[
+        TextSpan(text: optics.name),
+      ],
+    );
+
+    // テキスト描画用のペインター
+    TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+      maxLines: 1,
+    )
+      ..layout(
+        maxWidth: 40,
+      )
+      ..paint(canvas, Offset.zero);
   }
 
   @override
