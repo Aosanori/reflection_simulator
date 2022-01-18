@@ -8,6 +8,8 @@ import 'optics_display_viewModel.dart';
 
 class OpticsDisplay extends HookConsumerWidget {
   const OpticsDisplay({Key? key}) : super(key: key);
+  static final transformationController = TransformationController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final opticsDisplayViewModel = ref.watch(opticsDisplayViewModelProvider);
@@ -17,7 +19,7 @@ class OpticsDisplay extends HookConsumerWidget {
       boundaryMargin: const EdgeInsets.all(25600),
       minScale: 0.1,
       maxScale: 10,
-      transformationController: opticsDisplayViewModel.transformationController,
+      transformationController: transformationController,
       child: CustomPaint(
         willChange: true,
         painter: _OpticsPainter(

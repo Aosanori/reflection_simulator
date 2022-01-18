@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vector_math/vector_math.dart';
+import 'package:vector_math/vector_math.dart' as vm;
 
 import '../common/view_model_change_notifier.dart';
 import '../optics_diagram/optics.dart';
@@ -15,6 +16,14 @@ class OpticsDisplayViewModel extends ViewModelChangeNotifier {
   final SimulationService _simulationService;
 
   List<Optics> get currentOpticsList => _simulationService.currentOpticsList;
-  List<Vector3> get simulationResult =>
+  List<vm.Vector3> get simulationResult =>
       _simulationService.simulatedReflectPositions;
+
+  void returnToZero(TransformationController transformationController) {
+    transformationController.value = Matrix4.identity();
+  }
+
+  void zoomIn() {
+    //transformationController.value *= Matrix4.;
+  }
 }
