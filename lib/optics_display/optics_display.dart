@@ -13,11 +13,17 @@ class OpticsDisplay extends HookConsumerWidget {
     final opticsDisplayViewModel = ref.watch(opticsDisplayViewModelProvider);
     final currentOpticsList = opticsDisplayViewModel.currentOpticsList;
     final simulationResult = opticsDisplayViewModel.simulationResult;
-    return CustomPaint(
-      willChange: true,
-      painter: _OpticsPainter(
-        currentOpticsList: currentOpticsList,
-        simulationResult: simulationResult,
+    return InteractiveViewer(
+      boundaryMargin: const EdgeInsets.all(25600),
+      minScale: 0.1,
+      maxScale: 10,
+      transformationController: opticsDisplayViewModel.transformationController,
+      child: CustomPaint(
+        willChange: true,
+        painter: _OpticsPainter(
+          currentOpticsList: currentOpticsList,
+          simulationResult: simulationResult,
+        ),
       ),
     );
   }
