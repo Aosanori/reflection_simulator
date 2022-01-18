@@ -130,6 +130,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.6+1"
+  graphview:
+    dependency: "direct dev"
+    description:
+      name: graphview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   hooks_riverpod:
     dependency: "direct dev"
     description:
