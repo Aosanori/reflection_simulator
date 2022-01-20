@@ -46,7 +46,7 @@ final List<Optics> initialOpticsList = <Optics>[
     'M5',
     OpticsPosition(x: 700, y: 100, z: 0, theta: 180, phi: 90),
   ),
-  Mirror(
+  PolarizingBeamSplitter(
     'item6',
     'M6',
     OpticsPosition(x: 100, y: 100, z: 0, theta: 45, phi: 90),
@@ -125,11 +125,11 @@ final initialOpticsTree = Graph<Optics>(
     ): [],
     Node(
       7,
-      initialOpticsList[5],
+      initialOpticsList[4],
     ): [
       Node(
         8,
-        initialOpticsList[4],
+        initialOpticsList[3],
       )
     ],
     Node(

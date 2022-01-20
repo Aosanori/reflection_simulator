@@ -9,9 +9,11 @@ class Graph<T extends Optics> {
 }
 
 class Node<T extends Optics> {
-  Node(this.id, this.data);
+  Node(this.id, this.data,{this.isTransparent=false});
   final int id;
   final T data;
+  final bool isTransparent;
+
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
@@ -23,18 +25,4 @@ class Node<T extends Optics> {
 
   @override
   String toString() => '<$id -> $data>';
-}
-
-List<bool> seen =
-    List.generate(initialOpticsTree.nodes.keys.length, (index) => false);
-void dfs(Graph<Optics> g, Node<Optics> v) {
-  seen[v.id] = true;
-  final nodes = g.nodes[v];
-  print(v.id);
-  for (final nextV in nodes!) {
-    if (seen[nextV.id]) {
-      continue;
-    }
-    dfs(g, nextV);
-  }
 }
