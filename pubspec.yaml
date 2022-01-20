@@ -29,6 +29,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  hooks_riverpod: ^1.0.0
+  flutter_slidable: ^1.2.0
+  drag_and_drop_lists: ^0.3.2+2
+  vector_math: ^2.1.1
+  complex: ^0.7.2
+  graphs: ^2.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -38,14 +44,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  hooks_riverpod: ^1.0.0
-  dependencies:
-  flutter_slidable: ^1.2.0
-  drag_and_drop_lists: ^0.3.2+2
-  vector_math: ^2.1.1
-  complex: ^0.7.2
-  flutter_treeview: ^1.0.6+1
-  graphview: ^1.1.1
   
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

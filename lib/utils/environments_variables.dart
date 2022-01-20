@@ -1,5 +1,6 @@
 import '../beam_information/beam.dart';
 import '../optics_diagram/optics.dart';
+import 'graph.dart';
 
 const beamTypes = <String>['Gaussian beam'];
 
@@ -56,3 +57,129 @@ final List<Optics> initialOpticsList = <Optics>[
     OpticsPosition(x: 100, y: 200, z: 0, theta: -90, phi: 90),
   ),
 ];
+// nodeのidはintで
+final initialOpticsTree = Graph<Optics>(
+  {
+    Node(
+      0,
+      initialOpticsList[0],
+      // どこと繋がっているか
+    ): [
+      Node(
+        1,
+        initialOpticsList[1],
+      ),
+      Node(
+        7,
+        initialOpticsList[5],
+      )
+    ],
+    Node(
+      1,
+      initialOpticsList[1],
+    ): [
+      Node(
+        2,
+        initialOpticsList[2],
+      )
+    ],
+    Node(
+      2,
+      initialOpticsList[2],
+    ): [
+      Node(
+        3,
+        initialOpticsList[3],
+      ),
+    ],
+    Node(
+      3,
+      initialOpticsList[3],
+    ): [
+      Node(
+        4,
+        initialOpticsList[4],
+      )
+    ],
+    Node(
+      4,
+      initialOpticsList[4],
+    ): [
+      Node(
+        5,
+        initialOpticsList[5],
+      ),
+    ],
+    Node(
+      5,
+      initialOpticsList[5],
+    ): [
+      Node(
+        6,
+        initialOpticsList[6],
+      ),
+    ],
+    Node(
+      6,
+      initialOpticsList[6],
+    ): [],
+    Node(
+      7,
+      initialOpticsList[5],
+    ): [
+      Node(
+        8,
+        initialOpticsList[4],
+      )
+    ],
+    Node(
+      8,
+      initialOpticsList[3],
+    ): [
+      Node(
+        9,
+        initialOpticsList[2],
+      ),
+    ],
+    Node(
+      9,
+      initialOpticsList[2],
+    ): [
+      Node(
+        10,
+        initialOpticsList[1],
+      )
+    ],
+    Node(
+      10,
+      initialOpticsList[1],
+    ): [
+      Node(
+        11,
+        initialOpticsList[0],
+      )
+    ],
+    Node(
+      11,
+      initialOpticsList[0],
+    ): [
+      Node(
+        12,
+        initialOpticsList[5],
+      )
+    ],
+    Node(
+      12,
+      initialOpticsList[5],
+    ): [
+      Node(
+        13,
+        initialOpticsList[6],
+      ),
+    ],
+    Node(
+      13,
+      initialOpticsList[6],
+    ): []
+  },
+);
