@@ -20,6 +20,8 @@ class SimulationService extends ViewModelChangeNotifier {
   late List<Optics> currentOpticsList;
   late Beam currentBeam;
   late List<Vector3> simulatedReflectPositions;
+  
+
 
   List<Vector3> runSimulation() {
     // インスタンスをコピー

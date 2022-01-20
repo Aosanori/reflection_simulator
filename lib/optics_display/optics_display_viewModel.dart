@@ -22,8 +22,4 @@ class OpticsDisplayViewModel extends ViewModelChangeNotifier {
   void returnToZero(TransformationController transformationController) {
     transformationController.value = Matrix4.identity();
   }
-
-  void zoomIn() {
-    //transformationController.value *= Matrix4.;
-  }
 }

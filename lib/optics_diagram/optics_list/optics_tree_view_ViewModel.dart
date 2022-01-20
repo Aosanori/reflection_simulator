@@ -1,15 +1,15 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../common/view_model_change_notifier.dart';
+import '../../simulation/simulation_service.dart';
 
-import '../common/view_model_change_notifier.dart';
-import '../simulation/simulation_service.dart';
-import 'optics.dart';
+import '../optics.dart';
 
-final opticsDiagramViewModelProvider = ChangeNotifierProvider.autoDispose(
-  (ref) => OpticsDiagramViewModel(ref.watch(simulationServiceProvider)),
+final opticsListViewViewModelProvider = ChangeNotifierProvider.autoDispose(
+  (ref) => OpticsListViewViewModel(ref.watch(simulationServiceProvider)),
 );
 
-class OpticsDiagramViewModel extends ViewModelChangeNotifier {
-  OpticsDiagramViewModel(this._simulationService);
+class OpticsListViewViewModel extends ViewModelChangeNotifier {
+  OpticsListViewViewModel(this._simulationService);
   final SimulationService _simulationService;
   List<Optics> get currentOpticsList => _simulationService.currentOpticsList;
 
