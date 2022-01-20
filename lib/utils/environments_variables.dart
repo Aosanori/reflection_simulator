@@ -71,7 +71,7 @@ final initialOpticsTree = Graph<Optics>(
       ),
       Node(
         7,
-        initialOpticsList[5],
+        initialOpticsList[4],
       )
     ],
     Node(
