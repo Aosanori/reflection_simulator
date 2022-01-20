@@ -11,9 +11,9 @@ class Beam {
     required this.beamWaist,
     required this.startFrom,
   }) {
-    startPosionVector = startFrom.vector;
+    startPositionVector = startFrom.vector;
     ray = Ray.originDirection(
-      startPosionVector,
+      startPositionVector,
       direction,
     );
   }
@@ -23,7 +23,7 @@ class Beam {
   num beamWaist;
   final OpticsPosition startFrom;
   double distanceFromStart = 0;
-  late Vector3 startPosionVector;
+  late Vector3 startPositionVector;
   late Ray ray;
 
   late Vector3 direction = Vector3(
@@ -71,13 +71,24 @@ class Beam {
   //更新処理
   Vector3 reflect(Optics optics) {
     final nextStartPoint = pointOfReflection(optics);
-    distanceFromStart += nextStartPoint.distanceTo(startPosionVector);
+    distanceFromStart += nextStartPoint.distanceTo(startPositionVector);
     direction = reflectVector(optics);
     ray = Ray.originDirection(
       nextStartPoint,
       direction,
     );
-    startPosionVector = nextStartPoint;
+    startPositionVector = nextStartPoint;
     return nextStartPoint;
+  }
+
+  // 反射しない場合
+  void reachTo(Optics optics) {
+    final nextStartPoint = pointOfReflection(optics);
+    distanceFromStart += nextStartPoint.distanceTo(startPositionVector);
+    ray = Ray.originDirection(
+      nextStartPoint,
+      direction,
+    );
+    startPositionVector = nextStartPoint;
   }
 }
