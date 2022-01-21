@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vector_math/vector_math.dart' as vm;
 
 import '../optics_diagram/optics.dart';
+import '../utils/environments_variables.dart';
 import '../utils/get_position_of_mirror.dart';
 import 'beam_reflection_position_list_display_viewModel.dart';
 
@@ -11,47 +12,47 @@ class BeamReflectionPositionListDisplay extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final beamReflectionPositionListDisplayViewModel =
+    final viewModel =
         ref.watch(beamReflectionPositionListDisplayViewModelProvider);
+    final result = viewModel.simulationResult;
     return ListView.builder(
       // This next line does the trick.
       scrollDirection: Axis.horizontal,
-      itemCount:
-          beamReflectionPositionListDisplayViewModel.currentOpticsList.length,
-      itemBuilder: (context, index) =>
-          BeamReflectionPositionDisplay(index: index),
+      itemCount: result.length,
+      itemBuilder: (context, index) {
+        if (result.keys.elementAt(index) is Mirror) {
+          return _BeamReflectionPositionDisplay(
+            result: {
+              result.keys.elementAt(index): result.values.elementAt(index)
+            },
+          );
+        }
+        return Container();
+      },
     );
   }
 }
 
-class BeamReflectionPositionDisplay extends HookConsumerWidget {
-  const BeamReflectionPositionDisplay({required this.index, Key? key})
+class _BeamReflectionPositionDisplay extends StatelessWidget {
+  const _BeamReflectionPositionDisplay({required this.result, Key? key})
       : super(key: key);
-  final int index;
+  final Map<Optics, List<vm.Vector3>> result;
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final beamReflectionPositionListDisplayViewModel =
-        ref.watch(beamReflectionPositionListDisplayViewModelProvider);
-    final optics =
-        beamReflectionPositionListDisplayViewModel.currentOpticsList[index];
-    final result =
-        beamReflectionPositionListDisplayViewModel.simulationResult[index + 1];
-    return LayoutBuilder(
-      builder: (context, constraints) => Container(
-        padding: const EdgeInsets.all(10),
-        width: constraints.maxHeight,
-        child: CustomPaint(
-          painter: _MirrorPainter(optics: optics, result: result),
+  Widget build(BuildContext context) => LayoutBuilder(
+        builder: (context, constraints) => Container(
+          padding: const EdgeInsets.all(10),
+          width: constraints.maxHeight,
+          child: CustomPaint(
+            painter: _MirrorPainter(result: result),
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _MirrorPainter extends CustomPainter {
-  const _MirrorPainter({required this.optics, required this.result});
-  final Optics optics;
-  final vm.Vector3 result;
+  const _MirrorPainter({required this.result});
+  final Map<Optics, List<vm.Vector3>> result;
+
   // 左上が(0,0)
   // 中心を基準 => Offset(size.width / 2, size.height / 2)
 
@@ -73,10 +74,6 @@ class _MirrorPainter extends CustomPainter {
         paint,
       );
 
-    // 中心点（塗りつぶし）
-    paint.color = Colors.red;
-    drawPositionOfReflection(optics, result, canvas, size, paint);
-
     // 円（外線） 一応 反射鏡
     final line = Paint()
       ..color = Colors.black
@@ -89,6 +86,13 @@ class _MirrorPainter extends CustomPainter {
       line,
     );
 
+    final optics = result.keys.first;
+    // 中心点（塗りつぶし）
+    for (var i = 0; i < result.values.first.length; i++) {
+      paint.color = branchColor[i];
+      final position = result.values.first[i];
+      drawPositionOfReflection(optics, position, canvas, size, paint);
+    }
     final textSpan = TextSpan(
       style: const TextStyle(
         color: Colors.black,
