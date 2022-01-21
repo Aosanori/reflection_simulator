@@ -1,7 +1,5 @@
 import '../optics_diagram/optics.dart';
-import 'package:graphs/graphs.dart';
 
-import 'environments_variables.dart';
 
 class Graph<T extends Optics> {
   Graph(this.nodes);
@@ -11,7 +9,7 @@ class Graph<T extends Optics> {
 class Node<T extends Optics> {
   Node(this.id, this.data,{this.isTransparent=false});
   final int id;
-  final T data;
+  T data;
   final bool isTransparent;
 
 
