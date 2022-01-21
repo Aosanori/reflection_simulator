@@ -3,7 +3,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vector_math/vector_math.dart' as vm;
 
 import '../optics_diagram/optics.dart';
+import '../utils/environments_variables.dart';
 import '../utils/get_position_of_mirror.dart';
+import '../utils/graph.dart';
 import 'optics_display_viewModel.dart';
 
 class OpticsDisplay extends HookConsumerWidget {
@@ -14,6 +16,7 @@ class OpticsDisplay extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final opticsDisplayViewModel = ref.watch(opticsDisplayViewModelProvider);
     final currentOpticsList = opticsDisplayViewModel.currentOpticsList;
+    final currentOpticsTree = opticsDisplayViewModel.currentOpticsTree;
     final simulationResult = opticsDisplayViewModel.simulationResult;
     return InteractiveViewer(
       boundaryMargin: const EdgeInsets.all(25600),
@@ -24,6 +27,7 @@ class OpticsDisplay extends HookConsumerWidget {
         willChange: true,
         painter: _OpticsPainter(
           currentOpticsList: currentOpticsList,
+          currentOpticsTree: currentOpticsTree,
           simulationResult: simulationResult,
         ),
       ),
@@ -34,10 +38,12 @@ class OpticsDisplay extends HookConsumerWidget {
 class _OpticsPainter extends CustomPainter {
   _OpticsPainter({
     required this.currentOpticsList,
+    required this.currentOpticsTree,
     required this.simulationResult,
   });
   final List<Optics> currentOpticsList;
-  final List<vm.Vector3> simulationResult;
+  final Graph<Optics> currentOpticsTree;
+  final List<List<Map<int, vm.Vector3>>> simulationResult;
 
   void _drawOptics(Paint paint, Canvas canvas, Optics optics, Size size) {
     paint
@@ -101,23 +107,26 @@ class _OpticsPainter extends CustomPainter {
       _drawOpticsName(canvas, optics, size);
     }
 
-    paint
-      ..color = Colors.red
-      ..strokeWidth = 3;
-    for (var i = 1; i < simulationResult.length; i++) {
-      final distance = currentOpticsList[i - 1]
-          .position
-          .vector
-          .distanceTo(simulationResult[i]);
+    for (var branchID = 0; branchID < simulationResult.length; branchID++) {
+      paint
+        ..color = branchColor[branchID]
+        ..strokeWidth = 3;
+      for (var i = 1; i < simulationResult[branchID].length; i++) {
+        final nodeID = simulationResult[branchID][i].keys.first;
+        final optics = currentOpticsTree.nodes.keys.elementAt(nodeID).data;
 
-      canvas.drawLine(
-        getPositionOfBeam(simulationResult[i - 1], size),
-        getPositionOfBeam(simulationResult[i], size),
-        paint,
-      );
-      // ミラーからはみ出したら
-      if (distance > currentOpticsList[i - 1].size) {
-        paint.color = Colors.red.shade50;
+        final distance = optics.position.vector
+            .distanceTo(simulationResult[branchID][i].values.first);
+        canvas.drawLine(
+          getPositionOfBeam(
+              simulationResult[branchID][i - 1].values.first, size),
+          getPositionOfBeam(simulationResult[branchID][i].values.first, size),
+          paint,
+        );
+        // ミラーからはみ出したら
+        if (distance > optics.size) {
+          paint.color = branchColor[branchID].shade50;
+        }
       }
     }
   }
