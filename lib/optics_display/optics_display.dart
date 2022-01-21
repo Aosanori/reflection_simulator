@@ -107,6 +107,7 @@ class _OpticsPainter extends CustomPainter {
       _drawOpticsName(canvas, optics, size);
     }
 
+    // レーザー線の描画
     for (var branchID = 0; branchID < simulationResult.length; branchID++) {
       paint
         ..color = branchColor[branchID]
