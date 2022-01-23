@@ -120,7 +120,7 @@ class _OpticsPainter extends CustomPainter {
             .distanceTo(simulationResult[branchID][i].values.first);
         canvas.drawLine(
           getPositionOfBeam(
-              simulationResult[branchID][i - 1].values.first, size),
+              simulationResult[branchID][i - 1].values.first, size,),
           getPositionOfBeam(simulationResult[branchID][i].values.first, size),
           paint,
         );
