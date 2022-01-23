@@ -4,28 +4,33 @@ import 'package:complex/complex.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../common/view_model_change_notifier.dart';
-import '../../simulation/simulation_service.dart';
+import '../../simulation/optics_state.dart';
+import '../../simulation/simulation_state_store_service.dart';
 import '../../utils/environments_variables.dart';
 import '../optics.dart';
 
 final opticsDiagramItemViewModelProvider =
     ChangeNotifierProvider.family.autoDispose<OpticsDiagramItemViewModel, int>(
-  (ref, index) =>
-      OpticsDiagramItemViewModel(ref.watch(simulationServiceProvider), index),
+  (ref, index) => OpticsDiagramItemViewModel(
+      ref.watch(simulationStateStoreProvider),
+      ref.watch(opticsStateProvider),
+      index,),
 );
 
 class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
-  OpticsDiagramItemViewModel(this._simulationService, this.index) {
-    final opticsList = _simulationService.currentOpticsList;
+  OpticsDiagramItemViewModel(
+      this._simulationStateStore, this._opticsState, this.index) {
+    final opticsList = _simulationStateStore.state.currentOpticsList;
     _optics = opticsList[index];
     // 確実に当たる角度をスライダーの中心にする
-    if (_simulationService.currentOpticsList.isNotEmpty &&
-        index < _simulationService.currentOpticsList.length - 1) {
-      final nextOptics = _simulationService.currentOpticsList[index + 1];
+    if (_simulationStateStore.state.currentOpticsList.isNotEmpty &&
+        index < _simulationStateStore.state.currentOpticsList.length - 1) {
+      final nextOptics =
+          _simulationStateStore.state.currentOpticsList[index + 1];
 
       // 前の進行方向逆の偏角
       final currentBeamStartPosition =
-          _simulationService.currentBeam.startFrom.vector;
+          _simulationStateStore.state.currentBeam.startFrom.vector;
       final vectorOfPreviousDirection = index != 0
           ? opticsList[index - 1].position.vector -
               opticsList[index].position.vector
@@ -58,7 +63,7 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
           _optics.position.theta <= maximumValueOfTheta)) {
         _optics.position.theta =
             (minimumValueOfTheta + maximumValueOfTheta) / 2;
-        _simulationService.runSimulation();
+        _opticsState.editOptics(_optics);
       }
     } else {
       rangeOfTheta = [-180, 180];
@@ -66,7 +71,8 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
   }
 
   final int index;
-  final SimulationService _simulationService;
+  final SimulationStateStore _simulationStateStore;
+  final OpticsState _opticsState;
 
   late Optics _optics;
   late List<double> rangeOfTheta;
@@ -76,12 +82,12 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
   void changeTheta(int index, double value) {
     _optics.position.theta = value;
     notifyListeners();
-    _simulationService.runSimulation();
+    _opticsState.editOptics(_optics);
   }
 
   void changePhi(int index, double value) {
     _optics.position.phi = value;
     notifyListeners();
-    _simulationService.runSimulation();
+    _opticsState.editOptics(_optics);
   }
 }
