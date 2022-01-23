@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../beam_information/beam.dart';
 import '../optics_diagram/optics.dart';
 import 'graph.dart';
@@ -8,6 +10,8 @@ const opticsTypes = <String>['Mirror', 'PBS'];
 
 const adjustableAngleOfBeam = 5;
 const adjustableAngleOfMirror = 5;
+
+const branchColor = [Colors.red, Colors.blue,Colors.green,Colors.orange];
 
 // 基本球座標
 // ただしx-y平面の曲座標をθとしている()
@@ -29,7 +33,7 @@ final List<Optics> initialOpticsList = <Optics>[
   Mirror(
     'item2',
     'M2',
-    OpticsPosition(x: 300, y: -100, z: 0, theta: 45, phi: 90),
+    OpticsPosition(x: 300, y: -100, z: 0, theta: 45.3, phi: 90),
   ),
   Mirror(
     'item3',
@@ -48,7 +52,7 @@ final List<Optics> initialOpticsList = <Optics>[
   ),
   PolarizingBeamSplitter(
     'item6',
-    'M6',
+    'PBS3',
     OpticsPosition(x: 100, y: 100, z: 0, theta: 45, phi: 90),
   ),
   Mirror(
