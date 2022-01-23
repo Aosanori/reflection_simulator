@@ -18,6 +18,13 @@ class Beam {
     );
   }
 
+  Beam copy() => Beam(
+        type: type,
+        waveLength: waveLength,
+        beamWaist: beamWaist,
+        startFrom: startFrom,
+      );
+
   String type;
   num waveLength;
   num beamWaist;
