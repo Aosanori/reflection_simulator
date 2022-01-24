@@ -4,7 +4,6 @@ import 'package:vector_math/vector_math.dart';
 import '../beam_information/beam.dart';
 import '../common/view_model_change_notifier.dart';
 import '../optics_diagram/optics.dart';
-import '../utils/environments_variables.dart';
 import '../utils/graph.dart';
 import 'optics_state.dart';
 import 'simulation_service.dart';

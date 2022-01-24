@@ -13,13 +13,13 @@ final opticsDiagramItemViewModelProvider =
     ChangeNotifierProvider.family.autoDispose<OpticsDiagramItemViewModel, int>(
   (ref, index) => OpticsDiagramItemViewModel(
       ref.watch(simulationStateStoreProvider),
-      ref.watch(opticsStateProvider),
+      ref.watch(opticsStateActionProvider),
       index,),
 );
 
 class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
   OpticsDiagramItemViewModel(
-      this._simulationStateStore, this._opticsState, this.index) {
+      this._simulationStateStore, this._opticsStateAction, this.index) {
     final opticsList = _simulationStateStore.state.currentOpticsList;
     _optics = opticsList[index];
     // 確実に当たる角度をスライダーの中心にする
@@ -63,7 +63,7 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
           _optics.position.theta <= maximumValueOfTheta)) {
         _optics.position.theta =
             (minimumValueOfTheta + maximumValueOfTheta) / 2;
-        _opticsState.editOptics(_optics);
+        _opticsStateAction.editOptics(_optics);
       }
     } else {
       rangeOfTheta = [-180, 180];
@@ -72,7 +72,7 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
 
   final int index;
   final SimulationStateStore _simulationStateStore;
-  final OpticsState _opticsState;
+  final OpticsStateAction _opticsStateAction;
 
   late Optics _optics;
   late List<double> rangeOfTheta;
@@ -82,12 +82,12 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
   void changeTheta(int index, double value) {
     _optics.position.theta = value;
     notifyListeners();
-    _opticsState.editOptics(_optics);
+    _opticsStateAction.editOptics(_optics);
   }
 
   void changePhi(int index, double value) {
     _optics.position.phi = value;
     notifyListeners();
-    _opticsState.editOptics(_optics);
+    _opticsStateAction.editOptics(_optics);
   }
 }

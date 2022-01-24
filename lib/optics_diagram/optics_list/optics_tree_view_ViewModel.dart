@@ -7,13 +7,13 @@ import '../optics.dart';
 
 final opticsListViewViewModelProvider = ChangeNotifierProvider.autoDispose(
   (ref) => OpticsListViewViewModel(
-      ref.watch(simulationStateStoreProvider), ref.watch(opticsStateProvider)),
+      ref.watch(simulationStateStoreProvider), ref.watch(opticsStateActionProvider),),
 );
 
 class OpticsListViewViewModel extends ViewModelChangeNotifier {
-  OpticsListViewViewModel(this._simulationStateStore, this._opticsState);
+  OpticsListViewViewModel(this._simulationStateStore, this._opticsStateAction);
   final SimulationStateStore _simulationStateStore;
-  final OpticsState _opticsState;
+  final OpticsStateAction _opticsStateAction;
   List<Optics> get currentOpticsList =>
       _simulationStateStore.state.currentOpticsList;
 
@@ -34,7 +34,7 @@ class OpticsListViewViewModel extends ViewModelChangeNotifier {
   }
 
   void removeContent(int index) {
-    _opticsState.deleteOptics(index);
+    _opticsStateAction.deleteOptics(index);
     notifyListeners();
   }
 }
