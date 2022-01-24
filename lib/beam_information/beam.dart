@@ -33,6 +33,8 @@ class Beam {
   late Vector3 startPositionVector;
   late Ray ray;
 
+  List<Optics> passedOptics = [];
+
   late Vector3 direction = Vector3(
     sin(startFrom.phiRadian) * cos(startFrom.thetaRadian),
     sin(startFrom.phiRadian) * sin(startFrom.thetaRadian),
@@ -40,7 +42,8 @@ class Beam {
   );
 
   double get rayleighRange => // m
-      (pi * beamWaist * pow(10, -3) * beamWaist * pow(10, -3)) / (waveLength * pow(10, -9));
+      (pi * beamWaist * pow(10, -3) * beamWaist * pow(10, -3)) /
+      (waveLength * pow(10, -9));
   double get currentBeamWaist =>
       beamWaist *
       sqrt(
@@ -95,6 +98,7 @@ class Beam {
       direction,
     );
     startPositionVector = nextStartPoint;
+    passedOptics.add(optics);
     return nextStartPoint;
   }
 
@@ -107,5 +111,6 @@ class Beam {
       direction,
     );
     startPositionVector = nextStartPoint;
+    passedOptics.add(optics);
   }
 }

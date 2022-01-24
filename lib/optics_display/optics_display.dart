@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vector_math/vector_math.dart' as vm;
 
+import '../coherent_combine/coherent_combine.dart';
 import '../optics_diagram/optics.dart';
 import '../utils/environments_variables.dart';
 import '../utils/get_position_of_mirror.dart';
@@ -18,17 +19,34 @@ class OpticsDisplay extends HookConsumerWidget {
     final currentOpticsList = opticsDisplayViewModel.currentOpticsList;
     final currentOpticsTree = opticsDisplayViewModel.currentOpticsTree;
     final simulationResult = opticsDisplayViewModel.simulationResult;
-    return InteractiveViewer(
-      boundaryMargin: const EdgeInsets.all(25600),
-      minScale: 0.1,
-      maxScale: 10,
-      transformationController: transformationController,
-      child: CustomPaint(
-        willChange: true,
-        painter: _OpticsPainter(
-          currentOpticsList: currentOpticsList,
-          currentOpticsTree: currentOpticsTree,
-          simulationResult: simulationResult,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: const TabBar(
+          labelColor: Colors.blue,
+          tabs: <Widget>[
+            Tab(text: 'Ray Trace'),
+            Tab(text: 'Coherent View'),
+          ],
+        ),
+        body: TabBarView(
+          children: <Widget>[
+            InteractiveViewer(
+              boundaryMargin: const EdgeInsets.all(25600),
+              minScale: 0.1,
+              maxScale: 10,
+              transformationController: transformationController,
+              child: CustomPaint(
+                willChange: true,
+                painter: _OpticsPainter(
+                  currentOpticsList: currentOpticsList,
+                  currentOpticsTree: currentOpticsTree,
+                  simulationResult: simulationResult,
+                ),
+              ),
+            ),
+            const CoherentCombine(),
+          ],
         ),
       ),
     );
@@ -120,7 +138,9 @@ class _OpticsPainter extends CustomPainter {
             .distanceTo(simulationResult[branchID][i].values.first);
         canvas.drawLine(
           getPositionOfBeam(
-              simulationResult[branchID][i - 1].values.first, size,),
+            simulationResult[branchID][i - 1].values.first,
+            size,
+          ),
           getPositionOfBeam(simulationResult[branchID][i].values.first, size),
           paint,
         );

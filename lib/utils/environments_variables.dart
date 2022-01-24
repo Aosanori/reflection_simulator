@@ -19,7 +19,7 @@ const branchColor = [Colors.red, Colors.blue,Colors.green,Colors.orange];
 final Beam initialBeam = Beam(
   type: 'Gaussian beam',
   waveLength: 800,
-  beamWaist: 10,
+  beamWaist: 1,
   startFrom: OpticsPosition(x: 0, y: 100, z: 0, theta: 0, phi: 90),
 );
 
