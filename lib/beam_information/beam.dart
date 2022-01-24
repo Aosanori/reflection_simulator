@@ -26,8 +26,8 @@ class Beam {
       );
 
   String type;
-  num waveLength;
-  num beamWaist;
+  num waveLength; // nm
+  num beamWaist; // mm
   final OpticsPosition startFrom;
   double distanceFromStart = 0;
   late Vector3 startPositionVector;
@@ -38,6 +38,16 @@ class Beam {
     sin(startFrom.phiRadian) * sin(startFrom.thetaRadian),
     cos(startFrom.phiRadian),
   );
+
+  double get rayleighRange => // m
+      (pi * beamWaist * pow(10, -3) * beamWaist * pow(10, -3)) / (waveLength * pow(10, -9));
+  double get currentBeamWaist =>
+      beamWaist *
+      sqrt(
+        1 +
+            (distanceFromStart * pow(10, -3) / rayleighRange) *
+                (distanceFromStart * pow(10, -3) / rayleighRange),
+      );
 
   Vector3 reflectVector(Optics optics) =>
       direction.reflected(optics.normalVector);
