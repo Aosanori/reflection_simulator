@@ -1,17 +1,25 @@
 import '../optics_diagram/optics.dart';
 
-
 class Graph<T extends Optics> {
   Graph(this.nodes);
-  final Map<Node<T>, List<Node<T>>> nodes;
+  final Map<Node, List<Node>> nodes;
+
+  Graph copy() {
+    final clone = <Node, List<Node>>{};
+    nodes.forEach((node, edges) {
+      final clonedNode = node.copy();
+      final clonedEdges = edges.map((edge) => edge.copy()).toList();
+      clone[clonedNode] = clonedEdges;
+    });
+    return Graph(clone);
+  }
 }
 
-class Node<T extends Optics> {
-  Node(this.id, this.data,{this.isTransparent=false});
+class Node {
+  Node(this.id, this.data, {this.isTransparent = false});
   final int id;
-  T data;
+  Optics data;
   final bool isTransparent;
-
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
@@ -23,4 +31,6 @@ class Node<T extends Optics> {
 
   @override
   String toString() => '<$id -> $data>';
+
+  Node copy() => Node(id, data.copy(), isTransparent: isTransparent);
 }
