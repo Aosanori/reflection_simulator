@@ -27,7 +27,7 @@ void main() {
         },
       );
       test(
-        'case 1',
+        'case 1 (直角反射)',
         () {
           final container = ProviderContainer();
           final testTree = Graph<Optics>(
@@ -93,7 +93,7 @@ void main() {
       );
 
       test(
-        'case 2',
+        'case 2 (共振器)',
         () {
           final container = ProviderContainer();
           final testBeam = Beam(
@@ -165,7 +165,7 @@ void main() {
       );
 
       test(
-        'case 3',
+        'case 3 (六角形)',
         () {
           final container = ProviderContainer();
           final testBeam = Beam(
@@ -208,7 +208,7 @@ void main() {
                     'item3',
                     'M3',
                     OpticsPosition(
-                        x: 100, y: 346.4, z: 0, theta: -120, phi: 90),
+                        x: 100, y: 346.4, z: 0, theta: -120, phi: 90,),
                   ),
                 )
               ],
