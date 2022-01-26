@@ -22,6 +22,16 @@ void main() {
       expect(modelA.id != modelB.id, true);
     });
 
+    test('Reference of Optics Position are different', () {
+      final modelA = initialOpticsList[0];
+
+      final modelB = modelA.copy();
+
+      modelB.position.x = -200;
+
+      expect(modelA.position.x != modelB.position.x, true);
+    });
+
     test('Beam Instances are different', () {
       final modelA = initialBeam;
 
