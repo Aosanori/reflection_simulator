@@ -22,7 +22,7 @@ class Beam {
         type: type,
         waveLength: waveLength,
         beamWaist: beamWaist,
-        startFrom: startFrom,
+        startFrom: startFrom.copy(),
       );
 
   String type;
