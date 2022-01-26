@@ -1,29 +1,51 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../beam_information/beam.dart';
 import '../optics_diagram/optics.dart';
+import '../utils/graph.dart';
 import 'optics_state.dart';
+import 'simulation_result.dart';
 import 'simulation_service.dart';
-/*
-final simulationWithChangingValueProvider = Provider(
-  (ref) => SimulationWithChangingValue(
-    ref.watch(simulationServiceProvider),
+import 'simulation_state.dart';
+
+final simulationRepositoryProvider = Provider(
+  (ref) => SimulationRepository(
     ref.watch(opticsStateProvider),
+    ref.watch(simulationServiceProvider),
   ),
 );
 
-class SimulationWithChangingValue {
-  SimulationWithChangingValue(
-    this._simulationService,
-    this._opticsStateSource,
-  );
+class SimulationRepository {
+  SimulationRepository(this._opticsStateSource, this._simulationService);
 
   final SimulationService _simulationService;
   final OpticsState _opticsStateSource;
-  static const margin = 0.01;
 
-  Map<double, SimulationResult> runSimulation({
+  Graph<Optics> get currentOpticsTree =>
+      _opticsStateSource.currentOpticsTree;
+  
+  List<Optics> get currentOpticsList => _opticsStateSource.currentOpticsList
+      .map((optics) => optics)
+      .toList();
+
+  Beam get currentBeam => _opticsStateSource.currentBeam;
+
+  SimulationState get simulationState => SimulationState(
+        currentBeam: currentBeam,
+        currentOpticsTree: currentOpticsTree,
+        currentOpticsList: currentOpticsList,
+        simulationResult: simulationResult,
+      );
+
+  SimulationResult get simulationResult => _simulationService.runSimulation(
+        currentBeam: currentBeam,
+        currentOpticsTree: currentOpticsTree,
+      );
+
+  Map<double, SimulationResult> runSimulationWithChangingValue({
     required Optics target,
     required String targetValue,
+    double margin = 0.05,
   }) {
     final results = <double, SimulationResult>{};
 
@@ -68,11 +90,11 @@ class SimulationWithChangingValue {
       }
 
       final result = _simulationService.runSimulation(
-        currentBeam: _opticsStateSource.currentBeam,
+        currentBeam: currentBeam,
         currentOpticsTree: tmpOpticsTree,
       );
       results[currentValue] = result;
     }
     return results;
   }
-}*/
+}

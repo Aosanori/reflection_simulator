@@ -5,32 +5,32 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../common/view_model_change_notifier.dart';
 import '../../simulation/optics_state.dart';
-import '../../simulation/simulation_state_store_service.dart';
+import '../../simulation/simulation_repository.dart';
 import '../../utils/environments_variables.dart';
 import '../optics.dart';
 
 final opticsDiagramItemViewModelProvider =
     ChangeNotifierProvider.family.autoDispose<OpticsDiagramItemViewModel, int>(
   (ref, index) => OpticsDiagramItemViewModel(
-      ref.watch(simulationStateStoreProvider),
+      ref.watch(simulationRepositoryProvider),
       ref.watch(opticsStateActionProvider),
       index,),
 );
 
 class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
   OpticsDiagramItemViewModel(
-      this._simulationStateStore, this._opticsStateAction, this.index) {
-    final opticsList = _simulationStateStore.state.currentOpticsList;
+      this._simulationRepository, this._opticsStateAction, this.index) {
+    final opticsList = _simulationRepository.currentOpticsList;
     _optics = opticsList[index];
     // 確実に当たる角度をスライダーの中心にする
-    if (_simulationStateStore.state.currentOpticsList.isNotEmpty &&
-        index < _simulationStateStore.state.currentOpticsList.length - 1) {
+    if (_simulationRepository.currentOpticsList.isNotEmpty &&
+        index < _simulationRepository.currentOpticsList.length - 1) {
       final nextOptics =
-          _simulationStateStore.state.currentOpticsList[index + 1];
+          _simulationRepository.currentOpticsList[index + 1];
 
       // 前の進行方向逆の偏角
       final currentBeamStartPosition =
-          _simulationStateStore.state.currentBeam.startFrom.vector;
+          _simulationRepository.currentBeam.startFrom.vector;
       final vectorOfPreviousDirection = index != 0
           ? opticsList[index - 1].position.vector -
               opticsList[index].position.vector
@@ -71,7 +71,7 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
   }
 
   final int index;
-  final SimulationStateStore _simulationStateStore;
+  final SimulationRepository _simulationRepository;
   final OpticsStateAction _opticsStateAction;
 
   late Optics _optics;
@@ -81,13 +81,14 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
 
   void changeTheta(int index, double value) {
     _optics.position.theta = value;
-    notifyListeners();
     _opticsStateAction.editOptics(_optics);
+    notifyListeners();
+
   }
 
   void changePhi(int index, double value) {
     _optics.position.phi = value;
-    notifyListeners();
     _opticsStateAction.editOptics(_optics);
+      notifyListeners();
   }
 }

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'coherent_combine_viewModel.dart';
+
 
 class CoherentCombine extends HookConsumerWidget {
   const CoherentCombine({Key? key}) : super(key: key);
@@ -15,22 +17,50 @@ class CoherentCombine extends HookConsumerWidget {
     return Column(
       children: [
         Expanded(
-          flex: 1,
-          child: Container(
-              //color: Colors.red,
+          child: Column(
+            children: [
+              Row(children: [Text('Change:'),
+                /*DropdownButton<String>(
+                  value: editOpticsDialogViewModel.editOptics.type,
+                  icon: const Icon(Icons.arrow_drop_down),
+                  iconSize: 30,
+                  elevation: 16,
+                  underline: Container(
+                    height: 2,
+                    color: Colors.grey,
+                  ),
+                  onChanged: editOpticsDialogViewModel.changeOpticsType,
+                  items: opticsTypes
+                      .map<DropdownMenuItem<String>>(
+                        (value) => DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        ),
+                      )
+                      .toList(),
+                ),*/
+              ],),
+              SfCartesianChart(
+                series: <ChartSeries>[
+                  // Renders line chart
+                  LineSeries<ChartData, double>(
+                    dataSource: viewModel.chartData,
+                    xValueMapper: (ChartData sales, _) => sales.year,
+                    yValueMapper: (ChartData sales, _) => sales.sales,
+                  )
+                ],
               ),
+            ],
+          ),
         ),
         Expanded(
-          flex: 1,
           child: Row(
             children: [
               Expanded(
-                flex: 1,
                 child: SfRadialGauge(
                   axes: <RadialAxis>[
                     RadialAxis(
                       minimum: 0,
-                      maximum: 100,
                       ranges: <GaugeRange>[
                         GaugeRange(
                             startValue: 0, endValue: 30, color: Colors.red),
@@ -60,7 +90,6 @@ class CoherentCombine extends HookConsumerWidget {
                 ),
               ),
               Expanded(
-                flex: 1,
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
