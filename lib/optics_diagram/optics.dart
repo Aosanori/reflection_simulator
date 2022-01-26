@@ -16,7 +16,7 @@ abstract class Optics {
   double size;
   late String type;
 
-  void copy();
+  Optics copy();
 
   Vector3 get normalVector => Vector3(
         sin(position.phiRadian) * cos(position.thetaRadian),
@@ -43,6 +43,14 @@ class OpticsPosition {
   double get thetaRadian => theta * pi / 180;
   double get phiRadian => phi * pi / 180;
   Vector3 get vector => Vector3(x, y, z);
+
+  OpticsPosition copy() => OpticsPosition(
+        x: x,
+        y: y,
+        z: z,
+        theta: theta,
+        phi: phi,
+      );
 }
 
 class PolarizingBeamSplitter extends Optics {
@@ -63,7 +71,7 @@ class PolarizingBeamSplitter extends Optics {
   PolarizingBeamSplitter copy() => PolarizingBeamSplitter(
         id,
         name,
-        position,
+        position.copy(),
       );
 }
 
@@ -85,6 +93,6 @@ class Mirror extends Optics {
   Mirror copy() => Mirror(
         id,
         name,
-        position,
+        position.copy(),
       );
 }
