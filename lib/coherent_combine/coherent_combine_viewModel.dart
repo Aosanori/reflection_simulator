@@ -7,23 +7,80 @@ import 'package:vector_math/vector_math.dart';
 import '../../common/view_model_change_notifier.dart';
 import '../../simulation/simulation_state_store_service.dart';
 import '../beam_information/beam.dart';
+import '../simulation/simulation_with_changing_value.dart';
 import '../utils/environments_variables.dart';
 
 final coherentCombineViewModelProvider = ChangeNotifierProvider(
   (ref) => CoherentCombineViewModel(
     ref.watch(simulationStateStoreProvider),
+    ref.watch(simulationWithChangingValueProvider),
   ),
 );
 
 class CoherentCombineViewModel extends ViewModelChangeNotifier {
-  CoherentCombineViewModel(this._simulationStateStore);
+  CoherentCombineViewModel(
+    this._simulationStateStore,
+    this._simulationWithChangingValue,
+  ) {
+    _simulationWithChangingValue.runSimulation(
+      target: initialOpticsList[2],
+      targetValue: 'theta',
+    );
+  }
 
   final SimulationStateStore _simulationStateStore;
+  final SimulationWithChangingValue _simulationWithChangingValue;
 
   List<double> get distanceFromStartList =>
       _simulationStateStore.state.simulationResult.simulatedBeamList
           .map((beam) => beam.distanceFromStart)
           .toList();
+
+  List<double> get angles {
+    final beams =
+        _simulationStateStore.state.simulationResult.simulatedBeamList;
+    final results = beams.map((beam) {
+      final angle =
+          beam.direction.angleTo(beam.passedOptics.last.normalVector) *
+              180 /
+              pi;
+      //if(beam.direction-)
+      return angle;
+    }).toList();
+    return results;
+  }
+
+  List<GaugePointer> get gaugePointer {
+    final result = <GaugePointer>[];
+    var index = 0;
+    for (final angle in angles) {
+      result.add(
+        NeedlePointer(
+          value: angle,
+          needleEndWidth: 5,
+          needleColor: branchColor[index],
+          knobStyle: KnobStyle(
+            knobRadius: 0,
+            sizeUnit: GaugeSizeUnit.logicalPixel,
+            color: branchColor[index],
+          ),
+        ),
+      );
+      index++;
+    }
+    return result;
+    /*angles.map<GaugePointer>((e) {
+      NeedlePointer(
+        value: e,
+        needleEndWidth: 5,
+        knobStyle: KnobStyle(
+          knobRadius: 0,
+          sizeUnit: GaugeSizeUnit.logicalPixel,
+          color: branchColor[index],
+        ),
+      );
+    }).toList();*/
+  }
 
   double get idealDistanceFromEnd {
     var result = 0.0;
@@ -112,8 +169,8 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
     return monteCarlo(data);
   }
 
+  // TODO:　全方向に対応
   double circles_intersection_area(Vector3 p1, num r1, Vector3 p2, num r2) {
-    // TODO:
     final x1 = p1.x;
     final y1 = p1.z;
     final x2 = p2.x;
@@ -132,11 +189,11 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
     final p_1 = r1 * r1 - r2 * r2 + dd;
     final p_2 = r2 * r2 - r1 * r1 + dd;
 
-    final S1 = r1 * r1 * atan2(sqrt(4 * dd * r1 * r1 - p_1 * p_1), p_1);
-    final S2 = r2 * r2 * atan2(sqrt(4 * dd * r2 * r2 - p_2 * p_2), p_2);
-    final S0 = sqrt(4 * dd * r1 * r1 - p_1 * p_1) / 2;
+    final s1 = r1 * r1 * atan2(sqrt(4 * dd * r1 * r1 - p_1 * p_1), p_1);
+    final s2 = r2 * r2 * atan2(sqrt(4 * dd * r2 * r2 - p_2 * p_2), p_2);
+    final s0 = sqrt(4 * dd * r1 * r1 - p_1 * p_1) / 2;
 
-    return S1 + S2 - S0;
+    return s1 + s2 - s0;
   }
 
   double monteCarlo(Map<Beam, Vector3> data) {

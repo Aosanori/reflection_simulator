@@ -38,8 +38,8 @@ dependencies:
   flutter_slidable: ^1.2.0
   graphs: ^2.1.0
   hooks_riverpod: ^1.0.0
+  syncfusion_flutter_charts: ^19.4.47
   syncfusion_flutter_gauges: ^19.4.43
-  
   vector_math: ^2.1.1
   
   
