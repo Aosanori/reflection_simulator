@@ -20,7 +20,7 @@ final opticsDiagramItemViewModelProvider =
 class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
   OpticsDiagramItemViewModel(
       this._simulationRepository, this._opticsStateAction, this.index) {
-    final opticsList = _simulationRepository.currentOpticsList;
+    final opticsList = _simulationRepository.simulationResult.simulatedBeamList.first.passedOptics;
     _optics = opticsList[index];
     // 確実に当たる角度をスライダーの中心にする
     if (_simulationRepository.currentOpticsList.isNotEmpty &&
@@ -77,7 +77,7 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
   late Optics _optics;
   late List<double> rangeOfTheta;
 
-  Optics get optics => _optics;
+  Optics get optics => _optics.copy();
 
   void changeTheta(int index, double value) {
     _optics.position.theta = value;

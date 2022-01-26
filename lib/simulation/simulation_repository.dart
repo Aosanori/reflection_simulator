@@ -45,11 +45,11 @@ class SimulationRepository {
   Map<double, SimulationResult> runSimulationWithChangingValue({
     required Optics target,
     required String targetValue,
-    double margin = 0.05,
+    double margin = 0.005,
   }) {
     final results = <double, SimulationResult>{};
 
-    for (var value = -1.0; value <= 1.0; value += margin) {
+    for (var value = -0.5; value <= 0.5; value += margin) {
       final tmpTarget = target.copy();
       final tmpOpticsTree = _opticsStateSource.currentOpticsTree.copy();
       var currentValue = 0.0;
