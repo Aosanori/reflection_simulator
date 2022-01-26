@@ -8,6 +8,17 @@ import 'simulation_result.dart';
 import 'simulation_service.dart';
 import 'simulation_state.dart';
 
+class VariableOfSimulationWithChangingValue {
+  const VariableOfSimulationWithChangingValue(
+    this.target,
+    this.targetValue, {
+    this.margin = 0.005,
+  });
+  final Optics target;
+  final String targetValue;
+  final double margin;
+}
+
 final simulationRepositoryProvider = Provider(
   (ref) => SimulationRepository(
     ref.watch(opticsStateProvider),
@@ -21,12 +32,10 @@ class SimulationRepository {
   final SimulationService _simulationService;
   final OpticsState _opticsStateSource;
 
-  Graph<Optics> get currentOpticsTree =>
-      _opticsStateSource.currentOpticsTree;
-  
-  List<Optics> get currentOpticsList => _opticsStateSource.currentOpticsList
-      .map((optics) => optics)
-      .toList();
+  Graph<Optics> get currentOpticsTree => _opticsStateSource.currentOpticsTree;
+
+  List<Optics> get currentOpticsList =>
+      _opticsStateSource.currentOpticsList.map((optics) => optics).toList();
 
   Beam get currentBeam => _opticsStateSource.currentBeam;
 
@@ -42,18 +51,15 @@ class SimulationRepository {
         currentOpticsTree: currentOpticsTree,
       );
 
-  Map<double, SimulationResult> runSimulationWithChangingValue({
-    required Optics target,
-    required String targetValue,
-    double margin = 0.005,
-  }) {
+  Map<double, SimulationResult> runSimulationWithChangingValue(
+      VariableOfSimulationWithChangingValue variable) {
     final results = <double, SimulationResult>{};
 
-    for (var value = -0.5; value <= 0.5; value += margin) {
-      final tmpTarget = target.copy();
+    for (var value = -0.5; value <= 0.5; value += variable.margin) {
+      final tmpTarget = variable.target.copy();
       final tmpOpticsTree = _opticsStateSource.currentOpticsTree.copy();
       var currentValue = 0.0;
-      switch (targetValue) {
+      switch (variable.targetValue) {
         case 'x':
           tmpTarget.position.x += value;
           currentValue = tmpTarget.position.x;

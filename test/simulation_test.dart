@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reflection_simulator/beam_information/beam.dart';
 import 'package:reflection_simulator/optics_diagram/optics.dart';
+import 'package:reflection_simulator/simulation/simulation_repository.dart';
 import 'package:reflection_simulator/simulation/simulation_service.dart';
 
 import 'package:reflection_simulator/utils/environments_variables.dart';
@@ -11,6 +13,45 @@ void main() {
   group(
     'Simulation Test',
     () {
+      test(
+        'runSimulationWithChangingValue single thread',
+        () {
+          final stopwatch = Stopwatch()..start();
+          final targetOptics = initialOpticsList[2];
+          final targetValue = 'theta';
+          final container = ProviderContainer();
+          final repository = container.read(simulationRepositoryProvider);
+          final results = repository.runSimulationWithChangingValue(
+            VariableOfSimulationWithChangingValue(
+              targetOptics,
+              targetValue,
+              margin: 0.005,
+            ),
+          );
+          stopwatch.stop();
+          expect(stopwatch.elapsed.inMilliseconds < 150, true);
+        },
+      );
+      test(
+        'runSimulationWithChangingValue multi thread',
+        () async {
+          final stopwatch = Stopwatch()..start();
+          final targetOptics = initialOpticsList[2];
+          final targetValue = 'theta';
+          final container = ProviderContainer();
+          final repository = container.read(simulationRepositoryProvider);
+          final com = await compute(
+            repository.runSimulationWithChangingValue,
+            VariableOfSimulationWithChangingValue(
+              targetOptics,
+              targetValue,
+              margin: 0.005,
+            ),
+          );
+          stopwatch.stop();
+          expect(stopwatch.elapsed.inMilliseconds < 150, true);
+        },
+      );
       test(
         'initial value',
         () {
@@ -208,7 +249,12 @@ void main() {
                     'item3',
                     'M3',
                     OpticsPosition(
-                        x: 100, y: 346.4, z: 0, theta: -120, phi: 90,),
+                      x: 100,
+                      y: 346.4,
+                      z: 0,
+                      theta: -120,
+                      phi: 90,
+                    ),
                   ),
                 )
               ],
