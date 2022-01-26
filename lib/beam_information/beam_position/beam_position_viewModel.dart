@@ -1,11 +1,10 @@
 import 'dart:math';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:reflection_simulator/simulation/simulation_repository.dart';
 
 import '../../common/view_model_change_notifier.dart';
 import '../../simulation/optics_state.dart';
-import '../../simulation/simulation_state.dart';
+import '../../simulation/simulation_repository.dart';
 import '../../utils/environments_variables.dart';
 import '../beam.dart';
 

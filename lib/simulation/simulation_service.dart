@@ -1,17 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vector_math/vector_math.dart';
 
 import '../beam_information/beam.dart';
 import '../optics_diagram/optics.dart';
 import '../utils/graph.dart';
-
-class SimulationResult {
-  SimulationResult(
-      this.reflectionPositions, this.simulatedBeamList);
-  final List<List<Map<int, Vector3>>> reflectionPositions;
-  final List<Beam> simulatedBeamList;
-}
-
+import 'simulation_result.dart';
 
 final simulationServiceProvider = Provider(
   (ref) => SimulationService(),
@@ -21,7 +13,6 @@ class SimulationService {
   SimulationResult runSimulation({
     required Beam currentBeam,
     required Graph<Optics> currentOpticsTree,
-    required List<Optics> currentOpticsList,
   }) {
     // 初期化
     final _seen = List.generate(
@@ -45,7 +36,7 @@ class SimulationService {
     ];
 
     // 深さ優先探索
-    void _dfs(Graph<Optics> g, Node<Optics> v) {
+    void _dfs(Graph<Optics> g, Node v) {
       _seen[v.id] = true;
       final nodes = g.nodes[v];
 
@@ -85,6 +76,6 @@ class SimulationService {
       currentOpticsTree,
       currentOpticsTree.nodes.keys.first,
     );
-    return SimulationResult(reflectionPosition,_simulatedBeamList);
+    return SimulationResult(reflectionPosition, _simulatedBeamList);
   }
 }

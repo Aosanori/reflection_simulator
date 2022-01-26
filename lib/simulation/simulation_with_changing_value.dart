@@ -1,8 +1,4 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../optics_diagram/optics.dart';
-import 'optics_state.dart';
-import 'simulation_service.dart';
 /*
 final simulationWithChangingValueProvider = Provider(
   (ref) => SimulationWithChangingValue(

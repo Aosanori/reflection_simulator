@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:reflection_simulator/utils/environments_variables.dart';
+import 'package:reflection_simulator/utils/graph.dart';
 
 void main() {
   group('copyWith using Nullable', () {
@@ -48,6 +49,17 @@ void main() {
       modelB.type = 'test';
 
       expect(modelA.type != modelB.type, true);
+    });
+
+    test('Node Instances are different', () {
+      final modelA = Node(
+        1,
+        initialOpticsList[1],
+      );
+
+      final modelB = modelA.copy();
+      modelB.data.id = 'test';
+      expect(modelA.data.id != modelB.data.id, true);
     });
   });
 }
