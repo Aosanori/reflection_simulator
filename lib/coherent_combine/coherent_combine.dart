@@ -69,6 +69,7 @@ class CoherentCombine extends HookConsumerWidget {
                     )
                   ],
                   primaryXAxis: NumericAxis(
+                    rangePadding: ChartRangePadding.round,
                     title: AxisTitle(
                       text: viewModel.targetValue,
                     ),
