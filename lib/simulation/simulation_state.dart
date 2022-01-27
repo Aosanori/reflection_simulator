@@ -5,8 +5,6 @@ import '../optics_diagram/optics.dart';
 import '../utils/graph.dart';
 import 'simulation_result.dart';
 
-// TODO: isCombined: 別れたビームの終端が同じ場合
-
 class SimulationState {
   SimulationState({
     required this.currentBeam,

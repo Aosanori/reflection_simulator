@@ -22,19 +22,29 @@ class CreateOpticsRelationDialogViewModel extends ViewModelChangeNotifier {
   final SimulationRepository _simulationRepository;
   final OpticsStateAction _opticsStateAction;
 
-  late Node connectFrom =
-      _simulationRepository.currentOpticsTree.nodes.keys.first;
+  late Node connectFrom = currentOpticsTree.first;
 
   late Optics connectTo = _simulationRepository.currentOpticsList.first;
 
   List<Optics> get currentOpticsList => _simulationRepository.currentOpticsList;
 
-  List<Node> get currentOpticsTree =>
-      _simulationRepository.currentOpticsTree.nodes.keys.map((e) => e).toList();
+  List<Node> get currentOpticsTree {
+    final ableToConnect = <Node>[];
+    _simulationRepository.currentOpticsTree.nodes.forEach((key, value) {
+      if (key.data.runtimeType == Mirror && value.isEmpty) {
+        ableToConnect.add(key);
+      }
+
+      if (key.data.runtimeType == PolarizingBeamSplitter && value.length < 2) {
+        ableToConnect.add(key);
+      }
+    });
+    return ableToConnect;
+    //.keys.map((e) => e).toList();
+  }
 
   // Listから選ばせればいい
   void createRelation() {
-    // TODO: create
     final currentOpticsTree = _simulationRepository.currentOpticsTree;
     final newNode = Node(currentOpticsTree.nodes.length, connectTo);
     _opticsStateAction.addNode(newNode, connectFrom);
