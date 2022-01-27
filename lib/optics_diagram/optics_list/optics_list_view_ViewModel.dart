@@ -2,20 +2,20 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../common/view_model_change_notifier.dart';
 import '../../simulation/optics_state.dart';
-import '../../simulation/simulation_state_store_service.dart';
+import '../../simulation/simulation_repository.dart';
 import '../optics.dart';
 
 final opticsListViewViewModelProvider = ChangeNotifierProvider.autoDispose(
   (ref) => OpticsListViewViewModel(
-      ref.watch(simulationStateStoreProvider), ref.watch(opticsStateActionProvider),),
+      ref.watch(simulationRepositoryProvider), ref.watch(opticsStateActionProvider),),
 );
 
 class OpticsListViewViewModel extends ViewModelChangeNotifier {
-  OpticsListViewViewModel(this._simulationStateStore, this._opticsStateAction);
-  final SimulationStateStore _simulationStateStore;
+  OpticsListViewViewModel(this._simulationRepository, this._opticsStateAction);
+  final SimulationRepository _simulationRepository;
   final OpticsStateAction _opticsStateAction;
   List<Optics> get currentOpticsList =>
-      _simulationStateStore.state.currentOpticsList;
+      _simulationRepository.currentOpticsList;
 
   void dragAndDrop(int oldIndex, int newIndex) {
     /*if (newIndex > oldIndex) {
@@ -25,12 +25,12 @@ class OpticsListViewViewModel extends ViewModelChangeNotifier {
     }
 
     // 並び替え処理
-    final optics = _simulationStateStore.state.currentOpticsList[oldIndex];
-    _simulationStateStore.state.currentOpticsList
+    final optics = _simulationRepository.state.currentOpticsList[oldIndex];
+    _simulationRepository.state.currentOpticsList
       ..removeAt(oldIndex)
       ..insert(newIndex, optics);
     notifyListeners();
-    //_simulationStateStore.runSimulation();*/
+    //_simulationRepository.runSimulation();*/
   }
 
   void removeContent(int index) {

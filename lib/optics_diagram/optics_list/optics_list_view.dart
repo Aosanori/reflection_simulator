@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../create_optics/create_optics_dialog.dart';
 import '../optics_diagram_item/optics_diagram_item.dart';
 
-import 'optics_tree_view_ViewModel.dart';
+import 'optics_list_view_ViewModel.dart';
 
 class OpticsListView extends HookConsumerWidget {
   const OpticsListView({Key? key}) : super(key: key);
