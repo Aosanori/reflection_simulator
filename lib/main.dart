@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'beam_information/beam_information_display.dart';
 import 'beam_reflection_position_display/beam_reflection_position_list_display.dart';
-import 'create_optics/create_optics_dialog.dart';
 import 'optics_diagram/optics_diagram.dart';
 import 'optics_display/optics_display.dart';
 

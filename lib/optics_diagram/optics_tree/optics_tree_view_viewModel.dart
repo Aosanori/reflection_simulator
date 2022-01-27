@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:graphview/GraphView.dart' as gv;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:reflection_simulator/simulation/optics_state.dart';
 
 import '../../common/view_model_change_notifier.dart';
+import '../../simulation/optics_state.dart';
 import '../../simulation/simulation_repository.dart';
 import '../../utils/graph.dart';
 import '../optics.dart';

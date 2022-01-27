@@ -259,7 +259,7 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
     final dd = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 
     if ((r1 + r2) * (r1 + r2) <= dd) {
-      return 0.0;
+      return 0;
     }
 
     if (dd <= (r1 - r2) * (r1 - r2)) {

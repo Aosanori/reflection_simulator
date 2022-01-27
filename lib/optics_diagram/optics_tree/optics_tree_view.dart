@@ -33,14 +33,6 @@ class OpticsTreeView extends HookConsumerWidget {
           },
         ),
       ),
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: () => showDialog<CreateOpticsRelationDialog>(
-          context: context,
-          builder: (_) => CreateOpticsRelationDialog(),
-        ),
-        tooltip: 'Create Relation',
-        child: const Icon(Icons.add),
-      ),*/
     );
   }
 }
