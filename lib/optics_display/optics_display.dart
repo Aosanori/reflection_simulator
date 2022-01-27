@@ -79,6 +79,20 @@ class _OpticsPainter extends CustomPainter {
       positions[1],
       paint,
     );
+    if (optics.runtimeType == PolarizingBeamSplitter) {
+      final width = (positions[0].dx - positions[1].dx).abs();
+      paint
+        ..strokeWidth = 5
+        ..color = Colors.grey
+        ..style = PaintingStyle.stroke
+        ..strokeCap = StrokeCap.round;
+      canvas.drawRect(
+          Rect.fromCenter(
+              center: (positions[0] + positions[1]) / 2,
+              width: width,
+              height: width),
+          paint);
+    }
   }
 
   void _drawOpticsName(Canvas canvas, Optics optics, Size size) {
