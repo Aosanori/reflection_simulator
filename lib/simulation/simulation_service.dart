@@ -36,8 +36,10 @@ class SimulationService {
     ];
 
     // 深さ優先探索
+    // TODO PBSで分けれるようにする
     void _dfs(Graph<Optics> g, Node v) {
       _seen[v.id] = true;
+      // next
       final nodes = g.nodes[v];
 
       // 枝分かれを検出した時

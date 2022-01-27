@@ -50,11 +50,20 @@ class _OpticsTreeViewItem extends HookConsumerWidget {
   final Node opticsNode;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => InkWell(
-      onTap: () => showDialog<AlertDialog>(
-        context: context,
-        builder: (_) => _CreateOpticsRelationDialog(opticsNode),
-      ),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final viewModel = ref.watch(opticsTreeViewViewModelProvider);
+    return InkWell(
+      onTap: () async {
+        if ((opticsNode.data.runtimeType == PolarizingBeamSplitter &&
+                viewModel.currentOpticsTree.nodes[opticsNode]!.length < 2) ||
+            (opticsNode.data.runtimeType == Mirror &&
+                viewModel.currentOpticsTree.nodes[opticsNode]!.isEmpty)) {
+          await showDialog<AlertDialog>(
+            context: context,
+            builder: (_) => _CreateOpticsRelationDialog(opticsNode),
+          );
+        }
+      },
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: const BoxDecoration(
@@ -79,10 +88,11 @@ class _OpticsTreeViewItem extends HookConsumerWidget {
         ),
       ),
     );
+  }
 }
 
 class _CreateOpticsRelationDialog extends HookConsumerWidget {
-  _CreateOpticsRelationDialog(this.opticsNode,{Key? key}) : super(key: key);
+  _CreateOpticsRelationDialog(this.opticsNode, {Key? key}) : super(key: key);
   final Node opticsNode;
 
   final _formKey = GlobalKey<FormState>();
@@ -101,7 +111,7 @@ class _CreateOpticsRelationDialog extends HookConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-             Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   const Text('To: '),

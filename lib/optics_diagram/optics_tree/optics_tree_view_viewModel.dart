@@ -84,4 +84,9 @@ class OpticsTreeItemViewModel extends ViewModelChangeNotifier {
     _opticsStateAction.addNode(newNode, opticsNode);
     notifyListeners();
   }
+
+  void deleteNode() {
+    _opticsStateAction.deleteNode(opticsNode.id);
+    notifyListeners();
+  }
 }
