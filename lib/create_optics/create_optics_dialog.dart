@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:reflection_simulator/optics_diagram/optics.dart';
 import '../common/optics_input_dialog_input_field.dart';
 import '../utils/environments_variables.dart';
 
@@ -48,6 +49,31 @@ class CreateOpticsDialog extends HookConsumerWidget {
                   ),
                 ],
               ),
+              /*Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Text('Connect to: '),
+                  DropdownButton<String>(
+                    value: createOpticsDialogViewModel.currentConnectOptics,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    iconSize: 30,
+                    elevation: 16,
+                    underline: Container(
+                      height: 2,
+                      color: Colors.grey,
+                    ),
+                    onChanged: createOpticsDialogViewModel.changeConnectOptics,
+                    items: createOpticsDialogViewModel.currentTreeList
+                        .map<DropdownMenuItem<String>>(
+                          (value) => DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ],
+              ),*/
               OpticsDialogInputField(
                 labelText: 'Optics Name',
                 suffixText: '',
@@ -107,7 +133,7 @@ class CreateOpticsDialog extends HookConsumerWidget {
         TextButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              createOpticsDialogViewModel.addToDiagram();
+              createOpticsDialogViewModel.addOptics();
               Navigator.pop(context);
             }
           },

@@ -27,6 +27,7 @@ class EditOpticsDialogViewModel extends ViewModelChangeNotifier {
 
   void addToDiagram() {
     _opticsStateAction.editOptics(editOptics);
+    notifyListeners();
   }
 
   void changeOpticsType(String? newValue) {

@@ -1,17 +1,26 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:reflection_simulator/utils/graph.dart';
 
 import '../../common/view_model_change_notifier.dart';
-import '../../simulation/simulation_service.dart';
 import '../optics_diagram/optics.dart';
+import '../simulation/optics_state.dart';
+import '../simulation/simulation_repository.dart';
 import '../utils/random_string.dart';
 
 final createOpticsDialogViewModelProvider = ChangeNotifierProvider.autoDispose(
-  (ref) => CreateOpticsDialogViewModel(ref.watch(simulationServiceProvider)),
+  (ref) => CreateOpticsDialogViewModel(
+    ref.watch(simulationRepositoryProvider),
+    ref.watch(opticsStateActionProvider),
+  ),
 );
 
 class CreateOpticsDialogViewModel extends ViewModelChangeNotifier {
-  CreateOpticsDialogViewModel(this._simulationService);
-  final SimulationService _simulationService;
+  CreateOpticsDialogViewModel(
+    this._simulationRepository,
+    this._opticsStateAction,
+  );
+  final SimulationRepository _simulationRepository;
+  final OpticsStateAction _opticsStateAction;
 
   Optics newOptics = Mirror(
     randomString(4),
@@ -25,9 +34,11 @@ class CreateOpticsDialogViewModel extends ViewModelChangeNotifier {
     ),
   );
 
-  void addToDiagram() {
-    _simulationService.currentOpticsList.add(newOptics);
-    _simulationService.runSimulation();
+  List<Optics> get currentOpticsList => _simulationRepository.currentOpticsList;
+
+  void addOptics() {
+    _opticsStateAction.addOptics(newOptics);
+    notifyListeners();
   }
 
   void changeOpticsType(String? newValue) {

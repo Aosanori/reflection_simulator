@@ -12,21 +12,29 @@ import '../optics.dart';
 final opticsDiagramItemViewModelProvider =
     ChangeNotifierProvider.family.autoDispose<OpticsDiagramItemViewModel, int>(
   (ref, index) => OpticsDiagramItemViewModel(
-      ref.watch(simulationRepositoryProvider),
-      ref.watch(opticsStateActionProvider),
-      index,),
+    ref.watch(simulationRepositoryProvider),
+    ref.watch(opticsStateActionProvider),
+    index,
+  ),
 );
 
 class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
   OpticsDiagramItemViewModel(
       this._simulationRepository, this._opticsStateAction, this.index) {
-    final opticsList = _simulationRepository.simulationResult.simulatedBeamList.first.passedOptics;
+    final opticsList = _simulationRepository
+        .simulationResult.simulatedBeamList.first.passedOptics;
+    
+    if (index >= opticsList.length) {
+      rangeOfTheta = [-180, 180];
+      _optics = _simulationRepository.currentOpticsList[index];
+      return;
+    }
+
     _optics = opticsList[index];
     // 確実に当たる角度をスライダーの中心にする
     if (_simulationRepository.currentOpticsList.isNotEmpty &&
         index < _simulationRepository.currentOpticsList.length - 1) {
-      final nextOptics =
-          _simulationRepository.currentOpticsList[index + 1];
+      final nextOptics = _simulationRepository.currentOpticsList[index + 1];
 
       // 前の進行方向逆の偏角
       final currentBeamStartPosition =
@@ -83,12 +91,11 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
     _optics.position.theta = value;
     _opticsStateAction.editOptics(_optics);
     notifyListeners();
-
   }
 
   void changePhi(int index, double value) {
     _optics.position.phi = value;
     _opticsStateAction.editOptics(_optics);
-      notifyListeners();
+    notifyListeners();
   }
 }
