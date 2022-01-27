@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:graphview/GraphView.dart' as gv;
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../create_optics/create_optics_relation_dialog.dart';
 import '../optics.dart';
@@ -15,13 +15,26 @@ class OpticsTreeView extends HookConsumerWidget {
         },
         child: Container(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            boxShadow: const [
-              BoxShadow(color: Colors.white, spreadRadius: 1),
-            ],
+          decoration: const BoxDecoration(
+            border: Border(
+              left: BorderSide(
+                width: 3,
+              ),
+              top: BorderSide(
+                width: 3,
+              ),
+              right: BorderSide(
+                width: 3,
+              ),
+              bottom: BorderSide(
+                width: 3,
+              ),
+            ),
           ),
-          child: Text(optics.name),
+          child: Text(
+            optics.name,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
         ),
       );
 
@@ -43,7 +56,6 @@ class OpticsTreeView extends HookConsumerWidget {
             ..strokeWidth = 1
             ..style = PaintingStyle.stroke,
           builder: (node) {
-            // I can decide what widget should be shown here based on the id
             final optics = viewModel.getOpticsFromGraph(node.key!.value as int);
             return rectangleWidget(optics);
           },
