@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:graphview/GraphView.dart' as gv;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:reflection_simulator/simulation/optics_state.dart';
 
 import '../../common/view_model_change_notifier.dart';
 import '../../simulation/simulation_repository.dart';
@@ -36,14 +37,51 @@ class OpticsTreeViewViewModel extends ViewModelChangeNotifier {
     builder
       ..siblingSeparation = (100)
       ..levelSeparation = (50)
-      ..subtreeSeparation = (100)
+      ..subtreeSeparation = (75)
       ..orientation = 1;
     return graph;
   }
 
-  Optics getOpticsFromGraph(int nodeID) {
+  Node getOpticsNodeFromGraph(int nodeID) {
     final index =
         currentOpticsTree.nodes.keys.map((e) => e.id).toList().indexOf(nodeID);
-    return currentOpticsTree.nodes.keys.elementAt(index).data;
+    return currentOpticsTree.nodes.keys.elementAt(index);
+  }
+}
+
+final opticsTreeItemViewModelProvider =
+    ChangeNotifierProvider.family.autoDispose<OpticsTreeItemViewModel, Node>(
+  (ref, opticsNode) => OpticsTreeItemViewModel(
+    ref.watch(simulationRepositoryProvider),
+    ref.watch(opticsStateActionProvider),
+    opticsNode,
+  ),
+);
+
+class OpticsTreeItemViewModel extends ViewModelChangeNotifier {
+  OpticsTreeItemViewModel(
+    this._simulationRepository,
+    this._opticsStateAction,
+    this.opticsNode,
+  );
+  final SimulationRepository _simulationRepository;
+  final OpticsStateAction _opticsStateAction;
+  final Node opticsNode;
+
+  List<Optics> get currentOpticsList => _simulationRepository.currentOpticsList;
+  Graph get currentOpticsTree => _simulationRepository.currentOpticsTree;
+
+  late Optics connectTo = _simulationRepository.currentOpticsList.first;
+
+  void changeConnectTo(Optics? optics) {
+    connectTo = optics!;
+    notifyListeners();
+  }
+
+  void createRelation() {
+    final currentOpticsTree = _simulationRepository.currentOpticsTree;
+    final newNode = Node(currentOpticsTree.nodes.length, connectTo);
+    _opticsStateAction.addNode(newNode, opticsNode);
+    notifyListeners();
   }
 }
