@@ -1,12 +1,9 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import 'coherent_combine_viewModel.dart';
-
 
 class CoherentCombine extends HookConsumerWidget {
   const CoherentCombine({Key? key}) : super(key: key);
@@ -19,36 +16,69 @@ class CoherentCombine extends HookConsumerWidget {
         Expanded(
           child: Column(
             children: [
-              Row(children: [Text('Change:'),
-                /*DropdownButton<String>(
-                  value: editOpticsDialogViewModel.editOptics.type,
-                  icon: const Icon(Icons.arrow_drop_down),
-                  iconSize: 30,
-                  elevation: 16,
-                  underline: Container(
-                    height: 2,
-                    color: Colors.grey,
+              Expanded(
+                child: Row(
+                  children: [
+                    const Text('Change: '),
+                    DropdownButton<String>(
+                      value: viewModel.targetOptics.name,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      elevation: 16,
+                      onChanged: viewModel.changeTargetOptics,
+                      items: viewModel.opticsNameList
+                          .map<DropdownMenuItem<String>>(
+                            (value) => DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Text('X axis: '),
+                    DropdownButton<String>(
+                      value: viewModel.targetValue,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      elevation: 16,
+                      onChanged: viewModel.changeTargetValue,
+                      items: viewModel.targetValues
+                          .map<DropdownMenuItem<String>>(
+                            (value) => DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 8,
+                child: SfCartesianChart(
+                  series: <ChartSeries>[
+                    // Renders line chart
+                    LineSeries<ChartData, double>(
+                      dataSource: viewModel.chartData,
+                      xValueMapper: (data, _) => data.x,
+                      yValueMapper: (data, _) => data.y,
+                      xAxisName: viewModel.targetValue,
+                      yAxisName: 'Combine Rate',
+                    )
+                  ],
+                  primaryXAxis: NumericAxis(
+                    title: AxisTitle(
+                      text: viewModel.targetValue,
+                    ),
                   ),
-                  onChanged: editOpticsDialogViewModel.changeOpticsType,
-                  items: opticsTypes
-                      .map<DropdownMenuItem<String>>(
-                        (value) => DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        ),
-                      )
-                      .toList(),
-                ),*/
-              ],),
-              SfCartesianChart(
-                series: <ChartSeries>[
-                  // Renders line chart
-                  LineSeries<ChartData, double>(
-                    dataSource: viewModel.chartData,
-                    xValueMapper: (ChartData sales, _) => sales.year,
-                    yValueMapper: (ChartData sales, _) => sales.sales,
-                  )
-                ],
+                  primaryYAxis: NumericAxis(
+                    title: AxisTitle(
+                      text: 'Combine Rate',
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
