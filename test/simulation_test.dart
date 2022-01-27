@@ -18,7 +18,7 @@ void main() {
         () {
           final stopwatch = Stopwatch()..start();
           final targetOptics = initialOpticsList[2];
-          final targetValue = 'theta';
+          const targetValue = 'theta';
           final container = ProviderContainer();
           final repository = container.read(simulationRepositoryProvider);
           final results = repository.runSimulationWithChangingValue(
@@ -37,7 +37,7 @@ void main() {
         () async {
           final stopwatch = Stopwatch()..start();
           final targetOptics = initialOpticsList[2];
-          final targetValue = 'theta';
+          const targetValue = 'theta';
           final container = ProviderContainer();
           final repository = container.read(simulationRepositoryProvider);
           final com = await compute(
@@ -52,21 +52,7 @@ void main() {
           expect(stopwatch.elapsed.inMilliseconds < 150, true);
         },
       );
-      test(
-        'initial value',
-        () {
-          final container = ProviderContainer();
-          final result =
-              container.read(simulationServiceProvider).runSimulation(
-                    currentBeam: initialBeam,
-                    currentOpticsTree: initialOpticsTree,
-                  );
 
-          final distanceFromStart =
-              result.simulatedBeamList.first.distanceFromStart;
-          expect((distanceFromStart - 1800).abs() < 1, true);
-        },
-      );
       test(
         'case 1 (直角反射)',
         () {
@@ -349,6 +335,187 @@ void main() {
           expect((distanceFromStart - 1200).abs() < 0.1, true);
           expect((position.x - 0).abs() < 0.001, true);
           expect((position.y - (-0)).abs() < 0.001, true);
+        },
+      );
+
+      test(
+        'case 4 (Sagnac interferometer)',
+        () {
+          final container = ProviderContainer();
+
+          final testOpticsList = <Optics>[
+            PolarizingBeamSplitter(
+              'item1',
+              'PBS1',
+              OpticsPosition(x: 300, y: 100, z: 0, theta: -135, phi: 90),
+            ),
+            Mirror(
+              'item2',
+              'M2',
+              OpticsPosition(x: 300, y: -100, z: 0, theta: 45.3, phi: 90),
+            ),
+            Mirror(
+              'item3',
+              'M3',
+              OpticsPosition(x: 500, y: -100, z: 0, theta: 135, phi: 90),
+            ),
+            PolarizingBeamSplitter(
+              'item4',
+              'PBS2',
+              OpticsPosition(x: 500, y: 100, z: 0, theta: -45, phi: 90),
+            ),
+            Mirror(
+              'item5',
+              'M5',
+              OpticsPosition(x: 700, y: 100, z: 0, theta: 180, phi: 90),
+            ),
+            PolarizingBeamSplitter(
+              'item6',
+              'PBS3',
+              OpticsPosition(x: 100, y: 100, z: 0, theta: 45, phi: 90),
+            ),
+            Mirror(
+              'item7',
+              'M7',
+              OpticsPosition(x: 100, y: 200, z: 0, theta: -90, phi: 90),
+            ),
+          ];
+// nodeのidはintで
+          final testOpticsTree = Graph<Optics>(
+            {
+              Node(
+                0,
+                testOpticsList[0],
+                // どこと繋がっているか
+              ): [
+                Node(
+                  1,
+                  testOpticsList[1],
+                ),
+                Node(
+                  7,
+                  testOpticsList[4],
+                )
+              ],
+              Node(
+                1,
+                testOpticsList[1],
+              ): [
+                Node(
+                  2,
+                  testOpticsList[2],
+                )
+              ],
+              Node(
+                2,
+                testOpticsList[2],
+              ): [
+                Node(
+                  3,
+                  testOpticsList[3],
+                ),
+              ],
+              Node(
+                3,
+                testOpticsList[3],
+              ): [
+                Node(
+                  4,
+                  testOpticsList[4],
+                )
+              ],
+              Node(
+                4,
+                testOpticsList[4],
+              ): [
+                Node(
+                  5,
+                  testOpticsList[5],
+                ),
+              ],
+              Node(
+                5,
+                testOpticsList[5],
+              ): [
+                Node(
+                  6,
+                  testOpticsList[6],
+                ),
+              ],
+              Node(
+                6,
+                testOpticsList[6],
+              ): [],
+              Node(
+                7,
+                testOpticsList[4],
+              ): [
+                Node(
+                  8,
+                  testOpticsList[3],
+                )
+              ],
+              Node(
+                8,
+                testOpticsList[3],
+              ): [
+                Node(
+                  9,
+                  testOpticsList[2],
+                ),
+              ],
+              Node(
+                9,
+                testOpticsList[2],
+              ): [
+                Node(
+                  10,
+                  testOpticsList[1],
+                )
+              ],
+              Node(
+                10,
+                testOpticsList[1],
+              ): [
+                Node(
+                  11,
+                  testOpticsList[0],
+                )
+              ],
+              Node(
+                11,
+                testOpticsList[0],
+              ): [
+                Node(
+                  12,
+                  testOpticsList[5],
+                )
+              ],
+              Node(
+                12,
+                testOpticsList[5],
+              ): [
+                Node(
+                  13,
+                  testOpticsList[6],
+                ),
+              ],
+              Node(
+                13,
+                testOpticsList[6],
+              ): []
+            },
+          );
+
+          final result =
+              container.read(simulationServiceProvider).runSimulation(
+                    currentBeam: initialBeam,
+                    currentOpticsTree: testOpticsTree,
+                  );
+
+          final distanceFromStart =
+              result.simulatedBeamList.first.distanceFromStart;
+          expect((distanceFromStart - 1800).abs() < 1, true);
         },
       );
     },

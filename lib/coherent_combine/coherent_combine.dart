@@ -90,7 +90,6 @@ class CoherentCombine extends HookConsumerWidget {
                 child: SfRadialGauge(
                   axes: <RadialAxis>[
                     RadialAxis(
-                      minimum: 0,
                       ranges: <GaugeRange>[
                         GaugeRange(
                             startValue: 0, endValue: 30, color: Colors.red),

@@ -52,7 +52,8 @@ class SimulationRepository {
       );
 
   Map<double, SimulationResult> runSimulationWithChangingValue(
-      VariableOfSimulationWithChangingValue variable) {
+    VariableOfSimulationWithChangingValue variable,
+  ) {
     final results = <double, SimulationResult>{};
 
     for (var value = -0.5; value <= 0.5; value += variable.margin) {
@@ -79,6 +80,11 @@ class SimulationRepository {
         case 'phi':
           tmpTarget.position.phi += value;
           currentValue = tmpTarget.position.phi;
+          break;
+        case 'x-y Diagonal':
+          tmpTarget.position.x += value;
+          tmpTarget.position.y += value;
+          currentValue = value;
           break;
         default:
           break;

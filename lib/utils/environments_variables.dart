@@ -11,7 +11,7 @@ const opticsTypes = <String>['Mirror', 'PBS'];
 const adjustableAngleOfBeam = 5;
 const adjustableAngleOfMirror = 5;
 
-const branchColor = [Colors.red, Colors.blue,Colors.green,Colors.orange];
+const branchColor = [Colors.red, Colors.blue,Colors.green,Colors.orange,Colors.purple];
 
 // 基本球座標
 // ただしx-y平面の曲座標をθとしている()

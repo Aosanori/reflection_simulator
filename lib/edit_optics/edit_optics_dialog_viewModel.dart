@@ -1,27 +1,32 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:reflection_simulator/simulation/optics_state.dart';
 
 import '../../common/view_model_change_notifier.dart';
-import '../../simulation/simulation_service.dart';
 import '../optics_diagram/optics.dart';
+import '../simulation/simulation_repository.dart';
 
 final editOpticsDialogViewModelProvider =
     ChangeNotifierProvider.family.autoDispose<EditOpticsDialogViewModel, int>(
-  (ref, index) =>
-      EditOpticsDialogViewModel(ref.watch(simulationServiceProvider), index),
+  (ref, index) => EditOpticsDialogViewModel(
+    ref.watch(simulationRepositoryProvider),
+    ref.watch(opticsStateActionProvider),
+    index,
+  ),
 );
 
 class EditOpticsDialogViewModel extends ViewModelChangeNotifier {
-  EditOpticsDialogViewModel(this._simulationService, this.index) {
-    editOptics = _simulationService.currentOpticsList[index];
+  EditOpticsDialogViewModel(
+      this._simulationRepository, this._opticsStateAction, this.index) {
+    editOptics = _simulationRepository.currentOpticsList[index].copy();
   }
-  final SimulationService _simulationService;
+  final SimulationRepository _simulationRepository;
+  final OpticsStateAction _opticsStateAction;
   final int index;
 
   late Optics editOptics;
 
   void addToDiagram() {
-    _simulationService.currentOpticsList[index] = editOptics;
-    _simulationService.runSimulation();
+    _opticsStateAction.editOptics(editOptics);
   }
 
   void changeOpticsType(String? newValue) {
