@@ -5,40 +5,134 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:vector_math/vector_math.dart';
 
 import '../../common/view_model_change_notifier.dart';
-import '../../simulation/simulation_state_store_service.dart';
 import '../beam_information/beam.dart';
-import '../simulation/simulation_with_changing_value.dart';
+import '../optics_diagram/optics.dart';
+import '../simulation/simulation_repository.dart';
 import '../utils/environments_variables.dart';
+
+class ChartData {
+  ChartData(this.x, this.y);
+  final double x;
+  final double y;
+}
+
+final _changeOpticsValueChartViewModelProvider = ChangeNotifierProvider(
+  (ref) => ChangeOpticsValueChartViewModel(),
+);
+
+class ChangeOpticsValueChartViewModel extends ViewModelChangeNotifier {
+  ChangeOpticsValueChartViewModel() {
+    targetOptics = null;
+    targetValue = null;
+  }
+
+  late Optics? targetOptics;
+  late String? targetValue;
+
+  void initialize(Optics optics, String value) {
+    targetOptics = optics;
+    targetValue = value;
+    notifyListeners();
+  }
+
+  void setOptics(Optics optics) {
+    targetOptics = optics;
+    notifyListeners();
+  }
+
+  void setTargetValue(String value) {
+    targetValue = value;
+    notifyListeners();
+  }
+}
 
 final coherentCombineViewModelProvider = ChangeNotifierProvider(
   (ref) => CoherentCombineViewModel(
-    ref.watch(simulationStateStoreProvider),
-    ref.watch(simulationWithChangingValueProvider),
+    ref.watch(simulationRepositoryProvider),
+    ref.watch(_changeOpticsValueChartViewModelProvider),
   ),
 );
 
 class CoherentCombineViewModel extends ViewModelChangeNotifier {
   CoherentCombineViewModel(
-    this._simulationStateStore,
-    this._simulationWithChangingValue,
-  ) {
-    _simulationWithChangingValue.runSimulation(
-      target: initialOpticsList[2],
-      targetValue: 'theta',
-    );
+      this._simulationRepository, this._changeOpticsValueChartViewModel) {
+    if (_changeOpticsValueChartViewModel.targetOptics == null ||
+        _changeOpticsValueChartViewModel.targetValue == null) {
+      _changeOpticsValueChartViewModel.initialize(initialOpticsList[0], 'x');
+    }
+    targetOptics = _changeOpticsValueChartViewModel.targetOptics!;
+    targetValue = _changeOpticsValueChartViewModel.targetValue!;
   }
 
-  final SimulationStateStore _simulationStateStore;
-  final SimulationWithChangingValue _simulationWithChangingValue;
+  final SimulationRepository _simulationRepository;
+  final ChangeOpticsValueChartViewModel _changeOpticsValueChartViewModel;
+
+  final List<String> targetValues = [
+    'x',
+    'y',
+    'z',
+    'theta',
+    'phi',
+    'x-y Diagonal'
+  ];
+
+  late Optics targetOptics;
+  late String targetValue;
+
+  void changeTargetOptics(String? target) {
+    final index = _simulationRepository.currentOpticsList
+        .map((e) => e.name)
+        .toList()
+        .indexOf(target!);
+    targetOptics = _simulationRepository.currentOpticsList[index];
+    _changeOpticsValueChartViewModel.setOptics(targetOptics);
+    notifyListeners();
+  }
+
+  void changeTargetValue(String? value) {
+    targetValue = value!;
+    _changeOpticsValueChartViewModel.setTargetValue(targetValue);
+    notifyListeners();
+  }
+
+  List<String> get opticsNameList =>
+      _simulationRepository.currentOpticsList.map((e) => e.name).toList();
+
+  List<ChartData> get chartData {
+    final results = _simulationRepository.runSimulationWithChangingValue(
+      VariableOfSimulationWithChangingValue(targetOptics, targetValue),
+    );
+    /*final results = await compute(
+      _simulationRepository.runSimulationWithChangingValue,
+      VariableOfSimulationWithChangingValue(targetOptics,targetValue),
+    );*/
+
+    final chartData = <ChartData>[];
+
+    results.forEach((key, value) {
+      final reflectionPositions = value.reflectionPositions;
+      final resultsOfEnd = reflectionPositions
+          .map((branch) => branch.last.values.first)
+          .toList();
+      final beams = value.simulatedBeamList;
+      final data = <Beam, Vector3>{};
+      for (var i = 0; i < resultsOfEnd.length; i++) {
+        data[beams[i]] = resultsOfEnd[i];
+      }
+      final result = monteCarlo(data);
+      chartData.add(ChartData(key, result));
+    });
+
+    return chartData;
+  }
 
   List<double> get distanceFromStartList =>
-      _simulationStateStore.state.simulationResult.simulatedBeamList
+      _simulationRepository.simulationResult.simulatedBeamList
           .map((beam) => beam.distanceFromStart)
           .toList();
 
   List<double> get angles {
-    final beams =
-        _simulationStateStore.state.simulationResult.simulatedBeamList;
+    final beams = _simulationRepository.simulationResult.simulatedBeamList;
     final results = beams.map((beam) {
       final angle =
           beam.direction.angleTo(beam.passedOptics.last.normalVector) *
@@ -69,28 +163,16 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
       index++;
     }
     return result;
-    /*angles.map<GaugePointer>((e) {
-      NeedlePointer(
-        value: e,
-        needleEndWidth: 5,
-        knobStyle: KnobStyle(
-          knobRadius: 0,
-          sizeUnit: GaugeSizeUnit.logicalPixel,
-          color: branchColor[index],
-        ),
-      );
-    }).toList();*/
   }
 
   double get idealDistanceFromEnd {
     var result = 0.0;
-    final positionList = _simulationStateStore
-        .state.simulationResult.simulatedBeamList.first.passedOptics
+    final positionList = _simulationRepository
+        .simulationResult.simulatedBeamList.first.passedOptics
         .map((optics) => optics.position.vector)
         .toList();
 
-    var previousPosition =
-        _simulationStateStore.state.currentBeam.startFrom.vector;
+    var previousPosition = _simulationRepository.currentBeam.startFrom.vector;
     for (final position in positionList) {
       result += previousPosition.distanceTo(position);
       previousPosition = position;
@@ -103,7 +185,7 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
     var offset = 0.0;
     var index = 0;
     for (final beam
-        in _simulationStateStore.state.simulationResult.simulatedBeamList) {
+        in _simulationRepository.simulationResult.simulatedBeamList) {
       result.add(
         LinearBarPointer(
           value: beam.distanceFromStart,
@@ -121,30 +203,29 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
   double get averageDistanceFromStart {
     var result = 0.0;
     for (final beam
-        in _simulationStateStore.state.simulationResult.simulatedBeamList) {
+        in _simulationRepository.simulationResult.simulatedBeamList) {
       result += beam.distanceFromStart;
     }
     return result /
-        _simulationStateStore.state.simulationResult.simulatedBeamList.length
+        _simulationRepository.simulationResult.simulatedBeamList.length
             .toDouble();
   }
 
   List<int> get lastOpticsNodeIdList {
     final reflectionPositions =
-        _simulationStateStore.state.simulationResult.reflectionPositions;
+        _simulationRepository.simulationResult.reflectionPositions;
     // O(N)
     return reflectionPositions.map((branch) => branch.last.keys.first).toList();
   }
 
   bool get isCombined {
     var result = true;
-    var previousOptics = _simulationStateStore
-        .state.currentOpticsTree.nodes.keys
+    var previousOptics = _simulationRepository.currentOpticsTree.nodes.keys
         .elementAt(lastOpticsNodeIdList.first)
         .data;
     for (var i = 1; i < lastOpticsNodeIdList.length; i++) {
       final nodeID = lastOpticsNodeIdList[i];
-      final optics = _simulationStateStore.state.currentOpticsTree.nodes.keys
+      final optics = _simulationRepository.currentOpticsTree.nodes.keys
           .elementAt(nodeID)
           .data;
       result &= optics == previousOptics;
@@ -155,11 +236,10 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
 
   double get combineRate {
     final reflectionPositions =
-        _simulationStateStore.state.simulationResult.reflectionPositions;
+        _simulationRepository.simulationResult.reflectionPositions;
     final resultsOfEnd =
         reflectionPositions.map((branch) => branch.last.values.first).toList();
-    final beams =
-        _simulationStateStore.state.simulationResult.simulatedBeamList;
+    final beams = _simulationRepository.simulationResult.simulatedBeamList;
 
     final data = <Beam, Vector3>{};
     for (var i = 0; i < resultsOfEnd.length; i++) {
@@ -170,7 +250,7 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
   }
 
   // TODO:　全方向に対応
-  double circles_intersection_area(Vector3 p1, num r1, Vector3 p2, num r2) {
+  double circlesIntersectionArea(Vector3 p1, num r1, Vector3 p2, num r2) {
     final x1 = p1.x;
     final y1 = p1.z;
     final x2 = p2.x;
@@ -216,7 +296,7 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
       final p2 = data.values.elementAt(1);
       final r1 = data.keys.elementAt(0).beamWaist;
       final r2 = data.keys.elementAt(1).beamWaist;
-      return circles_intersection_area(p1, r1, p2, r2) /
+      return circlesIntersectionArea(p1, r1, p2, r2) /
           (min(r1, r2) * min(r1, r2) * pi) *
           100;
     }
