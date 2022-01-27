@@ -1,5 +1,4 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:reflection_simulator/utils/graph.dart';
 
 import '../../common/view_model_change_notifier.dart';
 import '../optics_diagram/optics.dart';
