@@ -29,8 +29,11 @@ class OpticsTreeViewViewModel extends ViewModelChangeNotifier {
     currentOpticsTree.nodes.forEach((key, value) {
       final rootNode = gv.Node.Id(key.id);
       for (final edge in value) {
-        final edgeNode = gv.Node.Id(edge.id);
-        graph.addEdge(rootNode, edgeNode, paint: Paint()..color = Colors.black);
+        if (edge != null) {
+          final edgeNode = gv.Node.Id(edge.id);
+          graph.addEdge(rootNode, edgeNode,
+              paint: Paint()..color = Colors.black);
+        }
       }
     });
 
@@ -86,7 +89,7 @@ class OpticsTreeItemViewModel extends ViewModelChangeNotifier {
   }
 
   void deleteNode() {
-    _opticsStateAction.deleteNode(opticsNode.id);
+    _opticsStateAction.deleteNode(opticsNode);
     notifyListeners();
   }
 }

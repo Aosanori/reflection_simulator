@@ -18,12 +18,22 @@ class Beam {
     );
   }
 
-  Beam copy() => Beam(
-        type: type,
-        waveLength: waveLength,
-        beamWaist: beamWaist,
-        startFrom: startFrom.copy(),
-      );
+  Beam copy() {
+    final newBeam = Beam(
+      type: type,
+      waveLength: waveLength,
+      beamWaist: beamWaist,
+      startFrom: startFrom.copy(),
+    )
+      ..distanceFromStart = distanceFromStart
+      ..passedOptics = passedOptics.map((e) => e).toList()
+      ..ray = Ray.originDirection(
+      startFrom.vector.clone(),
+      direction.clone(),
+    );
+
+    return newBeam;
+  }
 
   String type;
   num waveLength; // nm
@@ -98,12 +108,12 @@ class Beam {
       direction,
     );
     startPositionVector = nextStartPoint;
-    passedOptics.add(optics);
+    //passedOptics.add(optics);
     return nextStartPoint;
   }
 
   // 反射しない場合
-  void reachTo(Optics optics) {
+  Vector3 reachTo(Optics optics) {
     final nextStartPoint = pointOfReflection(optics);
     distanceFromStart += nextStartPoint.distanceTo(startPositionVector);
     ray = Ray.originDirection(
@@ -111,6 +121,7 @@ class Beam {
       direction,
     );
     startPositionVector = nextStartPoint;
-    passedOptics.add(optics);
+    //passedOptics.add(optics);
+    return nextStartPoint;
   }
 }

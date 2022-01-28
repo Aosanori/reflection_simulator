@@ -33,7 +33,7 @@ final List<Optics> initialOpticsList = <Optics>[
   Mirror(
     'item2',
     'M2',
-    OpticsPosition(x: 300, y: -100, z: 0, theta: 45.3, phi: 90),
+    OpticsPosition(x: 300, y: -100, z: 0, theta: 45, phi: 90),
   ),
   Mirror(
     'item3',
@@ -70,13 +70,13 @@ final initialOpticsTree = Graph<Optics>(
       // どこと繋がっているか
     ): [
       Node(
+        7,
+        initialOpticsList[4],
+      ),
+      Node(
         1,
         initialOpticsList[1],
       ),
-      Node(
-        7,
-        initialOpticsList[4],
-      )
     ],
     Node(
       1,
@@ -100,6 +100,7 @@ final initialOpticsTree = Graph<Optics>(
       3,
       initialOpticsList[3],
     ): [
+      null,
       Node(
         4,
         initialOpticsList[4],
@@ -118,6 +119,7 @@ final initialOpticsTree = Graph<Optics>(
       5,
       initialOpticsList[5],
     ): [
+      null,
       Node(
         6,
         initialOpticsList[6],
@@ -140,6 +142,7 @@ final initialOpticsTree = Graph<Optics>(
       8,
       initialOpticsList[3],
     ): [
+      null,
       Node(
         9,
         initialOpticsList[2],
@@ -167,6 +170,7 @@ final initialOpticsTree = Graph<Optics>(
       11,
       initialOpticsList[0],
     ): [
+      null,
       Node(
         12,
         initialOpticsList[5],
@@ -176,6 +180,7 @@ final initialOpticsTree = Graph<Optics>(
       12,
       initialOpticsList[5],
     ): [
+      null,
       Node(
         13,
         initialOpticsList[6],

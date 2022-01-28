@@ -95,7 +95,7 @@ class SimulationRepository {
       // 枝から取得しているためkeyを変えても意味ない
       for (final edges in tmpOpticsTree.nodes.values) {
         for (final edge in edges) {
-          if (nodeIDs.contains(edge.id)) {
+          if (edge != null && nodeIDs.contains(edge.id)) {
             edge.data = tmpTarget;
           }
         }

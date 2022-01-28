@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vector_math/vector_math.dart';
 
 import '../beam_information/beam.dart';
 import '../optics_diagram/optics.dart';
@@ -42,6 +43,7 @@ class SimulationService {
       // next
       final nodes = g.nodes[v];
 
+      /*
       // 枝分かれを検出した時
       if (nodes!.length > 1) {
         for (var i = 0; i < nodes.length - 1; i++) {
@@ -60,13 +62,62 @@ class SimulationService {
       }
 
       final position = _simulatedBeamList[branchID].reflect(v.data);
-      reflectionPosition[branchID].add({v.id: position});
+      reflectionPosition[branchID].add({v.id: position});*/
 
-      for (final nextV in nodes) {
-        if (_seen[nextV.id]) {
-          continue;
+      //透過ならばindex0 反射ならindex1とする
+      /*Beam(
+        type: _simulatedBeamList[branchID].type,
+        waveLength: _simulatedBeamList[branchID].waveLength,
+        beamWaist: _simulatedBeamList[branchID].beamWaist,
+        startFrom: _simulatedBeamList[branchID].startFrom,
+      );*/
+      //final tmpBeam = _simulatedBeamList[branchID];
+      //print('${v.data.name}');
+      //print(tmpBeam.direction);
+
+      if (v.data.runtimeType == PolarizingBeamSplitter) {
+        Vector3? position;
+        // ok (枝分かれがある時)
+        if (!nodes!.contains(null)) {
+          _simulatedBeamList.add(_simulatedBeamList[branchID].copy());
+          reflectionPosition.add([
+            {v.id: _simulatedBeamList[branchID].startPositionVector}
+          ]);
         }
-        _dfs(g, nextV);
+
+        var offsetBranch = 0;
+        if (nodes[0] != null) {
+          position = _simulatedBeamList[branchID].reachTo(v.data);
+          offsetBranch++;
+        }
+        if (nodes[1] != null) {
+          position =
+              _simulatedBeamList[branchID + offsetBranch].reflect(v.data);
+        }
+
+        _simulatedBeamList[branchID].passedOptics.add(v.data);
+
+        if(offsetBranch == 1){
+          _simulatedBeamList[branchID+ offsetBranch].passedOptics.add(v.data);
+          reflectionPosition[branchID+ offsetBranch].add({v.id: position!});
+        }
+
+        reflectionPosition[branchID].add({v.id: position!});
+      }
+
+      if (v.data.runtimeType == Mirror) {
+        final position = _simulatedBeamList[branchID].reflect(v.data);
+        _simulatedBeamList[branchID].passedOptics.add(v.data);
+        reflectionPosition[branchID].add({v.id: position});
+      }
+
+      for (final nextV in nodes!) {
+        if (nextV != null) {
+          if (_seen[nextV.id]) {
+            continue;
+          }
+          _dfs(g, nextV);
+        }
       }
       // 末端に到達した数 = 枝の数
       if (nodes.isEmpty) {

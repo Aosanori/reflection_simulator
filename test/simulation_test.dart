@@ -352,7 +352,7 @@ void main() {
             Mirror(
               'item2',
               'M2',
-              OpticsPosition(x: 300, y: -100, z: 0, theta: 45.3, phi: 90),
+              OpticsPosition(x: 300, y: -100, z: 0, theta: 45, phi: 90),
             ),
             Mirror(
               'item3',
@@ -380,7 +380,7 @@ void main() {
               OpticsPosition(x: 100, y: 200, z: 0, theta: -90, phi: 90),
             ),
           ];
-// nodeのidはintで
+// nodeのidはintで 0 3 5
           final testOpticsTree = Graph<Optics>(
             {
               Node(
@@ -389,13 +389,13 @@ void main() {
                 // どこと繋がっているか
               ): [
                 Node(
+                  7,
+                  testOpticsList[4],
+                ),
+                Node(
                   1,
                   testOpticsList[1],
                 ),
-                Node(
-                  7,
-                  testOpticsList[4],
-                )
               ],
               Node(
                 1,
@@ -419,6 +419,7 @@ void main() {
                 3,
                 testOpticsList[3],
               ): [
+                null,
                 Node(
                   4,
                   testOpticsList[4],
@@ -437,6 +438,7 @@ void main() {
                 5,
                 testOpticsList[5],
               ): [
+                null,
                 Node(
                   6,
                   testOpticsList[6],
@@ -459,6 +461,7 @@ void main() {
                 8,
                 testOpticsList[3],
               ): [
+                null,
                 Node(
                   9,
                   testOpticsList[2],
@@ -486,6 +489,7 @@ void main() {
                 11,
                 testOpticsList[0],
               ): [
+                null,
                 Node(
                   12,
                   testOpticsList[5],
@@ -495,6 +499,7 @@ void main() {
                 12,
                 testOpticsList[5],
               ): [
+                null,
                 Node(
                   13,
                   testOpticsList[6],
@@ -512,10 +517,18 @@ void main() {
                     currentBeam: initialBeam,
                     currentOpticsTree: testOpticsTree,
                   );
-
-          final distanceFromStart =
+          final distanceFromStart_1 =
               result.simulatedBeamList.first.distanceFromStart;
-          expect((distanceFromStart - 1800).abs() < 1, true);
+          final distanceFromStart_2 =
+              result.simulatedBeamList.first.distanceFromStart;
+          final position_1 = result.simulatedBeamList.first.startPositionVector;
+          final position_2 = result.simulatedBeamList.last.startPositionVector;
+          expect((distanceFromStart_1 - 1800).abs() < 0.01, true);
+          expect((distanceFromStart_2 - 1800).abs() < 0.01, true);
+          expect((position_1.x - 100).abs() < 0.01, true);
+          expect((position_1.y - (200)).abs() < 0.01, true);
+          expect((position_2.x - 100).abs() < 0.01, true);
+          expect((position_2.y - (200)).abs() < 0.01, true);
         },
       );
     },

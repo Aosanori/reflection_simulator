@@ -2,13 +2,18 @@ import '../optics_diagram/optics.dart';
 
 class Graph<T extends Optics> {
   Graph(this.nodes);
-  final Map<Node, List<Node>> nodes;
+  final Map<Node, List<Node?>> nodes;
 
   Graph copy() {
-    final clone = <Node, List<Node>>{};
+    final clone = <Node, List<Node?>>{};
     nodes.forEach((node, edges) {
       final clonedNode = node.copy();
-      final clonedEdges = edges.map((edge) => edge.copy()).toList();
+      final clonedEdges = edges.map((edge) {
+        if (edge != null) {
+          return edge.copy();
+        }
+        return null;
+      }).toList();
       clone[clonedNode] = clonedEdges;
     });
     return Graph(clone);
