@@ -47,7 +47,7 @@ class CreateOpticsRelationDialogViewModel extends ViewModelChangeNotifier {
   void createRelation() {
     final currentOpticsTree = _simulationRepository.currentOpticsTree;
     final newNode = Node(currentOpticsTree.nodes.length, connectTo);
-    _opticsStateAction.addNode(newNode, connectFrom);
+    //_opticsStateAction.addNode(newNode, connectFrom);
     notifyListeners();
   }
 

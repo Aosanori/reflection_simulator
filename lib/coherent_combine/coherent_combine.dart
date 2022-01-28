@@ -52,6 +52,13 @@ class CoherentCombine extends HookConsumerWidget {
                           )
                           .toList(),
                     ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    TextButton(
+                      onPressed: viewModel.downloadCSV,
+                      child:const Text('Download CSV'),
+                    ),
                   ],
                 ),
               ),

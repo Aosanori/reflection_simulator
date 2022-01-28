@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:reflection_simulator/csv/csv_service.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:vector_math/vector_math.dart';
 
@@ -14,6 +15,11 @@ class ChartData {
   ChartData(this.x, this.y);
   final double x;
   final double y;
+
+  List<String> toCsvFormat() => [
+        '$x',
+        '$y',
+      ];
 }
 
 final _changeOpticsValueChartViewModelProvider = ChangeNotifierProvider(
@@ -50,12 +56,15 @@ final coherentCombineViewModelProvider = ChangeNotifierProvider(
   (ref) => CoherentCombineViewModel(
     ref.watch(simulationRepositoryProvider),
     ref.watch(_changeOpticsValueChartViewModelProvider),
+    ref.watch(
+      csvServiceProvider,
+    ),
   ),
 );
 
 class CoherentCombineViewModel extends ViewModelChangeNotifier {
-  CoherentCombineViewModel(
-      this._simulationRepository, this._changeOpticsValueChartViewModel) {
+  CoherentCombineViewModel(this._simulationRepository,
+      this._changeOpticsValueChartViewModel, this._csvService) {
     if (_changeOpticsValueChartViewModel.targetOptics == null ||
         _changeOpticsValueChartViewModel.targetValue == null) {
       _changeOpticsValueChartViewModel.initialize(initialOpticsList[0], 'x');
@@ -66,6 +75,7 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
 
   final SimulationRepository _simulationRepository;
   final ChangeOpticsValueChartViewModel _changeOpticsValueChartViewModel;
+  final CSVService _csvService;
 
   final List<String> targetValues = [
     'x',
@@ -93,6 +103,13 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
     targetValue = value!;
     _changeOpticsValueChartViewModel.setTargetValue(targetValue);
     notifyListeners();
+  }
+
+  void downloadCSV() {
+    _csvService.csvDownload(
+      header: [targetValue + ' of ' + targetOptics.name, 'CombineRate'],
+      chartData: chartData,
+    );
   }
 
   List<String> get opticsNameList =>

@@ -26,16 +26,21 @@ class OpticsTreeViewViewModel extends ViewModelChangeNotifier {
   gv.Graph get graph {
     final graph = gv.Graph()..isTree = true;
 
-    currentOpticsTree.nodes.forEach((key, value) {
-      final rootNode = gv.Node.Id(key.id);
-      for (final edge in value) {
-        if (edge != null) {
-          final edgeNode = gv.Node.Id(edge.id);
-          graph.addEdge(rootNode, edgeNode,
-              paint: Paint()..color = Colors.black);
+    currentOpticsTree.nodes.forEach(
+      (key, value) {
+        final rootNode = gv.Node.Id(key.id);
+        for (final edge in value) {
+          if (edge != null) {
+            final edgeNode = gv.Node.Id(edge.id);
+            graph.addEdge(
+              rootNode,
+              edgeNode,
+              paint: Paint()..color = Colors.black,
+            );
+          }
         }
-      }
-    });
+      },
+    );
 
     builder
       ..siblingSeparation = (100)
@@ -70,6 +75,7 @@ class OpticsTreeItemViewModel extends ViewModelChangeNotifier {
   final SimulationRepository _simulationRepository;
   final OpticsStateAction _opticsStateAction;
   final Node opticsNode;
+  late bool willReflect = true;
 
   List<Optics> get currentOpticsList => _simulationRepository.currentOpticsList;
   Graph get currentOpticsTree => _simulationRepository.currentOpticsTree;
@@ -84,7 +90,7 @@ class OpticsTreeItemViewModel extends ViewModelChangeNotifier {
   void createRelation() {
     final currentOpticsTree = _simulationRepository.currentOpticsTree;
     final newNode = Node(currentOpticsTree.nodes.length, connectTo);
-    _opticsStateAction.addNode(newNode, opticsNode);
+    _opticsStateAction.addNode(newNode, opticsNode, willReflect);
     notifyListeners();
   }
 

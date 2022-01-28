@@ -6,6 +6,38 @@ import '../optics_diagram/optics.dart';
 import '../utils/environments_variables.dart';
 import '../utils/graph.dart';
 
+final opticsStateActionProvider =
+    Provider((ref) => OpticsStateAction(ref.watch(opticsStateProvider)));
+
+class OpticsStateAction {
+  OpticsStateAction(this._opticsState);
+  final OpticsState _opticsState;
+
+  void addNode(Node node, Node previousNode, bool willReflect) {
+    _opticsState.addNode(node, previousNode, willReflect);
+  }
+
+  void deleteNode(Node node) {
+    _opticsState.deleteNode(node);
+  }
+
+  void addOptics(Optics optics) {
+    _opticsState.addOptics(optics);
+  }
+
+  void deleteOptics(Optics optics) {
+    _opticsState.deleteOptics(optics);
+  }
+
+  void editOptics(Optics optics) {
+    _opticsState.editOptics(optics);
+  }
+
+  void editBeam(Beam newBeam) {
+    _opticsState.editBeam(newBeam);
+  }
+}
+
 final opticsStateProvider = ChangeNotifierProvider(
   (ref) => OpticsState(),
 );
@@ -17,12 +49,12 @@ class OpticsState extends ViewModelChangeNotifier {
     currentBeam = initialBeam;
 
     for (final optics in currentOpticsList) {
-      _opticsListVersusOpticsNode[optics.id] = <int>[];
+      opticsListVersusOpticsNode[optics.id] = <int>[];
     }
 
     final nodes = currentOpticsTree.nodes;
     for (final node in nodes.keys) {
-      _opticsListVersusOpticsNode[node.data.id]!.add(node.id);
+      opticsListVersusOpticsNode[node.data.id]!.add(node.id);
     }
   }
 
@@ -30,28 +62,94 @@ class OpticsState extends ViewModelChangeNotifier {
   late Graph<Optics> currentOpticsTree;
   late Beam currentBeam;
   // 対応関係
-  late final Map<String, List<int>> _opticsListVersusOpticsNode = {};
+  late final Map<String, List<int>> opticsListVersusOpticsNode = {};
 
-  void addOptics(Optics optics, Node previousNode) {}
+  void addNode(Node newNode, Node previousNode, bool willReflect) {
+    // ノードを作る
+    if (newNode.data.runtimeType == PolarizingBeamSplitter) {
+      currentOpticsTree.nodes[newNode] = [null, null];
+    } else {
+      currentOpticsTree.nodes[newNode] = [];
+    }
+
+    if (newNode.data.runtimeType == PolarizingBeamSplitter) {
+      if (willReflect) {
+        currentOpticsTree.nodes[newNode]![1] = newNode;
+      } else {
+        currentOpticsTree.nodes[newNode]![0] = newNode;
+      }
+    } else {
+      // Graphに追加する
+      currentOpticsTree.nodes[previousNode]!.add(newNode);
+    }
+
+    // もし既存のものがあるなら
+    if (currentOpticsTree.nodes.keys
+        .map((node) => node.data)
+        .toList()
+        .contains(newNode.data)) {
+      opticsListVersusOpticsNode[newNode.data.id]!.add(newNode.id);
+    } else {
+      opticsListVersusOpticsNode[newNode.data.id] = [newNode.id];
+    }
+    print(opticsListVersusOpticsNode);
+    notifyListeners();
+  }
+
+  void deleteNode(Node node) {
+    final nodeID = node.id;
+    currentOpticsTree.nodes[node]!.clear();
+    for (final edge in currentOpticsTree.nodes.values) {
+      edge.remove(node);
+    }
+    opticsListVersusOpticsNode[node.data.id]!.remove(node.id);
+    notifyListeners();
+  }
+
+  void addOptics(Optics optics) {
+    currentOpticsList.add(optics);
+    opticsListVersusOpticsNode[optics.id] = [];
+    notifyListeners();
+  }
+
+  void deleteOptics(Optics optics) {
+    // Listから削除
+    if (opticsListVersusOpticsNode[optics.id]!.isEmpty) {
+      currentOpticsList.remove(optics);
+      notifyListeners();
+    }
+  }
 
   void editOptics(Optics optics) {
-    for (final nodeId in _opticsListVersusOpticsNode[optics.id]!) {
+    // keyを変える
+    for (final nodeId in opticsListVersusOpticsNode[optics.id]!) {
       currentOpticsTree.nodes.keys.elementAt(nodeId).data = optics;
     }
+    // valueを変える
+    for (final edges in currentOpticsTree.nodes.values) {
+      for (final edge in edges) {
+        final nodeIDs = opticsListVersusOpticsNode[optics.id]!;
+        if (edge != null && nodeIDs.contains(edge.id)) {
+          edge.data = optics;
+        }
+      }
+    }
+    // Listの値を変える
+    final index =
+        currentOpticsList.map((e) => e.id).toList().indexOf(optics.id);
+    currentOpticsList[index] = optics;
     notifyListeners();
   }
 
-  void editOpticsValue(Optics optics) {
-    for (final nodeId in _opticsListVersusOpticsNode[optics.id]!) {
+  /*void editOpticsValue(Optics optics) {
+    for (final nodeId in opticsListVersusOpticsNode[optics.id]!) {
       currentOpticsTree.nodes.keys.elementAt(nodeId).data = optics;
     }
     notifyListeners();
-  }
+  }*/
 
   void editBeam(Beam newBeam) {
     currentBeam = newBeam;
     notifyListeners();
   }
-
-  void deleteOptics(int id) {}
 }
