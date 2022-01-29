@@ -1,8 +1,8 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vector_math/vector_math.dart';
-import 'package:flutter/foundation.dart';
 
 import '../beam_information/beam.dart';
 import '../optics_diagram/optics.dart';
