@@ -18,23 +18,20 @@ class SimulationService {
     Graph<Optics> currentOpticsTree,
   ) {
     // 初期化
-    final _seen = List.generate(
-      currentOpticsTree.nodes.keys.length,
-      (index) => false,
-    );
+    final _seen = { for (var item in currentOpticsTree.nodes.keys) item : false };
 
     var numberOfBranches = 0;
     final nodeIDVSBranchID = <int, int>{};
 
     // 先にbranchIDを振ってしまう
     void _dfsForPreprocessing(Graph<Optics> g, Node v) {
-      _seen[v.id] = true;
+      _seen[v] = true;
       nodeIDVSBranchID[v.id] = numberOfBranches;
       // next
       final nodes = g.nodes[v];
       for (final nextV in nodes!) {
         if (nextV != null) {
-          if (_seen[nextV.id]) {
+          if (_seen[nextV] ?? false) {
             continue;
           }
           _dfsForPreprocessing(g, nextV);
@@ -62,10 +59,7 @@ class SimulationService {
     final nodeIDVSBranchID = _preprocessing(currentBeam, currentOpticsTree);
     final numberOfBranches = nodeIDVSBranchID.values.toSet().length;
 
-    final _seen = List.generate(
-      currentOpticsTree.nodes.keys.length,
-      (index) => false,
-    );
+    final _seen = {for (var item in currentOpticsTree.nodes.keys) item: false};
 
     final reflectionPosition = List.generate(
       numberOfBranches,
@@ -87,40 +81,9 @@ class SimulationService {
     // 深さ優先探索
     // TODO PBSで分けれるようにする
     void _dfs(Graph<Optics> g, Node v) {
-      _seen[v.id] = true;
+      _seen[v] = true;
       // next
       final nodes = g.nodes[v];
-
-      /*
-      // 枝分かれを検出した時
-      if (nodes!.length > 1) {
-        for (var i = 0; i < nodes.length - 1; i++) {
-          final tmpBeam = Beam(
-            type: _simulatedBeamList[branchID].type,
-            waveLength: _simulatedBeamList[branchID].waveLength,
-            beamWaist: _simulatedBeamList[branchID].beamWaist,
-            startFrom: _simulatedBeamList[branchID].startFrom,
-          )..reachTo(v.data);
-          _simulatedBeamList.add(tmpBeam);
-
-          reflectionPosition.add([
-            {v.id: tmpBeam.startPositionVector}
-          ]);
-        }
-      }
-
-      final position = _simulatedBeamList[branchID].reflect(v.data);
-      reflectionPosition[branchID].add({v.id: position});*/
-
-      /*Beam(
-        type: _simulatedBeamList[branchID].type,
-        waveLength: _simulatedBeamList[branchID].waveLength,
-        beamWaist: _simulatedBeamList[branchID].beamWaist,
-        startFrom: _simulatedBeamList[branchID].startFrom,
-      );*/
-      //final tmpBeam = _simulatedBeamList[branchID];
-      //print('${v.data.name}');
-      //print(tmpBeam.direction);
 
       if (v.data.runtimeType == PolarizingBeamSplitter) {
         Vector3? position;
@@ -158,9 +121,10 @@ class SimulationService {
           if (nodes[1] != null) {
             position = _simulatedBeamList[branchID].reflect(v.data);
           }
-
-          _simulatedBeamList[branchID].passedOptics.add(v.data);
-          reflectionPosition[branchID].add({v.id: position!});
+          if (nodes[0] != null || nodes[1] != null) {
+            _simulatedBeamList[branchID].passedOptics.add(v.data);
+            reflectionPosition[branchID].add({v.id: position!});
+          }
         }
       }
 
@@ -173,7 +137,7 @@ class SimulationService {
 
       for (final nextV in nodes!) {
         if (nextV != null) {
-          if (_seen[nextV.id]) {
+          if (_seen[nextV] ?? false) {
             continue;
           }
           _dfs(g, nextV);

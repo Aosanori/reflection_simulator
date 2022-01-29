@@ -21,7 +21,9 @@ class OpticsTreeView extends HookConsumerWidget {
         child: gv.GraphView(
           graph: viewModel.graph,
           algorithm: gv.BuchheimWalkerAlgorithm(
-              viewModel.builder, gv.TreeEdgeRenderer(viewModel.builder),),
+            viewModel.builder,
+            gv.TreeEdgeRenderer(viewModel.builder),
+          ),
           paint: Paint()
             ..color = Colors.green
             ..strokeWidth = 1
@@ -158,21 +160,43 @@ class _CreateOpticsRelationDialog extends HookConsumerWidget {
         ),
       ),
       actions: <Widget>[
-        TextButton(
-          child: const Text('cancel'),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        TextButton(
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              viewModel.createRelation();
-              Navigator.pop(context);
-            }
-          },
-          child: const Text('connect'),
-        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            viewModel.currentOpticsTree.nodes[opticsNode]?.isEmpty ?? false
+                ? TextButton(
+                    onPressed: () {
+                      viewModel.deleteNode();
+                      Navigator.pop(context);
+                    },
+                    child: Text('delete',
+                        style: TextStyle(color: Color(Colors.red.value))),
+                  )
+                : const SizedBox(width: 0, height: 0),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: TextButton(
+                    child: const Text('cancel'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      viewModel.createRelation();
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text('connect'),
+                ),
+              ],
+            )
+          ],
+        )
       ],
     );
   }
