@@ -21,7 +21,7 @@ class OpticsTreeView extends HookConsumerWidget {
         child: gv.GraphView(
           graph: viewModel.graph,
           algorithm: gv.BuchheimWalkerAlgorithm(
-              viewModel.builder, gv.TreeEdgeRenderer(viewModel.builder)),
+              viewModel.builder, gv.TreeEdgeRenderer(viewModel.builder),),
           paint: Paint()
             ..color = Colors.green
             ..strokeWidth = 1
@@ -47,7 +47,7 @@ class _OpticsTreeViewItem extends HookConsumerWidget {
     return InkWell(
       onTap: () async {
         if ((opticsNode.data.runtimeType == PolarizingBeamSplitter &&
-                viewModel.currentOpticsTree.nodes[opticsNode]!.length < 2) ||
+                viewModel.currentOpticsTree.nodes[opticsNode]!.contains(null)) ||
             (opticsNode.data.runtimeType == Mirror &&
                 viewModel.currentOpticsTree.nodes[opticsNode]!.isEmpty)) {
           await showDialog<AlertDialog>(
@@ -122,6 +122,31 @@ class _CreateOpticsRelationDialog extends HookConsumerWidget {
                           (value) => DropdownMenuItem<Optics>(
                             value: value,
                             child: Text(value.name),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Text('Action: '),
+                  DropdownButton<String>(
+                    value: viewModel.currentAction,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    iconSize: 30,
+                    elevation: 16,
+                    underline: Container(
+                      height: 2,
+                      color: Colors.grey,
+                    ),
+                    onChanged: viewModel.changeAction,
+                    items: viewModel.action
+                        .map<DropdownMenuItem<String>>(
+                          (value) => DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
                           ),
                         )
                         .toList(),

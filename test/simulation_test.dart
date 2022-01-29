@@ -531,6 +531,222 @@ void main() {
           expect((position_2.y - (200)).abs() < 0.01, true);
         },
       );
+
+      test(
+        'case 5',
+        () {
+          final container = ProviderContainer();
+
+          final testOpticsList = <Optics>[
+            PolarizingBeamSplitter(
+              'item1',
+              'PBS1',
+              OpticsPosition(x: 300, y: 100, z: 0, theta: -135, phi: 90),
+            ),
+            Mirror(
+              'item2',
+              'M2',
+              OpticsPosition(x: 300, y: -100, z: 0, theta: 45, phi: 90),
+            ),
+            Mirror(
+              'item3',
+              'M3',
+              OpticsPosition(x: 500, y: -100, z: 0, theta: 135, phi: 90),
+            ),
+            PolarizingBeamSplitter(
+              'item4',
+              'PBS2',
+              OpticsPosition(x: 500, y: 100, z: 0, theta: -45, phi: 90),
+            ),
+            Mirror(
+              'item5',
+              'M5',
+              OpticsPosition(x: 700, y: 100, z: 0, theta: 180, phi: 90),
+            ),
+            PolarizingBeamSplitter(
+              'item6',
+              'PBS3',
+              OpticsPosition(x: 100, y: 100, z: 0, theta: 45, phi: 90),
+            ),
+            Mirror(
+              'item7',
+              'M7',
+              OpticsPosition(x: 100, y: 200, z: 0, theta: -90, phi: 90),
+            ),
+            Mirror(
+              'item8',
+              'M8',
+              OpticsPosition(x: 300, y: 200, z: 0, theta: -45, phi: 90),
+            ),
+          ];
+// nodeのidはintで 0 3 5
+          final testOpticsTree = Graph<Optics>(
+            {
+              Node(
+                0,
+                testOpticsList[0],
+                // どこと繋がっているか
+              ): [
+                Node(
+                  7,
+                  testOpticsList[4],
+                ),
+                Node(
+                  1,
+                  testOpticsList[1],
+                ),
+              ],
+              Node(
+                1,
+                testOpticsList[1],
+              ): [
+                Node(
+                  2,
+                  testOpticsList[2],
+                )
+              ],
+              Node(
+                2,
+                testOpticsList[2],
+              ): [
+                Node(
+                  3,
+                  testOpticsList[3],
+                ),
+              ],
+              Node(
+                3,
+                testOpticsList[3],
+              ): [
+                null,
+                Node(
+                  4,
+                  testOpticsList[4],
+                )
+              ],
+              Node(
+                4,
+                testOpticsList[4],
+              ): [
+                Node(
+                  5,
+                  testOpticsList[5],
+                ),
+              ],
+              Node(
+                5,
+                testOpticsList[5],
+              ): [
+                null,
+                Node(
+                  6,
+                  testOpticsList[6],
+                ),
+              ],
+              Node(
+                6,
+                testOpticsList[6],
+              ): [],
+              Node(
+                7,
+                testOpticsList[4],
+              ): [
+                Node(
+                  8,
+                  testOpticsList[3],
+                )
+              ],
+              Node(
+                8,
+                testOpticsList[3],
+              ): [
+                null,
+                Node(
+                  9,
+                  testOpticsList[2],
+                ),
+              ],
+              Node(
+                9,
+                testOpticsList[2],
+              ): [
+                Node(
+                  10,
+                  testOpticsList[1],
+                )
+              ],
+              Node(
+                10,
+                testOpticsList[1],
+              ): [
+                Node(
+                  11,
+                  testOpticsList[0],
+                )
+              ],
+              Node(
+                11,
+                testOpticsList[0],
+              ): [
+                Node(
+                  14,
+                  testOpticsList[7],
+                ),
+                Node(
+                  12,
+                  testOpticsList[5],
+                )
+              ],
+              Node(
+                12,
+                testOpticsList[5],
+              ): [
+                null,
+                Node(
+                  13,
+                  testOpticsList[6],
+                ),
+              ],
+              Node(
+                13,
+                testOpticsList[6],
+              ): [],
+              Node(
+                14,
+                testOpticsList[7],
+              ): []
+            },
+          );
+
+          final result =
+              container.read(simulationServiceProvider).runSimulation(
+                    currentBeam: initialBeam,
+                    currentOpticsTree: testOpticsTree,
+                  );
+          final result_1 = result.simulatedBeamList[0];
+          final result_2 = result.simulatedBeamList[1];
+          final result_3 = result.simulatedBeamList[2];
+          print(
+            result.simulatedBeamList
+                .map((e) => e.passedOptics.map((o) => o.name).toList())
+                .toList(),
+          );
+          print(
+            result.simulatedBeamList.map((e) => e.distanceFromStart).toList(),
+          );
+          expect((result_1.distanceFromStart - 1600).abs() < 0.01, true);
+          expect((result_2.distanceFromStart - 1800).abs() < 0.01, true);
+          expect((result_3.distanceFromStart - 1800).abs() < 0.01, true);
+
+          expect((result_1.startPositionVector.x - 300).abs() < 0.01, true);
+          expect((result_1.startPositionVector.y - (200)).abs() < 0.01, true);
+          expect((result_2.startPositionVector.x - 100).abs() < 0.01, true);
+          expect((result_2.startPositionVector.y - (200)).abs() < 0.01, true);
+          expect((result_3.startPositionVector.x - 100).abs() < 0.01, true);
+          expect((result_3.startPositionVector.y - (200)).abs() < 0.01, true);
+          print('end');
+        },
+      );
     },
   );
 }

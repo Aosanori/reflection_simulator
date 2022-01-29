@@ -1,12 +1,12 @@
 import 'dart:math';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:reflection_simulator/csv/csv_service.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:vector_math/vector_math.dart';
 
 import '../../common/view_model_change_notifier.dart';
 import '../beam_information/beam.dart';
+import '../csv/csv_service.dart';
 import '../optics_diagram/optics.dart';
 import '../simulation/simulation_repository.dart';
 import '../utils/environments_variables.dart';

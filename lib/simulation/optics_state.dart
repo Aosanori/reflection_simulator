@@ -72,11 +72,11 @@ class OpticsState extends ViewModelChangeNotifier {
       currentOpticsTree.nodes[newNode] = [];
     }
 
-    if (newNode.data.runtimeType == PolarizingBeamSplitter) {
+    if (previousNode.data.runtimeType == PolarizingBeamSplitter) {
       if (willReflect) {
-        currentOpticsTree.nodes[newNode]![1] = newNode;
+        currentOpticsTree.nodes[previousNode]![1] = newNode;
       } else {
-        currentOpticsTree.nodes[newNode]![0] = newNode;
+        currentOpticsTree.nodes[previousNode]![0] = newNode;
       }
     } else {
       // Graphに追加する
@@ -92,7 +92,6 @@ class OpticsState extends ViewModelChangeNotifier {
     } else {
       opticsListVersusOpticsNode[newNode.data.id] = [newNode.id];
     }
-    print(opticsListVersusOpticsNode);
     notifyListeners();
   }
 

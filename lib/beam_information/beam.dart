@@ -28,9 +28,11 @@ class Beam {
       ..distanceFromStart = distanceFromStart
       ..passedOptics = passedOptics.map((e) => e).toList()
       ..ray = Ray.originDirection(
-      startFrom.vector.clone(),
-      direction.clone(),
-    );
+        startPositionVector.clone(),
+        direction.clone(),
+      )
+      ..startPositionVector = startPositionVector.clone()
+      ..direction=direction.clone();
 
     return newBeam;
   }
