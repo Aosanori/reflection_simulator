@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vector_math/vector_math.dart';
+import 'package:flutter/foundation.dart';
 
 import '../beam_information/beam.dart';
 import '../optics_diagram/optics.dart';
@@ -13,7 +14,7 @@ final simulationServiceProvider = Provider(
 );
 
 class SimulationService {
-  Map<int, int> _preprocessing(
+  Map<Node, int> _preprocessing(
     Beam currentBeam,
     Graph<Optics> currentOpticsTree,
   ) {
@@ -21,12 +22,12 @@ class SimulationService {
     final _seen = { for (var item in currentOpticsTree.nodes.keys) item : false };
 
     var numberOfBranches = 0;
-    final nodeIDVSBranchID = <int, int>{};
+    final nodeIDVSBranchID = <Node, int>{};
 
     // 先にbranchIDを振ってしまう
     void _dfsForPreprocessing(Graph<Optics> g, Node v) {
       _seen[v] = true;
-      nodeIDVSBranchID[v.id] = numberOfBranches;
+      nodeIDVSBranchID[v] = numberOfBranches;
       // next
       final nodes = g.nodes[v];
       for (final nextV in nodes!) {
@@ -38,7 +39,7 @@ class SimulationService {
         }
       }
       // 末端に到達した数 = 枝の数
-      if (nodes.isEmpty) {
+      if (nodes.isEmpty || listEquals(nodes, [null, null]) || listEquals(nodes, [null])) {
         numberOfBranches++;
       }
     }
@@ -91,12 +92,12 @@ class SimulationService {
         //透過ならばindex0 反射ならindex1とする
         if (!nodes!.contains(null)) {
           final laterBranch = max<int>(
-            nodeIDVSBranchID[nodes[0]!.id]!,
-            nodeIDVSBranchID[nodes[1]!.id]!,
+            nodeIDVSBranchID[nodes[0]]!,
+            nodeIDVSBranchID[nodes[1]]!,
           );
           final baseBranch = min<int>(
-            nodeIDVSBranchID[nodes[0]!.id]!,
-            nodeIDVSBranchID[nodes[1]!.id]!,
+            nodeIDVSBranchID[nodes[0]]!,
+            nodeIDVSBranchID[nodes[1]]!,
           );
 
           _simulatedBeamList[laterBranch] =
@@ -113,7 +114,7 @@ class SimulationService {
 
         // 枝分かれがないとき
         if (nodes.contains(null)) {
-          final branchID = nodeIDVSBranchID[v.id]!;
+          final branchID = nodeIDVSBranchID[v]!;
 
           if (nodes[0] != null) {
             position = _simulatedBeamList[branchID].reachTo(v.data);
@@ -129,7 +130,7 @@ class SimulationService {
       }
 
       if (v.data.runtimeType == Mirror) {
-        final branchID = nodeIDVSBranchID[v.id]!;
+        final branchID = nodeIDVSBranchID[v]!;
         final position = _simulatedBeamList[branchID].reflect(v.data);
         _simulatedBeamList[branchID].passedOptics.add(v.data);
         reflectionPosition[branchID].add({v.id: position});

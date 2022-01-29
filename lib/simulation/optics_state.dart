@@ -96,12 +96,20 @@ class OpticsState extends ViewModelChangeNotifier {
   }
 
   void deleteNode(Node node) {
-    final nodeID = node.id;
-    currentOpticsTree.nodes[node]!.clear();
+    print('${node.id} ${node.data.name}');
+    // 繋がりを消す
     for (final edge in currentOpticsTree.nodes.values) {
-      edge.remove(node);
+      final index = edge.indexOf(node);
+      if (index != -1) {
+        edge[index] = null;
+      }
     }
+
+    // nodeを消す
+    currentOpticsTree.nodes.remove(node);
+    // 対応関係を消す
     opticsListVersusOpticsNode[node.data.id]!.remove(node.id);
+
     notifyListeners();
   }
 
