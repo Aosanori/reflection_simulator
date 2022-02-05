@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphview/GraphView.dart' as gv;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -49,7 +50,8 @@ class _OpticsTreeViewItem extends HookConsumerWidget {
     return InkWell(
       onTap: () async {
         if ((opticsNode.data.runtimeType == PolarizingBeamSplitter &&
-                viewModel.currentOpticsTree.nodes[opticsNode]!.contains(null)) ||
+                viewModel.currentOpticsTree.nodes[opticsNode]!
+                    .contains(null)) ||
             (opticsNode.data.runtimeType == Mirror &&
                 viewModel.currentOpticsTree.nodes[opticsNode]!.isEmpty)) {
           await showDialog<AlertDialog>(
@@ -93,7 +95,7 @@ class _CreateOpticsRelationDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(opticsTreeItemViewModelProvider(opticsNode));
-
+    final nodes = viewModel.currentOpticsTree.nodes[opticsNode];
     return AlertDialog(
       title: const Text(
         'Create Optics Relation',
@@ -163,7 +165,9 @@ class _CreateOpticsRelationDialog extends HookConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            viewModel.currentOpticsTree.nodes[opticsNode]?.isEmpty ?? false
+            ((nodes?.isEmpty ?? false) ||
+                    listEquals(nodes, [null, null]) ||
+                    listEquals(nodes, [null]))
                 ? TextButton(
                     onPressed: () {
                       viewModel.deleteNode();

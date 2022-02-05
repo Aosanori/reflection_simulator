@@ -8,22 +8,23 @@ class OpticsDiagram extends HookConsumerWidget {
   const OpticsDiagram({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => const DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar:  TabBar(
-          labelColor: Colors.blue,
+  Widget build(BuildContext context, WidgetRef ref) =>
+      const DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: TabBar(
+            labelColor: Colors.blue,
             tabs: <Widget>[
-              Tab(text:'List'),
-              Tab(text:'Tree'),
+              Tab(text: 'List'),
+              Tab(text: 'Tree'),
             ],
+          ),
+          body: TabBarView(
+            children: <Widget>[
+              OpticsListView(),
+              OpticsTreeView(),
+            ],
+          ),
         ),
-        body: TabBarView(
-          children: <Widget>[
-           OpticsListView(),
-           OpticsTreeView(),
-          ],
-        ),
-      ),
-    );
+      );
 }

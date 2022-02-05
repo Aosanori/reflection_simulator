@@ -1,4 +1,3 @@
-
 /*
 final simulationWithChangingValueProvider = Provider(
   (ref) => SimulationWithChangingValue(

@@ -11,7 +11,13 @@ const opticsTypes = <String>['Mirror', 'PBS'];
 const adjustableAngleOfBeam = 5;
 const adjustableAngleOfMirror = 5;
 
-const branchColor = [Colors.red, Colors.blue,Colors.green,Colors.orange,Colors.purple];
+const branchColor = [
+  Colors.red,
+  Colors.blue,
+  Colors.green,
+  Colors.orange,
+  Colors.purple
+];
 
 // 基本球座標
 // ただしx-y平面の曲座標をθとしている()
@@ -27,37 +33,37 @@ final Beam initialBeam = Beam(
 final List<Optics> initialOpticsList = <Optics>[
   PolarizingBeamSplitter(
     'item1',
-    'PBS1',
-    OpticsPosition(x: 300, y: 100, z: 0, theta: -135, phi: 90),
+    'PBS2',
+    OpticsPosition(x: 300, y: 100, z: 0, theta: -135, phi: 90.1),
   ),
   Mirror(
     'item2',
-    'M2',
+    'M1',
     OpticsPosition(x: 300, y: -100, z: 0, theta: 45, phi: 90),
   ),
   Mirror(
     'item3',
-    'M3',
+    'M2',
     OpticsPosition(x: 500, y: -100, z: 0, theta: 135, phi: 90),
   ),
   PolarizingBeamSplitter(
     'item4',
-    'PBS2',
+    'PBS3',
     OpticsPosition(x: 500, y: 100, z: 0, theta: -45, phi: 90),
   ),
   Mirror(
     'item5',
-    'M5',
+    'M3',
     OpticsPosition(x: 700, y: 100, z: 0, theta: 180, phi: 90),
   ),
   PolarizingBeamSplitter(
     'item6',
-    'PBS3',
-    OpticsPosition(x: 100, y: 100, z: 0, theta: 45, phi: 90),
+    'PBS1',
+    OpticsPosition(x: 100, y: 100, z: 0, theta: 45.0, phi: 90.0),
   ),
   Mirror(
     'item7',
-    'M7',
+    'M4',
     OpticsPosition(x: 100, y: 200, z: 0, theta: -90, phi: 90),
   ),
 ];

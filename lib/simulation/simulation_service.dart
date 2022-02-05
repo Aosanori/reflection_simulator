@@ -19,7 +19,7 @@ class SimulationService {
     Graph<Optics> currentOpticsTree,
   ) {
     // 初期化
-    final _seen = { for (var item in currentOpticsTree.nodes.keys) item : false };
+    final _seen = {for (var item in currentOpticsTree.nodes.keys) item: false};
 
     var numberOfBranches = 0;
     final nodeIDVSBranchID = <Node, int>{};
@@ -39,7 +39,9 @@ class SimulationService {
         }
       }
       // 末端に到達した数 = 枝の数
-      if (nodes.isEmpty || listEquals(nodes, [null, null]) || listEquals(nodes, [null])) {
+      if (nodes.isEmpty ||
+          listEquals(nodes, [null, null]) ||
+          listEquals(nodes, [null])) {
         numberOfBranches++;
       }
     }

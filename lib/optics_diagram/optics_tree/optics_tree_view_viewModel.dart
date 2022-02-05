@@ -94,12 +94,12 @@ class OpticsTreeItemViewModel extends ViewModelChangeNotifier {
     if (opticsNode.data.runtimeType == PolarizingBeamSplitter) {
       final res = <String>[];
       // 透過がない場合
-      if (currentOpticsTree.nodes[opticsNode]![0] == null) {
+      if (currentOpticsTree.nodes[opticsNode]?[0] == null) {
         res.add(actions[1]);
       }
 
       //反射がない場合
-      if (currentOpticsTree.nodes[opticsNode]![1] == null) {
+      if (currentOpticsTree.nodes[opticsNode]?[1] == null) {
         res.add(actions[0]);
       }
       return res;

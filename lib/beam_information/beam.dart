@@ -32,7 +32,7 @@ class Beam {
         direction.clone(),
       )
       ..startPositionVector = startPositionVector.clone()
-      ..direction=direction.clone();
+      ..direction = direction.clone();
 
     return newBeam;
   }
