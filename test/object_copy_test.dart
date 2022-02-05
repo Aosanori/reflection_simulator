@@ -53,7 +53,7 @@ void main() {
 
     test('Node Instances are different', () {
       final modelA = Node(
-        1,
+        '1',
         initialOpticsList[1],
       );
 

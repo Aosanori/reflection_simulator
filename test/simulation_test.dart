@@ -60,7 +60,7 @@ void main() {
           final testTree = Graph<Optics>(
             {
               Node(
-                0,
+                0.toString(),
                 Mirror(
                   'item1',
                   'M1',
@@ -69,7 +69,7 @@ void main() {
                 // どこと繋がっているか
               ): [
                 Node(
-                  1,
+                  1.toString(),
                   Mirror(
                     'item2',
                     'M2',
@@ -78,7 +78,7 @@ void main() {
                 ),
               ],
               Node(
-                1,
+                1.toString(),
                 Mirror(
                   'item2',
                   'M2',
@@ -86,7 +86,7 @@ void main() {
                 ),
               ): [
                 Node(
-                  2,
+                  2.toString(),
                   Mirror(
                     'item3',
                     'M3',
@@ -95,7 +95,7 @@ void main() {
                 )
               ],
               Node(
-                2,
+                2.toString(),
                 Mirror(
                   'item3',
                   'M3',
@@ -132,7 +132,7 @@ void main() {
           final testTree = Graph<Optics>(
             {
               Node(
-                0,
+                0.toString(),
                 Mirror(
                   'item1',
                   'M1',
@@ -141,7 +141,7 @@ void main() {
                 // どこと繋がっているか
               ): [
                 Node(
-                  1,
+                  1.toString(),
                   Mirror(
                     'item2',
                     'M2',
@@ -150,7 +150,7 @@ void main() {
                 ),
               ],
               Node(
-                1,
+                1.toString(),
                 Mirror(
                   'item2',
                   'M2',
@@ -158,7 +158,7 @@ void main() {
                 ),
               ): [
                 Node(
-                  2,
+                  2.toString(),
                   Mirror(
                     'item3',
                     'M3',
@@ -167,7 +167,7 @@ void main() {
                 )
               ],
               Node(
-                2,
+                2.toString(),
                 Mirror(
                   'item3',
                   'M3',
@@ -204,7 +204,7 @@ void main() {
           final testTree = Graph<Optics>(
             {
               Node(
-                0,
+                0.toString(),
                 Mirror(
                   'item1',
                   'M1',
@@ -213,7 +213,7 @@ void main() {
                 // どこと繋がっているか
               ): [
                 Node(
-                  1,
+                  1.toString(),
                   Mirror(
                     'item2',
                     'M2',
@@ -222,7 +222,7 @@ void main() {
                 ),
               ],
               Node(
-                1,
+                1.toString(),
                 Mirror(
                   'item2',
                   'M2',
@@ -230,7 +230,7 @@ void main() {
                 ),
               ): [
                 Node(
-                  2,
+                  2.toString(),
                   Mirror(
                     'item3',
                     'M3',
@@ -245,7 +245,7 @@ void main() {
                 )
               ],
               Node(
-                2,
+                2.toString(),
                 Mirror(
                   'item3',
                   'M3',
@@ -253,7 +253,7 @@ void main() {
                 ),
               ): [
                 Node(
-                  3,
+                  3.toString(),
                   Mirror(
                     'item4',
                     'M4',
@@ -263,7 +263,7 @@ void main() {
                 ),
               ],
               Node(
-                3,
+                3.toString(),
                 Mirror(
                   'item4',
                   'M4',
@@ -271,7 +271,7 @@ void main() {
                 ),
               ): [
                 Node(
-                  4,
+                  4.toString(),
                   Mirror(
                     'item5',
                     'M5',
@@ -280,7 +280,7 @@ void main() {
                 ),
               ],
               Node(
-                4,
+                4.toString(),
                 Mirror(
                   'item5',
                   'M5',
@@ -288,7 +288,7 @@ void main() {
                 ),
               ): [
                 Node(
-                  5,
+                  5.toString(),
                   Mirror(
                     'item6',
                     'M6',
@@ -297,7 +297,7 @@ void main() {
                 )
               ],
               Node(
-                5,
+                5.toString(),
                 Mirror(
                   'item6',
                   'M6',
@@ -305,7 +305,7 @@ void main() {
                 ),
               ): [
                 Node(
-                  6,
+                  6.toString(),
                   Mirror(
                     'item7',
                     'M7',
@@ -314,7 +314,7 @@ void main() {
                 )
               ],
               Node(
-                6,
+                6.toString(),
                 Mirror(
                   'item7',
                   'M7',
@@ -384,129 +384,129 @@ void main() {
           final testOpticsTree = Graph<Optics>(
             {
               Node(
-                0,
+                0.toString(),
                 testOpticsList[0],
                 // どこと繋がっているか
               ): [
                 Node(
-                  7,
+                  7.toString(),
                   testOpticsList[4],
                 ),
                 Node(
-                  1,
+                  1.toString(),
                   testOpticsList[1],
                 ),
               ],
               Node(
-                1,
+                1.toString(),
                 testOpticsList[1],
               ): [
                 Node(
-                  2,
+                  2.toString(),
                   testOpticsList[2],
                 )
               ],
               Node(
-                2,
+                2.toString(),
                 testOpticsList[2],
               ): [
                 Node(
-                  3,
+                  3.toString(),
                   testOpticsList[3],
                 ),
               ],
               Node(
-                3,
+                3.toString(),
                 testOpticsList[3],
               ): [
                 null,
                 Node(
-                  4,
+                  4.toString(),
                   testOpticsList[4],
                 )
               ],
               Node(
-                4,
+                4.toString(),
                 testOpticsList[4],
               ): [
                 Node(
-                  5,
+                  5.toString(),
                   testOpticsList[5],
                 ),
               ],
               Node(
-                5,
+                5.toString(),
                 testOpticsList[5],
               ): [
                 null,
                 Node(
-                  6,
+                  6.toString(),
                   testOpticsList[6],
                 ),
               ],
               Node(
-                6,
+                6.toString(),
                 testOpticsList[6],
               ): [],
               Node(
-                7,
+                7.toString(),
                 testOpticsList[4],
               ): [
                 Node(
-                  8,
+                  8.toString(),
                   testOpticsList[3],
                 )
               ],
               Node(
-                8,
+                8.toString(),
                 testOpticsList[3],
               ): [
                 null,
                 Node(
-                  9,
+                  9.toString(),
                   testOpticsList[2],
                 ),
               ],
               Node(
-                9,
+                9.toString(),
                 testOpticsList[2],
               ): [
                 Node(
-                  10,
+                  10.toString(),
                   testOpticsList[1],
                 )
               ],
               Node(
-                10,
+                10.toString(),
                 testOpticsList[1],
               ): [
                 Node(
-                  11,
+                  11.toString(),
                   testOpticsList[0],
                 )
               ],
               Node(
-                11,
+                11.toString(),
                 testOpticsList[0],
               ): [
                 null,
                 Node(
-                  12,
+                  12.toString(),
                   testOpticsList[5],
                 )
               ],
               Node(
-                12,
+                12.toString(),
                 testOpticsList[5],
               ): [
                 null,
                 Node(
-                  13,
+                  13.toString(),
                   testOpticsList[6],
                 ),
               ],
               Node(
-                13,
+                13.toString(),
                 testOpticsList[6],
               ): []
             },
@@ -583,136 +583,136 @@ void main() {
           final testOpticsTree = Graph<Optics>(
             {
               Node(
-                0,
+                0.toString(),
                 testOpticsList[0],
                 // どこと繋がっているか
               ): [
                 Node(
-                  7,
+                  7.toString(),
                   testOpticsList[4],
                 ),
                 Node(
-                  1,
+                  1.toString(),
                   testOpticsList[1],
                 ),
               ],
               Node(
-                1,
+                1.toString(),
                 testOpticsList[1],
               ): [
                 Node(
-                  2,
+                  2.toString(),
                   testOpticsList[2],
                 )
               ],
               Node(
-                2,
+                2.toString(),
                 testOpticsList[2],
               ): [
                 Node(
-                  3,
+                  3.toString(),
                   testOpticsList[3],
                 ),
               ],
               Node(
-                3,
+                3.toString(),
                 testOpticsList[3],
               ): [
                 null,
                 Node(
-                  4,
+                  4.toString(),
                   testOpticsList[4],
                 )
               ],
               Node(
-                4,
+                4.toString(),
                 testOpticsList[4],
               ): [
                 Node(
-                  5,
+                  5.toString(),
                   testOpticsList[5],
                 ),
               ],
               Node(
-                5,
+                5.toString(),
                 testOpticsList[5],
               ): [
                 null,
                 Node(
-                  6,
+                  6.toString(),
                   testOpticsList[6],
                 ),
               ],
               Node(
-                6,
+                6.toString(),
                 testOpticsList[6],
               ): [],
               Node(
-                7,
+                7.toString(),
                 testOpticsList[4],
               ): [
                 Node(
-                  8,
+                  8.toString(),
                   testOpticsList[3],
                 )
               ],
               Node(
-                8,
+                8.toString(),
                 testOpticsList[3],
               ): [
                 null,
                 Node(
-                  9,
+                  9.toString(),
                   testOpticsList[2],
                 ),
               ],
               Node(
-                9,
+                9.toString(),
                 testOpticsList[2],
               ): [
                 Node(
-                  10,
+                  10.toString(),
                   testOpticsList[1],
                 )
               ],
               Node(
-                10,
+                10.toString(),
                 testOpticsList[1],
               ): [
                 Node(
-                  11,
+                  11.toString(),
                   testOpticsList[0],
                 )
               ],
               Node(
-                11,
+                11.toString(),
                 testOpticsList[0],
               ): [
                 Node(
-                  14,
+                  14.toString(),
                   testOpticsList[7],
                 ),
                 Node(
-                  12,
+                  12.toString(),
                   testOpticsList[5],
                 )
               ],
               Node(
-                12,
+                12.toString(),
                 testOpticsList[5],
               ): [
                 null,
                 Node(
-                  13,
+                  13.toString(),
                   testOpticsList[6],
                 ),
               ],
               Node(
-                13,
+                13.toString(),
                 testOpticsList[6],
               ): [],
               Node(
-                14,
+                14.toString(),
                 testOpticsList[7],
               ): []
             },
@@ -821,95 +821,95 @@ void main() {
           final testOpticsTree = Graph<Optics>(
             {
               Node(
-                0,
+                0.toString(),
                 testOpticsList[0],
                 // どこと繋がっているか
               ): [
                 Node(
-                  1,
+                  1.toString(),
                   testOpticsList[1],
                 ),
                 Node(
-                  6,
+                  6.toString(),
                   testOpticsList[6],
                 )
               ],
               Node(
-                1,
+                1.toString(),
                 testOpticsList[1],
               ): [
                 Node(
-                  2,
+                  2.toString(),
                   testOpticsList[2],
                 )
               ],
               Node(
-                2,
+                2.toString(),
                 testOpticsList[2],
               ): [
                 Node(
-                  3,
+                  3.toString(),
                   testOpticsList[3],
                 ),
                 Node(
-                  5,
+                  5.toString(),
                   testOpticsList[5],
                 )
               ],
               Node(
-                3,
+                3.toString(),
                 testOpticsList[3],
               ): [
                 Node(
-                  4,
+                  4.toString(),
                   testOpticsList[4],
                 )
               ],
               Node(
-                4,
+                4.toString(),
                 testOpticsList[4],
               ): [],
               Node(
-                5,
+                5.toString(),
                 testOpticsList[5],
               ): [],
               Node(
-                6,
+                6.toString(),
                 testOpticsList[6],
               ): [
                 Node(
-                  7,
+                  7.toString(),
                   testOpticsList[7],
                 )
               ],
               Node(
-                7,
+                7.toString(),
                 testOpticsList[7],
               ): [
                 Node(
-                  8,
+                  8.toString(),
                   testOpticsList[8],
                 ),
                 Node(
-                  9,
+                  9.toString(),
                   testOpticsList[9],
                 )
               ],
               Node(
-                8,
+                8.toString(),
                 testOpticsList[8],
               ): [],
               Node(
-                9,
+                9.toString(),
                 testOpticsList[9],
               ): [
                 Node(
-                  10,
+                  10.toString(),
                   testOpticsList[10],
                 )
               ],
               Node(
-                10,
+                10.toString(),
                 testOpticsList[10],
               ): [],
             },
