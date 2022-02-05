@@ -49,7 +49,7 @@ class OpticsState extends ViewModelChangeNotifier {
     currentBeam = initialBeam;
 
     for (final optics in currentOpticsList) {
-      opticsListVersusOpticsNode[optics.id] = <int>[];
+      opticsListVersusOpticsNode[optics.id] = <String>[];
     }
 
     final nodes = currentOpticsTree.nodes;
@@ -62,14 +62,14 @@ class OpticsState extends ViewModelChangeNotifier {
   late Graph<Optics> currentOpticsTree;
   late Beam currentBeam;
   // 対応関係
-  late final Map<String, List<int>> opticsListVersusOpticsNode = {};
+  late final Map<String, List<String>> opticsListVersusOpticsNode = {};
 
   void addNode(Node newNode, Node previousNode, bool willReflect) {
     // ノードを作る
     if (newNode.data.runtimeType == PolarizingBeamSplitter) {
       currentOpticsTree.nodes[newNode] = [null, null];
     } else {
-      currentOpticsTree.nodes[newNode] = [];
+      currentOpticsTree.nodes[newNode] = [null];
     }
 
     if (previousNode.data.runtimeType == PolarizingBeamSplitter) {
@@ -130,7 +130,11 @@ class OpticsState extends ViewModelChangeNotifier {
   void editOptics(Optics optics) {
     // keyを変える
     for (final nodeId in opticsListVersusOpticsNode[optics.id]!) {
-      currentOpticsTree.nodes.keys.elementAt(nodeId).data = optics;
+      final index = currentOpticsTree.nodes.keys
+          .map((e) => e.id)
+          .toList()
+          .indexOf(nodeId);
+      currentOpticsTree.nodes.keys.elementAt(index).data = optics;
     }
     // valueを変える
     for (final edges in currentOpticsTree.nodes.values) {

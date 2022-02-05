@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:reflection_simulator/utils/random_string.dart';
 
 import '../../common/view_model_change_notifier.dart';
 import '../optics_diagram/optics.dart';
@@ -46,7 +47,7 @@ class CreateOpticsRelationDialogViewModel extends ViewModelChangeNotifier {
   // Listから選ばせればいい
   void createRelation() {
     final currentOpticsTree = _simulationRepository.currentOpticsTree;
-    final newNode = Node(currentOpticsTree.nodes.length, connectTo);
+    final newNode = Node(randomString(4), connectTo);
     //_opticsStateAction.addNode(newNode, connectFrom);
     notifyListeners();
   }

@@ -18,11 +18,15 @@ class Graph<T extends Optics> {
     });
     return Graph(clone);
   }
+
+  Map<String, Optics> get opticsWithNodeID => nodes.map<String, Optics>(
+        (key, value) => MapEntry(key.id, key.data),
+      );
 }
 
 class Node {
   Node(this.id, this.data, {this.isTransparent = false});
-  final int id;
+  final String id;
   Optics data;
   final bool isTransparent;
 

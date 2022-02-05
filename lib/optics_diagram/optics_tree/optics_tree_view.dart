@@ -31,7 +31,7 @@ class OpticsTreeView extends HookConsumerWidget {
             ..style = PaintingStyle.stroke,
           builder: (node) {
             final opticsNode =
-                viewModel.getOpticsNodeFromGraph(node.key!.value as int);
+                viewModel.getOpticsNodeFromGraph(node.key!.value as String);
             return _OpticsTreeViewItem(opticsNode);
           },
         ),
@@ -47,13 +47,15 @@ class _OpticsTreeViewItem extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(opticsTreeViewViewModelProvider);
+    final nextOpticsList = viewModel.currentOpticsTree.nodes[opticsNode]!;
     return InkWell(
       onTap: () async {
         if ((opticsNode.data.runtimeType == PolarizingBeamSplitter &&
-                viewModel.currentOpticsTree.nodes[opticsNode]!
+                nextOpticsList
                     .contains(null)) ||
             (opticsNode.data.runtimeType == Mirror &&
-                viewModel.currentOpticsTree.nodes[opticsNode]!.isEmpty)) {
+                (nextOpticsList.isEmpty ||
+                    listEquals(nextOpticsList, [null])))) {
           await showDialog<AlertDialog>(
             context: context,
             builder: (_) => _CreateOpticsRelationDialog(opticsNode),

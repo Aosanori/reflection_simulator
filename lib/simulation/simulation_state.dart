@@ -34,8 +34,9 @@ class SimulationState {
     for (final oneBranchResult in reflectionPositions) {
       for (final position in oneBranchResult) {
         final nodeID = position.keys.first;
-        if (nodeID >= 0) {
-          final optics = currentOpticsTree.nodes.keys.elementAt(nodeID).data;
+        if (nodeID != '-1') {
+          final optics =
+              currentOpticsTree.opticsWithNodeID[nodeID]!; //(nodeID).data;
           result[optics]!.add(position.values.first);
         }
       }

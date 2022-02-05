@@ -9,14 +9,14 @@ class SimulationResult {
     this.reflectionPositions,
     this.simulatedBeamList,
   );
-  final List<List<Map<int, Vector3>>> reflectionPositions;
+  final List<List<Map<String, Vector3>>> reflectionPositions;
   final List<Beam> simulatedBeamList;
 
   SimulationResult copy() => SimulationResult(
         reflectionPositions
             .map(
               (branch) => branch
-                  .map((e) => <int, Vector3>{e.keys.first: e.values.first})
+                  .map((e) => <String, Vector3>{e.keys.first: e.values.first})
                   .toList(),
             )
             .toList(),

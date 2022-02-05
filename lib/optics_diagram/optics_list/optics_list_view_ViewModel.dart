@@ -7,15 +7,16 @@ import '../optics.dart';
 
 final opticsListViewViewModelProvider = ChangeNotifierProvider.autoDispose(
   (ref) => OpticsListViewViewModel(
-      ref.watch(simulationRepositoryProvider), ref.watch(opticsStateActionProvider),),
+    ref.watch(simulationRepositoryProvider),
+    ref.watch(opticsStateActionProvider),
+  ),
 );
 
 class OpticsListViewViewModel extends ViewModelChangeNotifier {
   OpticsListViewViewModel(this._simulationRepository, this._opticsStateAction);
   final SimulationRepository _simulationRepository;
   final OpticsStateAction _opticsStateAction;
-  List<Optics> get currentOpticsList =>
-      _simulationRepository.currentOpticsList;
+  List<Optics> get currentOpticsList => _simulationRepository.currentOpticsList;
 
   void dragAndDrop(int oldIndex, int newIndex) {
     /*if (newIndex > oldIndex) {
@@ -34,7 +35,8 @@ class OpticsListViewViewModel extends ViewModelChangeNotifier {
   }
 
   void removeContent(int index) {
-    _opticsStateAction.deleteOptics(index);
+    final optics = currentOpticsList[index];
+    _opticsStateAction.deleteOptics(optics);
     notifyListeners();
   }
 }

@@ -67,7 +67,7 @@ class SimulationService {
     final reflectionPosition = List.generate(
       numberOfBranches,
       (index) => [
-        {-1: currentBeam.startFrom.vector.clone()}
+        {'-1': currentBeam.startFrom.vector.clone()}
       ],
     );
 

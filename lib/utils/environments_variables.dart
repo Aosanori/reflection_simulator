@@ -71,129 +71,129 @@ final List<Optics> initialOpticsList = <Optics>[
 final initialOpticsTree = Graph<Optics>(
   {
     Node(
-      0,
+      0.toString(),
       initialOpticsList[0],
       // どこと繋がっているか
     ): [
       Node(
-        7,
+        7.toString(),
         initialOpticsList[4],
       ),
       Node(
-        1,
+        1.toString(),
         initialOpticsList[1],
       ),
     ],
     Node(
-      1,
+      1.toString(),
       initialOpticsList[1],
     ): [
       Node(
-        2,
+        2.toString(),
         initialOpticsList[2],
       )
     ],
     Node(
-      2,
+      2.toString(),
       initialOpticsList[2],
     ): [
       Node(
-        3,
+        3.toString(),
         initialOpticsList[3],
       ),
     ],
     Node(
-      3,
+      3.toString(),
       initialOpticsList[3],
     ): [
       null,
       Node(
-        4,
+        4.toString(),
         initialOpticsList[4],
       )
     ],
     Node(
-      4,
+      4.toString(),
       initialOpticsList[4],
     ): [
       Node(
-        5,
+        5.toString(),
         initialOpticsList[5],
       ),
     ],
     Node(
-      5,
+      5.toString(),
       initialOpticsList[5],
     ): [
       null,
       Node(
-        6,
+        6.toString(),
         initialOpticsList[6],
       ),
     ],
     Node(
-      6,
+      6.toString(),
       initialOpticsList[6],
     ): [],
     Node(
-      7,
+      7.toString(),
       initialOpticsList[4],
     ): [
       Node(
-        8,
+        8.toString(),
         initialOpticsList[3],
       )
     ],
     Node(
-      8,
+      8.toString(),
       initialOpticsList[3],
     ): [
       null,
       Node(
-        9,
+        9.toString(),
         initialOpticsList[2],
       ),
     ],
     Node(
-      9,
+      9.toString(),
       initialOpticsList[2],
     ): [
       Node(
-        10,
+        10.toString(),
         initialOpticsList[1],
       )
     ],
     Node(
-      10,
+      10.toString(),
       initialOpticsList[1],
     ): [
       Node(
-        11,
+        11.toString(),
         initialOpticsList[0],
       )
     ],
     Node(
-      11,
+      11.toString(),
       initialOpticsList[0],
     ): [
       null,
       Node(
-        12,
+        12.toString(),
         initialOpticsList[5],
       )
     ],
     Node(
-      12,
+      12.toString(),
       initialOpticsList[5],
     ): [
       null,
       Node(
-        13,
+        13.toString(),
         initialOpticsList[6],
       ),
     ],
     Node(
-      13,
+      13.toString(),
       initialOpticsList[6],
     ): []
   },

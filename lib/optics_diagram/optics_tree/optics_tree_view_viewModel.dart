@@ -7,6 +7,7 @@ import '../../common/view_model_change_notifier.dart';
 import '../../simulation/optics_state.dart';
 import '../../simulation/simulation_repository.dart';
 import '../../utils/graph.dart';
+import '../../utils/random_string.dart';
 import '../optics.dart';
 
 final opticsTreeViewViewModelProvider = ChangeNotifierProvider.autoDispose(
@@ -50,7 +51,7 @@ class OpticsTreeViewViewModel extends ViewModelChangeNotifier {
     return graph;
   }
 
-  Node getOpticsNodeFromGraph(int nodeID) {
+  Node getOpticsNodeFromGraph(String nodeID) {
     final index =
         currentOpticsTree.nodes.keys.map((e) => e.id).toList().indexOf(nodeID);
     return currentOpticsTree.nodes.keys.elementAt(index);
@@ -127,7 +128,7 @@ class OpticsTreeItemViewModel extends ViewModelChangeNotifier {
 
   void createRelation() {
     final currentOpticsTree = _simulationRepository.currentOpticsTree;
-    final newNode = Node(currentOpticsTree.nodes.length, connectTo);
+    final newNode = Node(randomString(4), connectTo);
     _opticsStateAction.addNode(newNode, opticsNode, willReflect);
     notifyListeners();
   }

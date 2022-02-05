@@ -11,8 +11,7 @@ class CreateOpticsRelationDialog extends HookConsumerWidget {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel =
-        ref.watch(createOpticsRelationDialogViewModelProvider);
+    final viewModel = ref.watch(createOpticsRelationDialogViewModelProvider);
     return AlertDialog(
       title: const Text(
         'Create Optics Relation',

@@ -67,7 +67,7 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
       this._changeOpticsValueChartViewModel, this._csvService) {
     if (_changeOpticsValueChartViewModel.targetOptics == null ||
         _changeOpticsValueChartViewModel.targetValue == null) {
-      _changeOpticsValueChartViewModel.initialize(initialOpticsList[0], 'x');
+      _changeOpticsValueChartViewModel.initialize(initialOpticsList[1], 'theta');
     }
     targetOptics = _changeOpticsValueChartViewModel.targetOptics!;
     targetValue = _changeOpticsValueChartViewModel.targetValue!;
@@ -137,9 +137,20 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
         data[beams[i]] = resultsOfEnd[i];
       }
       final result = monteCarlo(data);
-      chartData.add(ChartData(key, result));
-    });
 
+      bool isOffMirror = false;
+      data.forEach((key, value) {
+        if (Vector3(100, 200, 0).distanceTo(value) >= 12.7) {
+          isOffMirror = true;
+        }
+      });
+      if (isOffMirror) {
+        chartData.add(ChartData(key, 0));
+      } else {
+        chartData.add(ChartData(key, result));
+      }
+    });
+    print('Max ${chartData.map((e) => e.y).toList().reduce(max)} %');
     return chartData;
   }
 
@@ -228,7 +239,7 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
             .toDouble();
   }
 
-  List<int> get lastOpticsNodeIdList {
+  List<String> get lastOpticsNodeIdList {
     final reflectionPositions =
         _simulationRepository.simulationResult.reflectionPositions;
     // O(N)
@@ -237,14 +248,11 @@ class CoherentCombineViewModel extends ViewModelChangeNotifier {
 
   bool get isCombined {
     var result = true;
-    var previousOptics = _simulationRepository.currentOpticsTree.nodes.keys
-        .elementAt(lastOpticsNodeIdList.first)
-        .data;
+    var previousOptics = _simulationRepository.currentOpticsTree.opticsWithNodeID[lastOpticsNodeIdList.first];
     for (var i = 1; i < lastOpticsNodeIdList.length; i++) {
       final nodeID = lastOpticsNodeIdList[i];
-      final optics = _simulationRepository.currentOpticsTree.nodes.keys
-          .elementAt(nodeID)
-          .data;
+      final optics = _simulationRepository
+          .currentOpticsTree.opticsWithNodeID[nodeID];
       result &= optics == previousOptics;
       previousOptics = optics;
     }

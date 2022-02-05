@@ -61,7 +61,7 @@ class _OpticsPainter extends CustomPainter {
   });
   final List<Optics> currentOpticsList;
   final Graph<Optics> currentOpticsTree;
-  final List<List<Map<int, vm.Vector3>>> simulationResult;
+  final List<List<Map<String, vm.Vector3>>> simulationResult;
 
   void _drawOptics(Paint paint, Canvas canvas, Optics optics, Size size) {
     paint
@@ -146,8 +146,7 @@ class _OpticsPainter extends CustomPainter {
         ..strokeWidth = 3;
       for (var i = 1; i < simulationResult[branchID].length; i++) {
         final nodeID = simulationResult[branchID][i].keys.first;
-        final optics = currentOpticsTree.nodes.keys.elementAt(nodeID).data;
-
+        final optics = currentOpticsTree.opticsWithNodeID[nodeID]!;//(nodeID).data;
         final distance = optics.position.vector
             .distanceTo(simulationResult[branchID][i].values.first);
         canvas.drawLine(

@@ -16,9 +16,11 @@ class OpticsDisplayViewModel extends ViewModelChangeNotifier {
 
   final SimulationRepository _simulationRepository;
 
-  Graph<Optics> get currentOpticsTree => _simulationRepository.currentOpticsTree;
+  Graph<Optics> get currentOpticsTree =>
+      _simulationRepository.currentOpticsTree;
   List<Optics> get currentOpticsList => _simulationRepository.currentOpticsList;
-  List<List<Map<int,vm.Vector3>>> get simulationResult => _simulationRepository.simulationResult.reflectionPositions;
+  List<List<Map<String, vm.Vector3>>> get simulationResult =>
+      _simulationRepository.simulationResult.reflectionPositions;
 
   void returnToZero(TransformationController transformationController) {
     transformationController.value = Matrix4.identity();
