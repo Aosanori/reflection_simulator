@@ -25,7 +25,6 @@ void main() {
             VariableOfSimulationWithChangingValue(
               targetOptics,
               targetValue,
-              margin: 0.005,
             ),
           );
           stopwatch.stop();
@@ -45,7 +44,6 @@ void main() {
             VariableOfSimulationWithChangingValue(
               targetOptics,
               targetValue,
-              margin: 0.005,
             ),
           );
           stopwatch.stop();
