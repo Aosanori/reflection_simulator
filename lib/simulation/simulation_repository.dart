@@ -56,7 +56,7 @@ class SimulationRepository {
   ) {
     final results = <double, SimulationResult>{};
 
-    for (var value = -0.5; value <= 0.5; value += variable.margin) {
+    for (var value = -0.3; value <= 0; value += variable.margin) {
       final tmpTarget = variable.target.copy();
       final tmpOpticsTree = _opticsStateSource.currentOpticsTree.copy();
       var currentValue = 0.0;
