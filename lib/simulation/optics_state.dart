@@ -152,13 +152,6 @@ class OpticsState extends ViewModelChangeNotifier {
     notifyListeners();
   }
 
-  /*void editOpticsValue(Optics optics) {
-    for (final nodeId in opticsListVersusOpticsNode[optics.id]!) {
-      currentOpticsTree.nodes.keys.elementAt(nodeId).data = optics;
-    }
-    notifyListeners();
-  }*/
-
   void editBeam(Beam newBeam) {
     currentBeam = newBeam;
     notifyListeners();
