@@ -36,6 +36,9 @@ class CreateOpticsDialogViewModel extends ViewModelChangeNotifier {
   List<Optics> get currentOpticsList => _simulationRepository.currentOpticsList;
 
   void addOptics() {
+    if (currentOpticsList.isEmpty) {
+      _opticsStateAction.addFirstNode(newOptics);
+    }
     _opticsStateAction.addOptics(newOptics);
     notifyListeners();
   }

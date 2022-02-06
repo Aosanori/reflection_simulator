@@ -14,28 +14,30 @@ class OpticsTreeView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(opticsTreeViewViewModelProvider);
     return Scaffold(
-      body: InteractiveViewer(
-        constrained: false,
-        boundaryMargin: const EdgeInsets.all(100),
-        minScale: 0.01,
-        maxScale: 5.6,
-        child: gv.GraphView(
-          graph: viewModel.graph,
-          algorithm: gv.BuchheimWalkerAlgorithm(
-            viewModel.builder,
-            gv.TreeEdgeRenderer(viewModel.builder),
-          ),
-          paint: Paint()
-            ..color = Colors.green
-            ..strokeWidth = 1
-            ..style = PaintingStyle.stroke,
-          builder: (node) {
-            final opticsNode =
-                viewModel.getOpticsNodeFromGraph(node.key!.value as String);
-            return _OpticsTreeViewItem(opticsNode);
-          },
-        ),
-      ),
+      body: viewModel.graph.nodes.isNotEmpty
+          ? InteractiveViewer(
+              constrained: false,
+              boundaryMargin: const EdgeInsets.all(100),
+              minScale: 0.01,
+              maxScale: 5.6,
+              child: gv.GraphView(
+                graph: viewModel.graph,
+                algorithm: gv.BuchheimWalkerAlgorithm(
+                  viewModel.builder,
+                  gv.TreeEdgeRenderer(viewModel.builder),
+                ),
+                paint: Paint()
+                  ..color = Colors.green
+                  ..strokeWidth = 1
+                  ..style = PaintingStyle.stroke,
+                builder: (node) {
+                  final opticsNode = viewModel
+                      .getOpticsNodeFromGraph(node.key!.value as String);
+                  return _OpticsTreeViewItem(opticsNode);
+                },
+              ),
+            )
+          : Container(),
     );
   }
 }
@@ -51,11 +53,11 @@ class _OpticsTreeViewItem extends HookConsumerWidget {
     return InkWell(
       onTap: () async {
         if ((opticsNode.data.runtimeType == PolarizingBeamSplitter &&
-                nextOpticsList
-                    .contains(null)) ||
+                nextOpticsList.contains(null)) ||
             (opticsNode.data.runtimeType == Mirror &&
                 (nextOpticsList.isEmpty ||
-                    listEquals(nextOpticsList, [null])))) {
+                    listEquals(nextOpticsList, [null])||
+                    listEquals(nextOpticsList, [null,null])))) {
           await showDialog<AlertDialog>(
             context: context,
             builder: (_) => _CreateOpticsRelationDialog(opticsNode),

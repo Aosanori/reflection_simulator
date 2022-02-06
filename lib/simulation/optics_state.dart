@@ -5,6 +5,7 @@ import '../common/view_model_change_notifier.dart';
 import '../optics_diagram/optics.dart';
 import '../utils/environments_variables.dart';
 import '../utils/graph.dart';
+import '../utils/random_string.dart';
 
 final opticsStateActionProvider =
     Provider((ref) => OpticsStateAction(ref.watch(opticsStateProvider)));
@@ -12,6 +13,10 @@ final opticsStateActionProvider =
 class OpticsStateAction {
   OpticsStateAction(this._opticsState);
   final OpticsState _opticsState;
+
+  void addFirstNode(Optics newOptics) {
+    _opticsState.addFirstNode(Node(randomString(4), newOptics));
+  }
 
   void addNode(Node node, Node previousNode, bool willReflect) {
     _opticsState.addNode(node, previousNode, willReflect);
@@ -47,6 +52,7 @@ class OpticsState extends ViewModelChangeNotifier {
     currentOpticsList = [];
     currentOpticsTree = Graph({});
     currentBeam = initialBeam;
+    opticsListVersusOpticsNode = {};
 
     for (final optics in currentOpticsList) {
       opticsListVersusOpticsNode[optics.id] = <String>[];
@@ -62,7 +68,20 @@ class OpticsState extends ViewModelChangeNotifier {
   late Graph<Optics> currentOpticsTree;
   late Beam currentBeam;
   // 対応関係
-  late final Map<String, List<String>> opticsListVersusOpticsNode = {};
+  late Map<String, List<String>> opticsListVersusOpticsNode;
+
+  void addFirstNode(Node newNode) {
+    // ノードを作る
+    if (newNode.data.runtimeType == PolarizingBeamSplitter) {
+      currentOpticsTree.nodes[newNode] = [null, null];
+    } else {
+      currentOpticsTree.nodes[newNode] = [null];
+    }
+    opticsListVersusOpticsNode[newNode.data.id] = <String>[newNode.id];
+    print(newNode.data.id);
+    print(opticsListVersusOpticsNode[newNode.data.id]);
+    notifyListeners();
+  }
 
   void addNode(Node newNode, Node previousNode, bool willReflect) {
     // ノードを作る
@@ -115,7 +134,9 @@ class OpticsState extends ViewModelChangeNotifier {
 
   void addOptics(Optics optics) {
     currentOpticsList.add(optics);
-    opticsListVersusOpticsNode[optics.id] = [];
+    if (opticsListVersusOpticsNode[optics.id] == null) {
+      opticsListVersusOpticsNode[optics.id] = [];
+    }
     notifyListeners();
   }
 
@@ -135,6 +156,10 @@ class OpticsState extends ViewModelChangeNotifier {
           .toList()
           .indexOf(nodeId);
       currentOpticsTree.nodes.keys.elementAt(index).data = optics;
+    }
+    // 他からPBS
+    if(optics.runtimeType==PolarizingBeamSplitter){
+
     }
     // valueを変える
     for (final edges in currentOpticsTree.nodes.values) {
