@@ -17,10 +17,7 @@ final opticsTreeViewViewModelProvider = ChangeNotifierProvider.autoDispose(
 );
 
 class OpticsTreeViewViewModel extends ViewModelChangeNotifier {
-  OpticsTreeViewViewModel(this._simulationRepository) {
-    print('inited');
-    print(gv.Graph().nodes);
-  }
+  OpticsTreeViewViewModel(this._simulationRepository);
   final SimulationRepository _simulationRepository;
   Graph get currentOpticsTree => _simulationRepository.currentOpticsTree;
 
@@ -33,18 +30,17 @@ class OpticsTreeViewViewModel extends ViewModelChangeNotifier {
     currentOpticsTree.nodes.forEach(
       (key, value) {
         final rootNode = gv.Node.Id(key.id);
-        if(graph.nodes.isEmpty) {
+        if (graph.nodes.isEmpty) {
           graph.addNode(rootNode);
         }
         for (final edge in value) {
           if (edge != null) {
             final edgeNode = gv.Node.Id(edge.id);
-            graph
-              .addEdge(
-                rootNode,
-                edgeNode,
-                paint: Paint()..color = Colors.black,
-              );
+            graph.addEdge(
+              rootNode,
+              edgeNode,
+              paint: Paint()..color = Colors.black,
+            );
           }
         }
       },

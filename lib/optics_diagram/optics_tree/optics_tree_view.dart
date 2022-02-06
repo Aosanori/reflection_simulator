@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../utils/graph.dart';
 import '../optics.dart';
+import 'create_first_node_dialog.dart/create_first_node_dialog.dart';
 import 'optics_tree_view_viewModel.dart';
 
 class OpticsTreeView extends HookConsumerWidget {
@@ -37,7 +38,17 @@ class OpticsTreeView extends HookConsumerWidget {
                 },
               ),
             )
-          : Container(),
+          : Center(
+              child: TextButton(
+                onPressed: ()async {
+                  await showDialog<AlertDialog>(
+                    context: context,
+                    builder: (_) => CreateFirstNodeDialog(),
+                  );
+                },
+                child: const Text('Add Node'),
+              ),
+            ),
     );
   }
 }
@@ -56,8 +67,8 @@ class _OpticsTreeViewItem extends HookConsumerWidget {
                 nextOpticsList.contains(null)) ||
             (opticsNode.data.runtimeType == Mirror &&
                 (nextOpticsList.isEmpty ||
-                    listEquals(nextOpticsList, [null])||
-                    listEquals(nextOpticsList, [null,null])))) {
+                    listEquals(nextOpticsList, [null]) ||
+                    listEquals(nextOpticsList, [null, null])))) {
           await showDialog<AlertDialog>(
             context: context,
             builder: (_) => _CreateOpticsRelationDialog(opticsNode),

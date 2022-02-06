@@ -84,7 +84,6 @@ class SimulationService {
     );
 
     // 深さ優先探索
-    // TODO PBSで分けれるようにする
     void _dfs(Graph<Optics> g, Node v) {
       _seen[v] = true;
       // next
