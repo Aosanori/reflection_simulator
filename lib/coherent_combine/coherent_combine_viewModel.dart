@@ -52,7 +52,7 @@ class ChangeOpticsValueChartViewModel extends ViewModelChangeNotifier {
   }
 }
 
-final coherentCombineViewModelProvider = ChangeNotifierProvider(
+final coherentCombineViewModelProvider = ChangeNotifierProvider.autoDispose(
   (ref) => CoherentCombineViewModel(
     ref.watch(simulationRepositoryProvider),
     ref.watch(_changeOpticsValueChartViewModelProvider),
@@ -64,7 +64,7 @@ final coherentCombineViewModelProvider = ChangeNotifierProvider(
 
 class CoherentCombineViewModel extends ViewModelChangeNotifier {
   CoherentCombineViewModel(this._simulationRepository,
-      this._changeOpticsValueChartViewModel, this._csvService) {
+      this._changeOpticsValueChartViewModel, this._csvService,) {
     if (_changeOpticsValueChartViewModel.targetOptics == null ||
         _changeOpticsValueChartViewModel.targetValue == null) {
       _changeOpticsValueChartViewModel.initialize(initialOpticsList[1], 'theta');

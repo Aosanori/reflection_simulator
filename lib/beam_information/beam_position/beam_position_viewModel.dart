@@ -20,16 +20,15 @@ class BeamPositionViewModel extends ViewModelChangeNotifier {
     currentBeam = _simulationRepository.currentBeam;
     if (_simulationRepository.currentOpticsList.isNotEmpty) {
       final nextOptics = _simulationRepository.currentOpticsList.first;
-      final directionToNextOptics = currentBeam.startFrom.vector.angleTo(
-                nextOptics.position.vector - currentBeam.startFrom.vector,
-              ) *
-              180 /
-              pi -
-          90;
+      final directionVector =
+          nextOptics.position.vector - currentBeam.startFrom.vector;
+      final directionToNextOptics =
+          atan(directionVector.y / directionVector.x) * 180 / pi;
       rangeOfTheta = [
         directionToNextOptics - adjustableAngleOfBeam,
         directionToNextOptics + adjustableAngleOfBeam
       ];
+      currentBeam.startFrom.theta = directionToNextOptics;
     }
   }
 
@@ -38,18 +37,22 @@ class BeamPositionViewModel extends ViewModelChangeNotifier {
 
   late Beam currentBeam;
   late List<double>? rangeOfTheta;
+  late Beam newBeam = currentBeam.copy();
+
+  void changeBeam() {
+    _opticsStateAction.editBeam(newBeam);
+    notifyListeners();
+  }
 
   void changeBeamType(String newValue) {
-    final newBeam = currentBeam.copy()..type = newValue;
-    _opticsStateAction.editBeam(newBeam);
+    newBeam.type = newValue;
     notifyListeners();
   }
 
   void changeValueOfX(String newValue) {
     final value = double.tryParse(newValue);
     if (value != null) {
-      final newBeam = currentBeam.copy()..startFrom.x = value;
-      _opticsStateAction.editBeam(newBeam);
+      newBeam.startFrom.x = value;
       notifyListeners();
     }
   }
@@ -57,8 +60,8 @@ class BeamPositionViewModel extends ViewModelChangeNotifier {
   void changeValueOfY(String newValue) {
     final value = double.tryParse(newValue);
     if (value != null) {
-      final newBeam = currentBeam.copy()..startFrom.y = value;
-      _opticsStateAction.editBeam(newBeam);
+      newBeam.startFrom.y = value;
+
       notifyListeners();
     }
   }
@@ -66,29 +69,28 @@ class BeamPositionViewModel extends ViewModelChangeNotifier {
   void changeValueOfZ(String newValue) {
     final value = double.tryParse(newValue);
     if (value != null) {
-      final newBeam = currentBeam.copy()..startFrom.z = value;
-      _opticsStateAction.editBeam(newBeam);
+      newBeam.startFrom.z = value;
+
       notifyListeners();
     }
   }
 
   void changeValueOfTheta(double newValue) {
-    final newBeam = currentBeam.copy()..startFrom.theta = newValue;
-    _opticsStateAction.editBeam(newBeam);
+    newBeam.startFrom.theta = newValue;
+    changeBeam();
     notifyListeners();
   }
 
   void changeValueOfPhi(double newValue) {
-    final newBeam = currentBeam.copy()..startFrom.phi = newValue;
-    _opticsStateAction.editBeam(newBeam);
+    newBeam.startFrom.phi = newValue;
+    changeBeam();
     notifyListeners();
   }
 
   void changeValueOfWaveLength(String newValue) {
     final value = double.tryParse(newValue);
     if (value != null) {
-      final newBeam = currentBeam.copy()..waveLength = value;
-      _opticsStateAction.editBeam(newBeam);
+      newBeam.waveLength = value;
       notifyListeners();
     }
   }
@@ -96,8 +98,7 @@ class BeamPositionViewModel extends ViewModelChangeNotifier {
   void changeValueOfBeamWaist(String newValue) {
     final value = double.tryParse(newValue);
     if (value != null) {
-      final newBeam = currentBeam.copy()..beamWaist = value;
-      _opticsStateAction.editBeam(newBeam);
+      newBeam.beamWaist = value;
       notifyListeners();
     }
   }

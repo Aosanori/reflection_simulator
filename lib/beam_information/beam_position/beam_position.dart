@@ -28,7 +28,7 @@ class BeamPositionDisplay extends HookConsumerWidget {
           Container(
             padding: const EdgeInsets.all(5),
             child: Text(
-              'x: ${currentBeam.startFrom.x} mm  y: ${currentBeam.startFrom.y} mm  z: ${currentBeam.startFrom.z} mm   θ: ${currentBeam.startFrom.theta}°  φ: ${currentBeam.startFrom.phi}°',
+              'x: ${currentBeam.startFrom.x.toStringAsFixed(1)} mm  y: ${currentBeam.startFrom.y.toStringAsFixed(1)} mm  z: ${currentBeam.startFrom.z.toStringAsFixed(1)} mm   θ: ${currentBeam.startFrom.theta.toStringAsFixed(2)}°  φ: ${currentBeam.startFrom.phi.toStringAsFixed(2)}°',
               style: const TextStyle(color: Colors.black54),
             ),
           ),
@@ -196,7 +196,7 @@ class _BeamPositionInputDialog extends HookConsumerWidget {
         TextButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              viewModel.runSimulation();
+              viewModel.changeBeam();
               Navigator.pop(context);
             }
           },
