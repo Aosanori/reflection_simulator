@@ -14,7 +14,7 @@ class CreateFirstNodeDialog extends HookConsumerWidget {
     final viewModel = ref.watch(createFirstNodeDialogViewModelProvider);
     return AlertDialog(
       title: const Text(
-        'Create Optics Relation',
+        'Create First Node',
       ),
       content: SingleChildScrollView(
         reverse: true,
