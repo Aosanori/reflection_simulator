@@ -18,7 +18,8 @@ final beamPositionViewModelProvider = ChangeNotifierProvider.autoDispose(
 class BeamPositionViewModel extends ViewModelChangeNotifier {
   BeamPositionViewModel(this._simulationRepository, this._opticsStateAction) {
     currentBeam = _simulationRepository.currentBeam;
-    if (_simulationRepository.currentOpticsList.isNotEmpty) {
+    if (_simulationRepository.currentOpticsList.isNotEmpty &&
+        _simulationRepository.currentOpticsTree.nodes.isNotEmpty) {
       final nextOptics = _simulationRepository.currentOpticsList.first;
       final directionVector =
           nextOptics.position.vector - currentBeam.startFrom.vector;
@@ -29,6 +30,8 @@ class BeamPositionViewModel extends ViewModelChangeNotifier {
         directionToNextOptics + adjustableAngleOfBeam
       ];
       currentBeam.startFrom.theta = directionToNextOptics;
+    } else {
+      rangeOfTheta = [-180, 180];
     }
   }
 

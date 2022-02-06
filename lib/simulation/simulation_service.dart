@@ -46,10 +46,12 @@ class SimulationService {
       }
     }
 
-    _dfsForPreprocessing(
-      currentOpticsTree,
-      currentOpticsTree.nodes.keys.first,
-    );
+    if (currentOpticsTree.nodes.isNotEmpty) {
+      _dfsForPreprocessing(
+        currentOpticsTree,
+        currentOpticsTree.nodes.keys.first,
+      );
+    }
 
     return nodeIDVSBranchID;
   }
@@ -148,10 +150,12 @@ class SimulationService {
       }
     }
 
-    _dfs(
-      currentOpticsTree,
-      currentOpticsTree.nodes.keys.first,
-    );
+    if (currentOpticsTree.nodes.isNotEmpty) {
+      _dfs(
+        currentOpticsTree,
+        currentOpticsTree.nodes.keys.first,
+      );
+    }
     return SimulationResult(reflectionPosition, _simulatedBeamList);
   }
 }
