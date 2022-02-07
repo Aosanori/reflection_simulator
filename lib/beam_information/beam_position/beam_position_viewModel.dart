@@ -29,7 +29,10 @@ class BeamPositionViewModel extends ViewModelChangeNotifier {
         directionToNextOptics - adjustableAngleOfBeam,
         directionToNextOptics + adjustableAngleOfBeam
       ];
-      currentBeam.startFrom.theta = directionToNextOptics;
+      if(currentBeam.startFrom.theta>rangeOfTheta![1]||
+          currentBeam.startFrom.theta < rangeOfTheta![0]){
+        currentBeam.startFrom.theta = directionToNextOptics;
+      }
     } else {
       rangeOfTheta = [-180, 180];
     }
