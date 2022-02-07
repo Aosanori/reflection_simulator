@@ -49,8 +49,8 @@ final opticsStateProvider = ChangeNotifierProvider(
 
 class OpticsState extends ViewModelChangeNotifier {
   OpticsState() {
-    currentOpticsList = [];
-    currentOpticsTree = Graph({});
+    currentOpticsList = initialOpticsList; //[];
+    currentOpticsTree = initialOpticsTree; //Graph({});
     currentBeam = initialBeam;
     opticsListVersusOpticsNode = {};
 
@@ -158,9 +158,7 @@ class OpticsState extends ViewModelChangeNotifier {
       currentOpticsTree.nodes.keys.elementAt(index).data = optics;
     }
     // 他からPBS
-    if(optics.runtimeType==PolarizingBeamSplitter){
-
-    }
+    if (optics.runtimeType == PolarizingBeamSplitter) {}
     // valueを変える
     for (final edges in currentOpticsTree.nodes.values) {
       for (final edge in edges) {

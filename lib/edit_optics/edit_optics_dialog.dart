@@ -81,7 +81,7 @@ class EditOpticsDialog extends HookConsumerWidget {
                 initialValue:
                     editOpticsDialogViewModel.editOptics.position.z.toString(),
               ),
-              /*OpticsDialogInputField(
+              OpticsDialogInputField(
                 labelText: 'theta',
                 hintText: '0° ~ 360',
                 suffixText: '°',
@@ -97,7 +97,7 @@ class EditOpticsDialog extends HookConsumerWidget {
                 onChanged: editOpticsDialogViewModel.changeValueOfPhi,
                 initialValue: editOpticsDialogViewModel.editOptics.position.phi
                     .toString(),
-              ),*/
+              ),
               OpticsDialogInputField(
                 labelText: 'size',
                 suffixText: 'mm',

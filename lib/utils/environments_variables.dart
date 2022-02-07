@@ -34,7 +34,7 @@ final List<Optics> initialOpticsList = <Optics>[
   PolarizingBeamSplitter(
     'item1',
     'PBS2',
-    OpticsPosition(x: 300, y: 100, z: 0, theta: -135, phi: 90.1),
+    OpticsPosition(x: 300, y: 100, z: 0, theta: -135.1, phi: 90),
   ),
   Mirror(
     'item2',
@@ -59,7 +59,7 @@ final List<Optics> initialOpticsList = <Optics>[
   PolarizingBeamSplitter(
     'item6',
     'PBS1',
-    OpticsPosition(x: 100, y: 100, z: 0, theta: 45.0, phi: 90.0),
+    OpticsPosition(x: 100, y: 100, z: 0, theta: 45, phi: 90),
   ),
   Mirror(
     'item7',

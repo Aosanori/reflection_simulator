@@ -26,7 +26,7 @@ class OpticsDisplay extends HookConsumerWidget {
           labelColor: Colors.blue,
           tabs: <Widget>[
             Tab(text: 'Ray Trace'),
-            Tab(text: 'Coherent View'),
+             Tab(text: 'Coherent View'),
           ],
         ),
         body: TabBarView(
@@ -90,8 +90,8 @@ class _OpticsPainter extends CustomPainter {
           Rect.fromCenter(
               center: (positions[0] + positions[1]) / 2,
               width: width,
-              height: width),
-          paint);
+              height: width,),
+          paint,);
     }
   }
 

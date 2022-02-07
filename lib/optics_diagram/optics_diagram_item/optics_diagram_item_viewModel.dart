@@ -1,6 +1,4 @@
-import 'dart:math';
 
-import 'package:complex/complex.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../common/view_model_change_notifier.dart';
@@ -9,21 +7,51 @@ import '../../simulation/simulation_repository.dart';
 import '../../utils/environments_variables.dart';
 import '../optics.dart';
 
+final _opticsAngleStateProvider =
+    Provider.family.autoDispose<OpticsAngleState, Optics>(
+  (ref, optics) => OpticsAngleState(optics),
+);
+
+class OpticsAngleState {
+  OpticsAngleState(this._optics);
+  final Optics _optics;
+  late List<double> rangeOfTheta = [
+    _optics.position.theta - adjustableAngleOfMirror,
+    _optics.position.theta + adjustableAngleOfMirror,
+  ];
+
+  void changeRangeOfTheta(List<double> newRangeOfTheta) {
+    rangeOfTheta = newRangeOfTheta;
+  }
+}
+
 final opticsDiagramItemViewModelProvider =
     ChangeNotifierProvider.family.autoDispose<OpticsDiagramItemViewModel, int>(
   (ref, index) => OpticsDiagramItemViewModel(
     ref.watch(simulationRepositoryProvider),
     ref.watch(opticsStateActionProvider),
+    ref.watch(
+      _opticsAngleStateProvider(
+        ref.watch(simulationRepositoryProvider).currentOpticsList[index],
+      ),
+    ),
     index,
   ),
 );
 
 class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
   OpticsDiagramItemViewModel(
-      this._simulationRepository, this._opticsStateAction, this.index) {
-    final opticsList = _simulationRepository
+    this._simulationRepository,
+    this._opticsStateAction,
+    this._opticsAngleState,
+    this.index,
+  ) {
+    /*final opticsList = _simulationRepository
         .simulationResult.simulatedBeamList.first.passedOptics;
-    
+    */
+    // TODO: なんとかする
+    /*final opticsList = _simulationRepository.currentOpticsList;
+
     if (index >= opticsList.length) {
       rangeOfTheta = [-180, 180];
       _optics = _simulationRepository.currentOpticsList[index];
@@ -69,18 +97,20 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
       // 調整時に範囲から出ていたらやり直す
       if (!(minimumValueOfTheta <= _optics.position.theta &&
           _optics.position.theta <= maximumValueOfTheta)) {
-        _optics.position.theta =
-            (minimumValueOfTheta + maximumValueOfTheta) / 2;
+        _optics.position.theta = idealTheta;
         _opticsStateAction.editOptics(_optics);
       }
     } else {
       rangeOfTheta = [-180, 180];
-    }
+    }*/
+    rangeOfTheta = _opticsAngleState.rangeOfTheta;
+    _optics = _simulationRepository.currentOpticsList[index];
   }
 
   final int index;
   final SimulationRepository _simulationRepository;
   final OpticsStateAction _opticsStateAction;
+  final OpticsAngleState _opticsAngleState;
 
   late Optics _optics;
   late List<double> rangeOfTheta;
