@@ -49,7 +49,6 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
     /*final opticsList = _simulationRepository
         .simulationResult.simulatedBeamList.first.passedOptics;
     */
-    // TODO: なんとかする
     /*final opticsList = _simulationRepository.currentOpticsList;
 
     if (index >= opticsList.length) {
