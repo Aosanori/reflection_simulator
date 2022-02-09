@@ -1,4 +1,3 @@
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../common/view_model_change_notifier.dart';
@@ -115,6 +114,8 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
   late List<double> rangeOfTheta;
 
   Optics get optics => _optics.copy();
+
+  bool get canDismissible => _simulationRepository.hasNode(_optics);
 
   void changeTheta(int index, double value) {
     _optics.position.theta = value;

@@ -51,6 +51,9 @@ class SimulationRepository {
         currentOpticsTree: currentOpticsTree,
       );
 
+  bool hasNode(Optics optics) =>
+      _opticsStateSource.opticsListVersusOpticsNode[optics.id]!.isNotEmpty;
+
   Map<double, SimulationResult> runSimulationWithChangingValue(
     VariableOfSimulationWithChangingValue variable,
   ) {
