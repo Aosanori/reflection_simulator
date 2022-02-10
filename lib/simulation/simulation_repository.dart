@@ -34,8 +34,7 @@ class SimulationRepository {
 
   Graph<Optics> get currentOpticsTree => _opticsStateSource.currentOpticsTree;
 
-  List<Optics> get currentOpticsList =>
-      _opticsStateSource.currentOpticsList.map((optics) => optics).toList();
+  List<Optics> get currentOpticsList => _opticsStateSource.currentOpticsList;
 
   Beam get currentBeam => _opticsStateSource.currentBeam;
 
