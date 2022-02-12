@@ -78,7 +78,6 @@ class OpticsTreeItemViewModel extends ViewModelChangeNotifier {
   }
 
   void createRelation() {
-    final currentOpticsTree = _simulationRepository.currentOpticsTree;
     final newNode = Node(randomString(4), connectTo);
     _opticsStateAction.addNode(newNode, opticsNode, willReflect);
     notifyListeners();
