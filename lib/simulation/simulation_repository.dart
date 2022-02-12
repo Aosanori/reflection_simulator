@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../beam_information/beam.dart';
@@ -52,6 +53,19 @@ class SimulationRepository {
 
   bool hasNode(Optics optics) =>
       _opticsStateSource.opticsListVersusOpticsNode[optics.id]!.isNotEmpty;
+
+  List<Optics> get isAvailableToConnect {
+    final notFilledNodes = <Node>[];
+    for (final node in _opticsStateSource.currentOpticsTree.nodes.keys) {
+      final edges = _opticsStateSource.currentOpticsTree.nodes[node];
+      if (edges!.isEmpty || edges.contains(null)) {
+        notFilledNodes.add(node);
+      }
+    }
+
+    final result = notFilledNodes.map((node) => node.data).toSet().toList();
+    return result;
+  }
 
   Map<double, SimulationResult> runSimulationWithChangingValue(
     VariableOfSimulationWithChangingValue variable,
