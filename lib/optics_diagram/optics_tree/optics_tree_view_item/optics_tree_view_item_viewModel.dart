@@ -28,10 +28,10 @@ class OpticsTreeItemViewModel extends ViewModelChangeNotifier {
   final OpticsStateAction _opticsStateAction;
   final Node opticsNode;
 
-  List<Optics> get availableToConnectOptics => _simulationRepository.availableToConnectOptics;
+  List<Optics> get availableToConnectOptics => _simulationRepository.availableToConnectOptics(opticsNode.data);
   Graph get currentOpticsTree => _simulationRepository.currentOpticsTree;
 
-  late Optics connectTo = _simulationRepository.availableToConnectOptics.first;
+  late Optics connectTo = availableToConnectOptics.first;
 
   late bool willReflect = true;
 

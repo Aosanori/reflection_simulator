@@ -54,7 +54,7 @@ class SimulationRepository {
   bool hasNode(Optics optics) =>
       _opticsStateSource.opticsListVersusOpticsNode[optics.id]!.isNotEmpty;
 
-  List<Optics> get availableToConnectOptics {
+  List<Optics> availableToConnectOptics(Optics selectedOptics) {
     final notFilledNodes = <Node>[];
     for (final node in _opticsStateSource.currentOpticsTree.nodes.keys) {
       final edges = _opticsStateSource.currentOpticsTree.nodes[node];
@@ -63,7 +63,8 @@ class SimulationRepository {
       }
     }
 
-    final result = notFilledNodes.map((node) => node.data).toSet().toList();
+    final result = notFilledNodes.map((node) => node.data).toSet().toList()
+      ..remove(selectedOptics);
     return result;
   }
 
