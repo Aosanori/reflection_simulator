@@ -92,7 +92,7 @@ class _CreateOpticsRelationDialog extends HookConsumerWidget {
                       color: Colors.grey,
                     ),
                     onChanged: viewModel.changeConnectTo,
-                    items: viewModel.currentOpticsList
+                    items: viewModel.availableToConnectOptics
                         .map<DropdownMenuItem<Optics>>(
                           (value) => DropdownMenuItem<Optics>(
                             value: value,

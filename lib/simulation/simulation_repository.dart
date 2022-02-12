@@ -54,7 +54,7 @@ class SimulationRepository {
   bool hasNode(Optics optics) =>
       _opticsStateSource.opticsListVersusOpticsNode[optics.id]!.isNotEmpty;
 
-  List<Optics> get isAvailableToConnect {
+  List<Optics> get availableToConnectOptics {
     final notFilledNodes = <Node>[];
     for (final node in _opticsStateSource.currentOpticsTree.nodes.keys) {
       final edges = _opticsStateSource.currentOpticsTree.nodes[node];
