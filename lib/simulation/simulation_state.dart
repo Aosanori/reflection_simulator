@@ -47,4 +47,21 @@ class SimulationState {
     }
     return result;
   }
+  /*Map<int,List<Vector3>> get reflectionPositionsDistributedByBranches {
+    var branchID = 0;
+    final reflectionPositions = simulationResult.reflectionPositions;
+    for (final oneBranchResult in reflectionPositions) {
+      for (final position in oneBranchResult) {
+        final nodeID = position.keys.first;
+        if (nodeID != '-1') {
+          final optics = currentOpticsTree.opticsWithNodeID[nodeID]!;
+          if (result[optics] == null) {
+            result[optics] = <int, Vector3>{};
+          }
+          result[optics]![branchID] = position.values.first;
+        }
+      }
+      branchID++;
+    }
+  }*/
 }
