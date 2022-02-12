@@ -25,23 +25,25 @@ class SimulationState {
   final List<Optics> currentOpticsList;
   final SimulationResult simulationResult;
 
-  Map<Optics, List<Vector3>> get reflectPositionsDistributedByOptics {
-    final result = <Optics, List<Vector3>>{};
+  Map<Optics, Map<int, Vector3>> get reflectPositionsDistributedByOptics {
+    final result = <Optics, Map<int, Vector3>>{};
     final reflectionPositions = simulationResult.reflectionPositions;
     for (final optics in currentOpticsList) {
-      result[optics] = <Vector3>[];
+      result[optics] = <int, Vector3>{};
     }
+    var branchID = 0;
     for (final oneBranchResult in reflectionPositions) {
       for (final position in oneBranchResult) {
         final nodeID = position.keys.first;
         if (nodeID != '-1') {
           final optics = currentOpticsTree.opticsWithNodeID[nodeID]!;
           if (result[optics] == null) {
-            result[optics] = <Vector3>[];
+            result[optics] = <int, Vector3>{};
           }
-          result[optics]!.add(position.values.first);
+          result[optics]![branchID] = position.values.first;
         }
       }
+      branchID++;
     }
     return result;
   }

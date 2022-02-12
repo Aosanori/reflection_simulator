@@ -55,15 +55,24 @@ class SimulationRepository {
 
   List<Optics> availableToConnectOptics(Optics selectedOptics) {
     final notFilledNodes = <Node>[];
+    final opticsUsedNodes = <Optics>[];
     for (final node in _opticsStateSource.currentOpticsTree.nodes.keys) {
       final edges = _opticsStateSource.currentOpticsTree.nodes[node];
       if (edges!.isEmpty || edges.contains(null)) {
         notFilledNodes.add(node);
       }
+      opticsUsedNodes.add(node.data);
     }
 
+    final allOptics = opticsUsedNodes.toSet().toList();
     final result = notFilledNodes.map((node) => node.data).toSet().toList()
       ..remove(selectedOptics);
+
+    // まだnodeに追加されていないOpticsを探す
+    currentOpticsList
+        .where((element) => !allOptics.contains(element))
+        .toList()
+        .forEach(result.add);
     return result;
   }
 

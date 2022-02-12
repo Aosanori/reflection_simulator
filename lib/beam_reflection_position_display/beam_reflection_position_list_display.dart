@@ -40,7 +40,7 @@ class _BeamReflectionPositionDisplay extends StatelessWidget {
   const _BeamReflectionPositionDisplay(
       {required this.result, required this.beams, Key? key})
       : super(key: key);
-  final Map<Optics, List<vm.Vector3>> result;
+  final Map<Optics, Map<int, vm.Vector3>> result;
   final List<Beam> beams;
 
   @override
@@ -57,7 +57,7 @@ class _BeamReflectionPositionDisplay extends StatelessWidget {
 
 class _MirrorPainter extends CustomPainter {
   const _MirrorPainter({required this.result, required this.beams});
-  final Map<Optics, List<vm.Vector3>> result;
+  final Map<Optics, Map<int, vm.Vector3>> result;
   final List<Beam> beams;
 
   // 左上が(0,0)
@@ -95,12 +95,22 @@ class _MirrorPainter extends CustomPainter {
 
     final optics = result.keys.first;
     // 中心点（塗りつぶし）
-    for (var i = 0; i < result.values.first.length; i++) {
-      paint.color = branchColor[i];
-      final position = result.values.first[i];
-      final beamWaist = beams[i].beamWaistOn[optics] ?? 0.0;
-      drawPositionOfReflection(optics, position, canvas, size, paint, beamWaist);
-    }
+    result[optics]?.forEach(
+      (i, position) {
+        paint.color = branchColor[i];
+        final position = result.values.first[i]!;
+        final beamWaist = beams[i].beamWaistOn[optics] ?? 0.0;
+        drawPositionOfReflection(
+          optics,
+          position,
+          canvas,
+          size,
+          paint,
+          beamWaist,
+        );
+      },
+    );
+
     final textSpan = TextSpan(
       style: const TextStyle(
         color: Colors.black,

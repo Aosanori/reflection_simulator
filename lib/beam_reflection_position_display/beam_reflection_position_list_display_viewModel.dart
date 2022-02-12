@@ -18,7 +18,7 @@ class BeamReflectionPositionListDisplayViewModel
   BeamReflectionPositionListDisplayViewModel(this._simulationRepository);
   final SimulationRepository _simulationRepository;
 
-  Map<Optics, List<Vector3>> get simulationResult =>
+  Map<Optics, Map<int,Vector3>> get simulationResult =>
       _simulationRepository.simulationState.reflectPositionsDistributedByOptics;
 
   List<Beam> get simulatedBeamList =>
