@@ -32,6 +32,7 @@ class Beam {
         direction.clone(),
       )
       ..startPositionVector = startPositionVector.clone()
+      ..beamWaistOn = beamWaistOn.map(MapEntry.new)
       ..direction = direction.clone();
 
     return newBeam;
@@ -46,6 +47,7 @@ class Beam {
   late Ray ray;
 
   List<Optics> passedOptics = [];
+  Map<Optics, double> beamWaistOn = {};
 
   late Vector3 direction = Vector3(
     sin(startFrom.phiRadian) * cos(startFrom.thetaRadian),
@@ -110,6 +112,7 @@ class Beam {
       direction,
     );
     startPositionVector = nextStartPoint;
+    beamWaistOn[optics] = currentBeamWaist;
     //passedOptics.add(optics);
     return nextStartPoint;
   }
@@ -123,6 +126,7 @@ class Beam {
       direction,
     );
     startPositionVector = nextStartPoint;
+    beamWaistOn[optics] = currentBeamWaist;
     //passedOptics.add(optics);
     return nextStartPoint;
   }

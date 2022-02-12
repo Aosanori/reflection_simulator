@@ -27,6 +27,7 @@ void drawPositionOfReflection(
   Canvas canvas,
   Size size,
   Paint paint,
+  double beamWaist,
 ) {
   final position = optics.position;
   final baseAxis = Vector3(
@@ -48,7 +49,7 @@ void drawPositionOfReflection(
         size.width / 2 + (radius * ratio * cos(angle)),
         size.height / 2 - (radius * ratio * sin(angle)),
       ),
-      10,
+      size.width * (beamWaist/optics.size) / 2,
       paint,
     );
   }

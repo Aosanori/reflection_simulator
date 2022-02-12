@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vector_math/vector_math.dart' as vm;
 
+import '../beam_information/beam.dart';
 import '../optics_diagram/optics.dart';
 import '../utils/environments_variables.dart';
 import '../utils/get_position_of_mirror.dart';
@@ -15,6 +16,7 @@ class BeamReflectionPositionListDisplay extends HookConsumerWidget {
     final viewModel =
         ref.watch(beamReflectionPositionListDisplayViewModelProvider);
     final result = viewModel.simulationResult;
+    final beams = viewModel.simulatedBeamList;
     return ListView.builder(
       // This next line does the trick.
       scrollDirection: Axis.horizontal,
@@ -25,6 +27,7 @@ class BeamReflectionPositionListDisplay extends HookConsumerWidget {
             result: {
               result.keys.elementAt(index): result.values.elementAt(index)
             },
+            beams: beams,
           );
         }
         return Container();
@@ -34,24 +37,28 @@ class BeamReflectionPositionListDisplay extends HookConsumerWidget {
 }
 
 class _BeamReflectionPositionDisplay extends StatelessWidget {
-  const _BeamReflectionPositionDisplay({required this.result, Key? key})
+  const _BeamReflectionPositionDisplay(
+      {required this.result, required this.beams, Key? key})
       : super(key: key);
   final Map<Optics, List<vm.Vector3>> result;
+  final List<Beam> beams;
+
   @override
   Widget build(BuildContext context) => LayoutBuilder(
         builder: (context, constraints) => Container(
           padding: const EdgeInsets.all(10),
           width: constraints.maxHeight,
           child: CustomPaint(
-            painter: _MirrorPainter(result: result),
+            painter: _MirrorPainter(result: result, beams: beams),
           ),
         ),
       );
 }
 
 class _MirrorPainter extends CustomPainter {
-  const _MirrorPainter({required this.result});
+  const _MirrorPainter({required this.result, required this.beams});
   final Map<Optics, List<vm.Vector3>> result;
+  final List<Beam> beams;
 
   // 左上が(0,0)
   // 中心を基準 => Offset(size.width / 2, size.height / 2)
@@ -91,7 +98,8 @@ class _MirrorPainter extends CustomPainter {
     for (var i = 0; i < result.values.first.length; i++) {
       paint.color = branchColor[i];
       final position = result.values.first[i];
-      drawPositionOfReflection(optics, position, canvas, size, paint);
+      final beamWaist = beams[i].beamWaistOn[optics] ?? 0.0;
+      drawPositionOfReflection(optics, position, canvas, size, paint, beamWaist);
     }
     final textSpan = TextSpan(
       style: const TextStyle(

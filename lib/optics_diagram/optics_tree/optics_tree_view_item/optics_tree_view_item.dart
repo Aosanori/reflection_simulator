@@ -145,7 +145,7 @@ class _CreateOpticsRelationDialog extends HookConsumerWidget {
                       Navigator.pop(context);
                     },
                     child: Text('delete',
-                        style: TextStyle(color: Color(Colors.red.value))),
+                        style: TextStyle(color: Color(Colors.red.value)),),
                   )
                 : const SizedBox(width: 0, height: 0),
             Row(
