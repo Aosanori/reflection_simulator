@@ -7,8 +7,6 @@ import '../../../utils/random_string.dart';
 
 import '../../optics.dart';
 
-
-
 final opticsTreeItemViewModelProvider =
     ChangeNotifierProvider.family.autoDispose<OpticsTreeItemViewModel, Node>(
   (ref, opticsNode) => OpticsTreeItemViewModel(
@@ -23,25 +21,37 @@ class OpticsTreeItemViewModel extends ViewModelChangeNotifier {
     this._simulationRepository,
     this._opticsStateAction,
     this.opticsNode,
-  );
+  ) {
+    action = _getActions();
+    currentAction = action.first;
+  }
   final SimulationRepository _simulationRepository;
   final OpticsStateAction _opticsStateAction;
   final Node opticsNode;
 
-  List<Optics> get availableToConnectOptics => _simulationRepository.availableToConnectOptics(opticsNode.data);
+  List<Optics> get availableToConnectOptics =>
+      _simulationRepository.availableToConnectOptics(opticsNode.data);
   Graph get currentOpticsTree => _simulationRepository.currentOpticsTree;
 
   late Optics connectTo = availableToConnectOptics.first;
 
-  late bool willReflect = true;
+  late String currentAction;
 
-  String? currentAction;
+  late List<String> action;
 
-  List<String> get action {
-    const actions = ['Reflect', 'Transparent'];
-    if (opticsNode.data.runtimeType == Mirror) {
-      return ['Reflect'];
+  bool get _willReflect {
+    if (currentAction == 'Reflect') {
+      return true;
     }
+
+    if (currentAction == 'Transparent') {
+      return false;
+    }
+    return false;
+  }
+
+  List<String> _getActions() {
+    const actions = ['Reflect', 'Transparent'];
 
     if (opticsNode.data.runtimeType == PolarizingBeamSplitter) {
       final res = <String>[];
@@ -54,19 +64,18 @@ class OpticsTreeItemViewModel extends ViewModelChangeNotifier {
       if (currentOpticsTree.nodes[opticsNode]?[1] == null) {
         res.add(actions[0]);
       }
+
       return res;
     }
-    return [''];
+    return ['Reflect'];
   }
 
   void changeAction(String? newAction) {
     if (newAction == 'Reflect') {
-      willReflect = true;
       currentAction = 'Reflect';
     }
 
     if (newAction == 'Transparent') {
-      willReflect = false;
       currentAction = 'Transparent';
     }
     notifyListeners();
@@ -79,7 +88,7 @@ class OpticsTreeItemViewModel extends ViewModelChangeNotifier {
 
   void createRelation() {
     final newNode = Node(randomString(4), connectTo);
-    _opticsStateAction.addNode(newNode, opticsNode, willReflect);
+    _opticsStateAction.addNode(newNode, opticsNode, _willReflect);
     notifyListeners();
   }
 
