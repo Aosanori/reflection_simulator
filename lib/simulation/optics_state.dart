@@ -145,7 +145,27 @@ class OpticsState extends ViewModelChangeNotifier {
     if (opticsListVersusOpticsNode[optics.id]!.isEmpty) {
       currentOpticsList.remove(optics);
       notifyListeners();
+      return;
     }
+/*
+    // Listから削除
+    currentOpticsList.remove(optics);
+
+    // 対応するNode
+    final nodeIDs = opticsListVersusOpticsNode[optics.id]!;
+    for (final nodeID in nodeIDs) {
+      for (final edges in currentOpticsTree.nodes.values) {
+        edges.removeWhere((element) => element?.id == nodeID);
+      }
+    }
+
+    for (final nodeID in nodeIDs) {
+      currentOpticsTree.nodes.removeWhere((key, value) => key.id == nodeID);
+    }
+    opticsListVersusOpticsNode
+        .removeWhere((key, value) => nodeIDs.contains(key));
+    notifyListeners();
+    */
   }
 
   void editOptics(Optics optics) {
