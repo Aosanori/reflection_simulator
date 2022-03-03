@@ -53,6 +53,21 @@ class SimulationRepository {
   bool hasNode(Optics optics) =>
       _opticsStateSource.opticsListVersusOpticsNode[optics.id]!.isNotEmpty;
 
+  bool hasEdge(Optics optics) {
+    final nodes = _opticsStateSource.opticsListVersusOpticsNode[optics.id];
+    if (nodes == null) {
+      return true;
+    }
+
+    for (final node in nodes) {
+      if (currentOpticsTree.nodes[node]?.isNotEmpty ?? false) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   List<Optics> availableToConnectOptics(Optics selectedOptics) {
     final notFilledNodes = <Node>[];
     final opticsUsedNodes = <Optics>[];
