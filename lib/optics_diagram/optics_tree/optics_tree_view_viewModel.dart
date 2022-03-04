@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../common/view_model_change_notifier.dart';
 import '../../simulation/simulation_repository.dart';
 import '../../utils/graph.dart';
+import '../optics.dart';
 
 final opticsTreeViewViewModelProvider = ChangeNotifierProvider.autoDispose(
   (ref) => OpticsTreeViewViewModel(
@@ -16,6 +17,7 @@ final opticsTreeViewViewModelProvider = ChangeNotifierProvider.autoDispose(
 class OpticsTreeViewViewModel extends ViewModelChangeNotifier {
   OpticsTreeViewViewModel(this._simulationRepository);
   final SimulationRepository _simulationRepository;
+  List<Optics> get currentOpticsList => _simulationRepository.currentOpticsList;
   Graph get currentOpticsTree => _simulationRepository.currentOpticsTree;
 
   late gv.BuchheimWalkerConfiguration builder =

@@ -7,8 +7,6 @@ import '../../optics.dart';
 import '../optics_tree_view_viewModel.dart';
 import 'optics_tree_view_item_viewModel.dart';
 
-
-
 class OpticsTreeViewItem extends HookConsumerWidget {
   const OpticsTreeViewItem(this.opticsNode, {Key? key}) : super(key: key);
   final Node opticsNode;
@@ -19,12 +17,13 @@ class OpticsTreeViewItem extends HookConsumerWidget {
     final nextOpticsList = viewModel.currentOpticsTree.nodes[opticsNode]!;
     return InkWell(
       onTap: () async {
-        if ((opticsNode.data.runtimeType == PolarizingBeamSplitter &&
-                nextOpticsList.contains(null)) ||
-            (opticsNode.data.runtimeType == Mirror &&
-                (nextOpticsList.isEmpty ||
-                    listEquals(nextOpticsList, [null]) ||
-                    listEquals(nextOpticsList, [null, null])))) {
+        if (viewModel.currentOpticsList.length > 1 &&
+            ((opticsNode.data.runtimeType == PolarizingBeamSplitter &&
+                    nextOpticsList.contains(null)) ||
+                (opticsNode.data.runtimeType == Mirror &&
+                    (nextOpticsList.isEmpty ||
+                        listEquals(nextOpticsList, [null]) ||
+                        listEquals(nextOpticsList, [null, null]))))) {
           await showDialog<AlertDialog>(
             context: context,
             builder: (_) => _CreateOpticsRelationDialog(opticsNode),
@@ -144,8 +143,10 @@ class _CreateOpticsRelationDialog extends HookConsumerWidget {
                       viewModel.deleteNode();
                       Navigator.pop(context);
                     },
-                    child: Text('delete',
-                        style: TextStyle(color: Color(Colors.red.value)),),
+                    child: Text(
+                      'delete',
+                      style: TextStyle(color: Color(Colors.red.value)),
+                    ),
                   )
                 : const SizedBox(width: 0, height: 0),
             Row(

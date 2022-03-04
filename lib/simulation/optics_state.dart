@@ -49,8 +49,8 @@ final opticsStateProvider = ChangeNotifierProvider(
 
 class OpticsState extends ViewModelChangeNotifier {
   OpticsState() {
-    currentOpticsList = initialOpticsList; //[];
-    currentOpticsTree = initialOpticsTree; //Graph({});
+    currentOpticsList = [];
+    currentOpticsTree = Graph({});
     currentBeam = initialBeam;
     opticsListVersusOpticsNode = {};
 

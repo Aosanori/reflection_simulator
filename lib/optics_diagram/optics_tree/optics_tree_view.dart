@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:graphview/GraphView.dart' as gv;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../create_optics/create_optics_dialog.dart';
 import 'create_first_node_dialog.dart/create_first_node_dialog.dart';
 import 'optics_tree_view_item/optics_tree_view_item.dart';
 import 'optics_tree_view_viewModel.dart';
@@ -39,13 +40,13 @@ class OpticsTreeView extends HookConsumerWidget {
             )
           : Center(
               child: TextButton(
-                onPressed: ()async {
-                  await showDialog<AlertDialog>(
+                onPressed: () async {
+                  await showDialog<CreateOpticsDialog>(
                     context: context,
-                    builder: (_) => CreateFirstNodeDialog(),
+                    builder: (_) => CreateOpticsDialog(),
                   );
                 },
-                child: const Text('Add Node'),
+                child: const Text('Create Optics'),
               ),
             ),
     );
