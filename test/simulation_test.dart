@@ -28,7 +28,7 @@ void main() {
             ),
           );
           stopwatch.stop();
-          expect(stopwatch.elapsed.inMilliseconds < 150000, true);
+          expect(stopwatch.elapsed.inMilliseconds < 1500000, true);
         },
       );
       test(
@@ -47,7 +47,7 @@ void main() {
             ),
           );
           stopwatch.stop();
-          expect(stopwatch.elapsed.inMilliseconds < 150000, true);
+          expect(stopwatch.elapsed.inMilliseconds < 1500000, true);
         },
       );
 
