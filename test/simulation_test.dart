@@ -13,6 +13,7 @@ void main() {
   group(
     'Simulation Test',
     () {
+/*
       test(
         'runSimulationWithChangingValue single thread',
         () {
@@ -28,7 +29,7 @@ void main() {
             ),
           );
           stopwatch.stop();
-          expect(stopwatch.elapsed.inMilliseconds < 1500000, true);
+          expect(stopwatch.elapsed.inMilliseconds < 1500, true);
         },
       );
       test(
@@ -47,10 +48,10 @@ void main() {
             ),
           );
           stopwatch.stop();
-          expect(stopwatch.elapsed.inMilliseconds < 1500000, true);
+          expect(stopwatch.elapsed.inMilliseconds < 1500, true);
         },
       );
-
+*/
       test(
         'case 1 (直角反射)',
         () {
