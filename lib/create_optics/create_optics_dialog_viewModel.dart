@@ -29,7 +29,7 @@ class CreateOpticsDialogViewModel extends ViewModelChangeNotifier {
       y: 0,
       z: 0,
       theta: 0,
-      phi: 0,
+      phi: 90,
     ),
   );
 

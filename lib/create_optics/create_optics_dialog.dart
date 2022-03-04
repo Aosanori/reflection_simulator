@@ -80,13 +80,13 @@ class CreateOpticsDialog extends HookConsumerWidget {
                 maxLength: 4,
                 onChanged: createOpticsDialogViewModel.changeValueOfTheta,
               ),
-              OpticsDialogInputField(
+              /*OpticsDialogInputField(
                 labelText: 'phi',
                 hintText: '0° ~ 180',
                 suffixText: '°',
                 maxLength: 4,
                 onChanged: createOpticsDialogViewModel.changeValueOfPhi,
-              ),
+              ),*/
               OpticsDialogInputField(
                 labelText: 'size',
                 suffixText: 'mm',

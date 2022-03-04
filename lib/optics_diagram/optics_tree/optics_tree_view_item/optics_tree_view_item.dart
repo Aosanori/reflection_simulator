@@ -28,6 +28,12 @@ class OpticsTreeViewItem extends HookConsumerWidget {
             context: context,
             builder: (_) => _CreateOpticsRelationDialog(opticsNode),
           );
+        }else{
+          const snackBar = SnackBar(
+            content: Text("This optics can't connect to other optics."),
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       },
       child: Container(

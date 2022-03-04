@@ -20,13 +20,13 @@ class OpticsDisplay extends HookConsumerWidget {
     final currentOpticsTree = opticsDisplayViewModel.currentOpticsTree;
     final simulationResult = opticsDisplayViewModel.simulationResult;
     return DefaultTabController(
-      length: 2,
+      length: 1,
       child: Scaffold(
         appBar: const TabBar(
           labelColor: Colors.blue,
           tabs: <Widget>[
             Tab(text: 'Ray Trace'),
-             Tab(text: 'Coherent View'),
+            //Tab(text: 'Coherent View'),
           ],
         ),
         body: TabBarView(
@@ -45,7 +45,7 @@ class OpticsDisplay extends HookConsumerWidget {
                 ),
               ),
             ),
-            const CoherentCombine(),
+            //const CoherentCombine(),
           ],
         ),
       ),
