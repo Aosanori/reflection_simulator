@@ -115,7 +115,7 @@ class OpticsDiagramItemViewModel extends ViewModelChangeNotifier {
 
   Optics get optics => _optics.copy();
 
-  bool get canDismissible => _simulationRepository.hasNode(_optics);
+  bool get canDelete => _simulationRepository.canDelete(_optics);
 
   void changeTheta(int index, double value) {
     _optics.position.theta = value;

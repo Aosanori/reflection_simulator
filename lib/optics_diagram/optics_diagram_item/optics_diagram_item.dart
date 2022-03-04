@@ -97,20 +97,33 @@ class OpticsDiagramItem extends HookConsumerWidget {
               ),
             ],
           ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              child: TextButton(
-                child: const Text('edit'),
-                onPressed: () {
-                  showDialog<EditOpticsDialog>(
-                    context: context,
-                    builder: (_) => EditOpticsDialog(index: index),
-                  );
-                },
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextButton(
+                  child: const Text('edit'),
+                  onPressed: () {
+                    showDialog<EditOpticsDialog>(
+                      context: context,
+                      builder: (_) => EditOpticsDialog(index: index),
+                    );
+                  },
+                ),
               ),
-            ),
+              opticsDiagramItemViewModel.canDelete
+                  ? Container(
+                      padding: const EdgeInsets.all(10),
+                      child: TextButton(
+                        onPressed: onDelete,
+                        child: const Text(
+                          'delete',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    )
+                  : Container(),
+            ],
           )
         ],
       ),

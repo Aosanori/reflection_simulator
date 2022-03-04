@@ -53,7 +53,7 @@ class SimulationRepository {
   bool hasNode(Optics optics) =>
       _opticsStateSource.opticsListVersusOpticsNode[optics.id]!.isNotEmpty;
 
-  bool hasEdge(Optics optics) {
+  bool canDelete(Optics optics) {
     final nodes = _opticsStateSource.opticsListVersusOpticsNode[optics.id];
     if (nodes == null) {
       return true;

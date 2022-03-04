@@ -55,12 +55,12 @@ class OpticsState extends ViewModelChangeNotifier {
     opticsListVersusOpticsNode = {};
 
     for (final optics in currentOpticsList) {
-      opticsListVersusOpticsNode[optics.id] = <String>[];
+      opticsListVersusOpticsNode[optics.id] = <Node>[];
     }
 
     final nodes = currentOpticsTree.nodes;
     for (final node in nodes.keys) {
-      opticsListVersusOpticsNode[node.data.id]!.add(node.id);
+      opticsListVersusOpticsNode[node.data.id]!.add(node);
     }
   }
 
@@ -68,7 +68,7 @@ class OpticsState extends ViewModelChangeNotifier {
   late Graph<Optics> currentOpticsTree;
   late Beam currentBeam;
   // 対応関係
-  late Map<String, List<String>> opticsListVersusOpticsNode;
+  late Map<String, List<Node>> opticsListVersusOpticsNode;
 
   void addFirstNode(Node newNode) {
     // ノードを作る
@@ -77,7 +77,7 @@ class OpticsState extends ViewModelChangeNotifier {
     } else {
       currentOpticsTree.nodes[newNode] = [null];
     }
-    opticsListVersusOpticsNode[newNode.data.id] = <String>[newNode.id];
+    opticsListVersusOpticsNode[newNode.data.id] = <Node>[newNode];
     print(newNode.data.id);
     print(opticsListVersusOpticsNode[newNode.data.id]);
     notifyListeners();
@@ -107,9 +107,9 @@ class OpticsState extends ViewModelChangeNotifier {
         .map((node) => node.data)
         .toList()
         .contains(newNode.data)) {
-      opticsListVersusOpticsNode[newNode.data.id]!.add(newNode.id);
+      opticsListVersusOpticsNode[newNode.data.id]!.add(newNode);
     } else {
-      opticsListVersusOpticsNode[newNode.data.id] = [newNode.id];
+      opticsListVersusOpticsNode[newNode.data.id] = [newNode];
     }
     notifyListeners();
   }
@@ -127,7 +127,7 @@ class OpticsState extends ViewModelChangeNotifier {
     // nodeを消す
     currentOpticsTree.nodes.remove(node);
     // 対応関係を消す
-    opticsListVersusOpticsNode[node.data.id]!.remove(node.id);
+    opticsListVersusOpticsNode[node.data.id]!.remove(node);
 
     notifyListeners();
   }
@@ -147,43 +147,50 @@ class OpticsState extends ViewModelChangeNotifier {
       notifyListeners();
       return;
     }
-/*
+
     // Listから削除
     currentOpticsList.remove(optics);
 
     // 対応するNode
-    final nodeIDs = opticsListVersusOpticsNode[optics.id]!;
-    for (final nodeID in nodeIDs) {
-      for (final edges in currentOpticsTree.nodes.values) {
-        edges.removeWhere((element) => element?.id == nodeID);
+    final nodes = opticsListVersusOpticsNode[optics.id]!;
+    final nodeIDs =
+        opticsListVersusOpticsNode[optics.id]!.map((e) => e.id).toList();
+
+    for (final edges in currentOpticsTree.nodes.values) {
+      final index = edges.map((e) => e?.data).toList().indexOf(optics);
+      if(index!=-1) {
+        edges[index] = null;
       }
     }
 
-    for (final nodeID in nodeIDs) {
-      currentOpticsTree.nodes.removeWhere((key, value) => key.id == nodeID);
+    for (final node in nodes) {
+      currentOpticsTree.nodes.removeWhere((key, value) => key == node);
     }
+
     opticsListVersusOpticsNode
         .removeWhere((key, value) => nodeIDs.contains(key));
     notifyListeners();
-    */
   }
 
   void editOptics(Optics optics) {
     // keyを変える
-    for (final nodeId in opticsListVersusOpticsNode[optics.id]!) {
+    for (final node in opticsListVersusOpticsNode[optics.id]!) {
       final index = currentOpticsTree.nodes.keys
-          .map((e) => e.id)
+          //.map((e) => e.id)
           .toList()
-          .indexOf(nodeId);
+          .indexOf(node);
       currentOpticsTree.nodes.keys.elementAt(index).data = optics;
+      for (final node in opticsListVersusOpticsNode[optics.id]!) {
+        node.data = optics;
+      }
     }
     // 他からPBS
     if (optics.runtimeType == PolarizingBeamSplitter) {}
     // valueを変える
     for (final edges in currentOpticsTree.nodes.values) {
       for (final edge in edges) {
-        final nodeIDs = opticsListVersusOpticsNode[optics.id]!;
-        if (edge != null && nodeIDs.contains(edge.id)) {
+        final nodes = opticsListVersusOpticsNode[optics.id]!;
+        if (edge != null && nodes.contains(edge)) {
           edge.data = optics;
         }
       }
