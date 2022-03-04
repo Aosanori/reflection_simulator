@@ -158,7 +158,7 @@ class OpticsState extends ViewModelChangeNotifier {
 
     for (final edges in currentOpticsTree.nodes.values) {
       final index = edges.map((e) => e?.data).toList().indexOf(optics);
-      if(index!=-1) {
+      if (index != -1) {
         edges[index] = null;
       }
     }

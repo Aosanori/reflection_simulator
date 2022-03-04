@@ -20,15 +20,7 @@ class OpticsDiagramItem extends HookConsumerWidget {
         ref.watch(opticsDiagramItemViewModelProvider(index));
     final optics = opticsDiagramItemViewModel.optics;
     final rangeOfTheta = opticsDiagramItemViewModel.rangeOfTheta;
-    return Dismissible(
-      key: key!, // 項目が特定できるよう固有の文字列をキーとする
-      background: Container(color: Colors.red), // スワイプしているアイテムの背景色
-      onDismissed: (direction) {
-        // 削除時の処理
-        onDelete();
-      },
-      // 各項目のレイアウト
-      child: ExpansionTile(
+    return ExpansionTile(
         title: Text(
           optics.name,
           style: const TextStyle(
@@ -126,7 +118,6 @@ class OpticsDiagramItem extends HookConsumerWidget {
             ],
           )
         ],
-      ),
     );
   }
 }
